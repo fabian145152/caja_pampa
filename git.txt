@@ -1,0 +1,10 @@
+hago una modificacion
+ git status -s    ;me la lista
+ git add .  
+ git commit -m ""    ; agrego mensaje
+ git push	     ;subo todo a mi repo en git
+ 
+ 
+ 
+ git pull 	     ;Traigo todo desde github a mi vsc
+
