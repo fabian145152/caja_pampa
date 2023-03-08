@@ -6,8 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Unidad</title>
-    <link rel="styleshet" href="../css/detalles.css">
+    <link rel="stylesheet" href=".../css/detalles.css">
     <style>
+        .boton {
+            padding: 4px 25px;
+            background: rgb(19, 143, 247);
+            border: 1px solid #1161B0;
+            color: #fff;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+
         table {
             border-collapse: collapse;
             width: 100%;
@@ -32,9 +41,8 @@
 
 <body>
     <h1>Crear Titulares unidades y moviles</h1>
+    <br>
     <?php
-
-
 
     include("../includes/conexion.php");
 
@@ -226,7 +234,8 @@ Creo variable $tamagno_pagina
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
         <table class="table table-sm" id="table_2">
             <!-- <table width="50%" border="0" align="center" > -->
-            <a href="nuevo.php">Nuevo</a>
+
+            <a href="nuevo.php" class="boton">Nuevo</a>
 
             <tr>
                 <td class="primera_fila">Id</td>
