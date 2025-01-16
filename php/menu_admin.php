@@ -73,13 +73,7 @@ if ($_SESSION['logueado']) {
                 </div>
                 <div class="col-md-3">
                     <ul class="list-group">
-                        <h3>SEMANAS</h3>
-
-                        <li><a href="semana/semana.php" class=" btn btn-primary btn-block btn-sm">SEMANA los lunes solamente...
-                                <p style="margin-top:0; margin-bottom:0;"><small>Una vez, los lunes al empezar.</small></p>
-
-                            </a></li>
-                        <br>
+                      
                         <h3>VOUCHER</h3>
                         <li><a href="ayuda/ayuda_voucher.php" target="_blank" class="btn btn-info btn-block btn-sm">AYUDA DE CARGA DE VOUCHER</a></li>
                         <br>
@@ -90,19 +84,27 @@ if ($_SESSION['logueado']) {
                         <li><a href="admin/venta/venta_prod.php" class=" btn btn-primary btn-block btn-sm" target="__blank">STOCK DE PRODUCTOS</a></li>
                         <br>
                         <li><a href="admin/ventas/inicio_ventas.php" class=" btn btn-primary btn-block btn-sm" target="__blank">VENTA</a></li>
-                        <h3>TARIFAS</h3>
-                        <li> <a href="admin/arma_unidad/inicio_arma.php" class="btn btn-primary btn-block btn-sm" target="__blank">CONFIGURA UNIDAD PARA COBRAR</a></li>
-                        <br>
-                        <li> <a href="admin/abonos_viajes/inicio_abonos.php" class="btn btn-primary btn-block btn-sm" target="__blank">IMPORTE DE LOS VIAJES</a></li>
-                        <br>
-                        <li> <a href="admin/abonos_semanales/inicio_abonos_semanales.php" class="btn btn-primary btn-block btn-sm" target="__blank">ABONOS SEMANALES</a></li>
+
                     </ul>
                 </div>
 
 
                 <div class="col-md-3">
                     <ul class="list-group">
-                        <h3>MENU CAJA </h3>
+                        <h3>TARIFAS</h3>
+                        <li> <a href="admin/arma_unidad/inicio_arma.php" class="btn btn-primary btn-block btn-sm" target="__blank">CONFIGURA UNIDAD PARA COBRAR</a></li>
+                        <br>
+                        <li> <a href="admin/abonos_viajes/inicio_abonos.php" class="btn btn-primary btn-block btn-sm" target="__blank">IMPORTE DE LOS VIAJES</a></li>
+                        <br>
+                        <li> <a href="admin/abonos_semanales/inicio_abonos_semanales.php" class="btn btn-primary btn-block btn-sm" target="__blank">ABONOS SEMANALES</a></li>
+
+
+
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <ul class="list-group">
+                        <h3>MENU CAJA</h3>
 
                         <li><a href="ayuda/help.php" target="_blank" class="btn btn-info btn-block btn-sm">AYUDA DE COBROS</a></li>
                         <br>
@@ -110,16 +112,18 @@ if ($_SESSION['logueado']) {
                         <br>
                         <li><a href="admin/cobros/inicio_cobros.php" target="_blank" class=" btn btn-primary btn-block btn-sm">COBRAR A MOVIL</a></li>
                         <br>
-                        <li><a href="admin/cobros/resumen_cobros.php" target="_blank" class=" btn btn-primary btn-block btn-sm">RESUMEN DE DEPOSITOS DE MOVIL</a></li>
+                        <li><a href="admin/historial/inicio_resumen.php" target="_blank" class=" btn btn-primary btn-block btn-sm">HISTORIAL DE PAGOS DEL MOVIL</a></li>
                         <br>
                         <li><a href="admin/cobros/recibos" target="_blank" class=" btn btn-primary btn-block btn-sm">RECIBOS</a></li>
                         <br>
                         <li><a href="admin/moviminetos_de_caja/inicio_movimientos.php" target="_blank" class=" btn btn-primary btn-block btn-sm">EXTRACCIONES</a></li>
                         <br>
 
-
                     </ul>
                 </div>
+
+
+                <!--
                 <div class="col-md-3">
                     <ul class="list-group">
                         <h3>SIN TERMINAR</h3>
@@ -140,6 +144,7 @@ if ($_SESSION['logueado']) {
                         <br>
                     </ul>
                 </div>
+-->
             </div>
         </div>
         <br>

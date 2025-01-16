@@ -33,11 +33,16 @@ $row = $result_movil->fetch_assoc();
 
 
     $movil = $row['movil'];
-    $sql_semana = "SELECT * FROM semanas WHERE movil=" . $movil;
 
+    $sql_semana = "SELECT * FROM semanas WHERE movil=" . $movil;
     $result_semana = $con->query($sql_semana);
     $row_semana = $result_semana->fetch_assoc();
+    $row_semana['total'];
 
+    $lee_reg = "SELECT * FROM completa WHERE movil=" . $movil;
+    $lee_leido = $con->query($lee_reg);
+    $lee_row = $lee_leido->fetch_assoc();
+    $lee_row['estado_admin'];
 
     ?>
 
@@ -88,44 +93,40 @@ $row = $result_movil->fetch_assoc();
                         <input type="text" class="form-control" id="licencia_titu" name="licencia_titu" value="<?php echo $row['licencia_titu']; ?>">
                     </div>
 
-                    <label class="control-label">Estado administrativo:</label>
+                    <?php
+                    //  include_once "select_edita_movil.php";
 
+                    $row_semana['total'];
+                    echo "<br>";
+                    $estado_admin = $lee_row['estado_admin'];
+                    echo "<br>";
+                    //echo $lee_estado['nombre'];
+                    echo "<br>";
 
+                    $lee_es = "SELECT * FROM estados_unidades WHERE id=" . $estado_admin;
+                    $lee_esta = $con->query($lee_es);
+                    $lee_estado = $lee_esta->fetch_assoc();
+                    $estado_administrativo = $lee_estado['nombre'];
+                    ?>
+                    <div class="form-group">
+                        <label class="control-label">ESTADO ADMINISTRATIVO</label>
+                        <select id="estado" name="estado">
 
-
-                    <select name="estado_administrativo" id="estado_administrativo">
-                        <?php
-                        $estado = $row['estado_admin'];
-                        $sql_est = "SELECT * FROM estados_unidades WHERE id = $estado ";
-                        $sql_estados = $con->query($sql_est);
-                        $lee_estados = $sql_estados->fetch_assoc();
-                        ?>
-                        <option value="<?php echo $lee_estados['id'] ?>"><?php echo $lee_estados['nombre'] ?></option>
-                        <?php
-                        $op = [];
-                        if ($estados->num_rows > 0) {
-                            while ($row_2 = $estados->fetch_assoc()) {
-                                $op[] = $row_2;
+                            <option value="<?php echo $lee_estado['id'] ?>"><?php echo $lee_estado['nombre'] ?>&nbsp;&nbsp;&nbsp;<?php $lee_estado['color'] ?></option>
+                            <?php
+                            $sql_estado = "SELECT * FROM estados_unidades";
+                            $result_estado = $con->query($sql_estado);
+                            while ($row_estado = $result_estado->fetch_assoc()) {
+                                echo "<option value='" . $row_estado['id'] . "'>" . $row_estado['nombre'] . "</option>";
                             }
-                        } else {
-                            echo "0 resultados";
-                        }
-                        foreach ($op as $opcion) {
-                            echo "<option value=\"" . $opcion['id'] . "\" >" . $opcion['nombre'] . "</option>";
-                        }
-                        ?>
-                    </select>
 
-
-
-
-
+                            ?>
+                        </select>
+                    </div>
 
                     <div class="form-group">
                         <input type="hidden" class="form-control" id="semana_movil" name="semana_movil" value="<?php echo $row_semana['movil']; ?>">
                     </div>
-
-
 
                     <div class="text-center">
                         <br>

@@ -65,8 +65,8 @@ if ($_SESSION['logueado']) {
 
                 <thead class="thead-dark">
                     <tr>
+                        <th>ID</th>
                         <th>Movil</th>
-
                         <th>Nombre</th>
                         <th>Apellido</th>
                         <th>DNI</th>
@@ -87,6 +87,8 @@ if ($_SESSION['logueado']) {
                     <?php
                     $sql = "SELECT * FROM completa WHERE 1 ORDER BY movil ASC";
                     $result = $con->query($sql);
+
+
                     while ($row = $result->fetch_assoc()) {
 
 
@@ -94,6 +96,7 @@ if ($_SESSION['logueado']) {
                         <form action="borrar_movil.php" method="get">
 
                             <tr>
+                                <td><?php echo $row['id'] ?></td>
                                 <?php
                                 $id = $row['id'];
                                 $row['id'] ?>
@@ -113,10 +116,12 @@ if ($_SESSION['logueado']) {
                                     ?>
                                 </td>
                                 <?php
+                                $status = $row['estado_admin'];
                                 $estado = $row['id'];
-                                $sql_est = "SELECT * FROM estados_unidades WHERE id = $estado ";
+                                $sql_est = "SELECT * FROM estados_unidades WHERE id = $status ";
                                 $result_est = $con->query($sql_est);
                                 $row_estado = $result_est->fetch_assoc();
+
                                 ?>
                                 <td><?php echo $row['nombre_titu'] ?></td>
                                 <td><?php echo $row['apellido_titu'] ?></td>
@@ -125,7 +130,8 @@ if ($_SESSION['logueado']) {
                                 <td><?php echo $row['cp_titu'] ?></td>
                                 <td><?php echo $row['cel_titu'] ?></td>
                                 <td><?php echo $row['licencia_titu'] ?></td>
-                                <td style="color: <?php echo $row_estado['color']  ?>;"><?php echo $row_estado['nombre'] ?></td>
+
+                                <td><?php echo $row_estado['nombre'] ?></td>
                                 <td><?php
                                     if ($row['tropa'] != 50) {
                                         echo $row['tropa'];

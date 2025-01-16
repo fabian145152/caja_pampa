@@ -10,7 +10,7 @@ if ($_SESSION['logueado']) {
     // Si se envía el formulario
     if (isset($_POST['actualizar'])) {
         // Consulta para actualizar todos los registros
-        $sql_completa = "UPDATE completa SET deuda_anterior = 0, pago_ant = 0, venta_1 = 0, venta_2 = 0, venta_3 = 0, venta_4 = 0, venta_5 = 0";
+        $sql_completa = "UPDATE completa SET deuda_anterior = 0, saldo_a_favor = 0, venta_1 = 0, venta_2 = 0, venta_3 = 0, venta_4 = 0, venta_5 = 0";
 
         if ($con->query($sql_completa) === TRUE) {
             echo "<br>";

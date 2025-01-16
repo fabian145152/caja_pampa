@@ -53,11 +53,11 @@ if ($result->num_rows > 0) {
             <form class="form-group" accept=-"charset utf8" action="update_mov.php" method="POST">
                     <div class="form-group">
                         <label class="control-label">Efectivo en caja</label>
-                        <input type="text" class="form-control" value="<?php echo $sql_list['dep_ant_ft']; ?>">
+                        <input type="text" class="form-control" value="<?php echo $sql_list['dep_ant_ft']; ?>" readonly >
                     </div>
                     <div class="form-group">
                         <label class="control-label">Mercado Pago en caja</label>
-                        <input type="text" class="form-control" value="<?php echo  $sql_list['dep_ant_mp']; ?>">
+                        <input type="text" class="form-control" value="<?php echo  $sql_list['dep_ant_mp']; ?>" readonly>
                     </div>
                     <div class="form-group">
                         <label class="control-label">Extraccion de FT</label>

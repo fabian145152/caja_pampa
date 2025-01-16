@@ -41,7 +41,7 @@ include_once "funciones/funciones.php";
             <br>
             <a href="http://google.com" class="btn btn-lg btn-info btn-block">SALIR</a>
         </form>
-
+<!--
         <ul>
             <li>Roberto<strong>Administrador</strong></li>
             <li>Ricardo <strong> Acceso total</strong></li>
@@ -49,7 +49,7 @@ include_once "funciones/funciones.php";
             <li>Jorge <strong> Solo Cobra</strong></li>
             <li>Marcelo <strong> Actualiza Cobros</strong></li>
         </ul>
-
+    -->
     </div>
 
     <script src="js/jquery-3.4.1.min.js"></script>

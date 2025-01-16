@@ -3,8 +3,13 @@ session_start();
 include_once "../../../funciones/funciones.php";
 $con = conexion();
 $con->set_charset("utf8mb4");
-$sql_listado = "SELECT * FROM caja_final WHERE 1";
-$sql_lis = $con->query($sql_listado);
+$cantidad = 10;
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $cantidad = intval($_POST["cantidad"]);
+}
+
 
 ?>
 
@@ -37,6 +42,7 @@ $sql_lis = $con->query($sql_listado);
 </head>
 
 <body>
+
     <h1 class="text-center" style="margin: 5px ; ">MOVIMIENTOS DE CAJA</h1>
     <div class="row">
         <style>
@@ -44,6 +50,16 @@ $sql_lis = $con->query($sql_listado);
                 text-align: center;
             }
         </style>
+        <form method="post" action="">
+        &nbsp; &nbsp;
+            <label for="cantidad">Cantidad de registros a mostrar:</label>
+            <input type="number"  id="cantidad" name="cantidad" value="10" min="1" required>
+            <input type="submit" class="btn btn-secondary btn-sm" value="Ver registros">
+        </form>
+     
+
+
+
         <div class="btn-group d-flex w-50" role="group">
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -62,17 +78,17 @@ $sql_lis = $con->query($sql_listado);
 
             <thead class="thead-dark">
                 <tr>
-                    <th>id</th>
+                    <th></th>
                     <th>dep FT</th>
-                    <th>dep ant ft</th>
-                    <th>FT Actual</th>
+                    <th>Dinero an caja</th>
+                    <!-- <th>Ft Actual</th> -->
                     <th>extraccion ft</th>
-                    <th>deposito ft</th>
+                    <!-- <th>deposito ft</th>-->
                     <th>dep MP</th>
-                    <th>dep ant MP</th>
-                    <th>ft actual</th>
+                    <th>Dinero en MP</th>
+                    <!-- <th>MP actual</th> -->
                     <th>extraccion MP</th>
-                    <th>deposito MP</th>
+                    <!-- <th>deposito MP</th> -->
                     <th>Fecha</th>
                     <th>Operador</th>
                     <th>Obs</th>
@@ -82,21 +98,28 @@ $sql_lis = $con->query($sql_listado);
             </thead>
             <br>
             <?php
+
+            $sql_listado = "SELECT * FROM caja_final ORDER BY id DESC LIMIT $cantidad";
+            $sql_lis = $con->query($sql_listado);
             while ($sql_lista = $sql_lis->fetch_assoc()) {
             ?>
                 <form action="">
                     <tr>
-                        <th><?php echo $sql_lista['id'] ?></th>
+                        <th><?php $sql_lista['id'] ?></th>
                         <th><?php echo $sql_lista['dep_ft_hoy'] ?></th>
                         <th><?php echo $sql_lista['dep_ant_ft'] ?></th>
-                        <th><?php echo $sql_lista['ft_actual'] ?></th>
+                        <!--<th><?php //echo $sql_lista['ft_actual'] 
+                                ?></th> -->
                         <th><?php echo $sql_lista['extra_ft'] ?></th>
-                        <th><?php echo $sql_lista['deposito_ft'] ?></th>
+                        <!-- <th><?php //echo $sql_lista['deposito_ft'] 
+                                    ?></th> -->
                         <th><?php echo $sql_lista['dep_mp_hoy'] ?></th>
                         <th><?php echo $sql_lista['dep_ant_mp'] ?></th>
-                        <th><?php echo $sql_lista['mp_actual'] ?></th>
+                        <!-- <th><?php //echo $sql_lista['mp_actual'] 
+                                    ?></th> -->
                         <th><?php echo $sql_lista['extra_mp'] ?></th>
-                        <th><?php echo $sql_lista['deposito_mp'] ?></th>
+                        <!-- <th><?php //echo $sql_lista['deposito_mp'] 
+                                    ?></th> -->
                         <th><?php echo $sql_lista['fecha'] ?></th>
                         <th><?php echo $sql_lista['nombre'] ?></th>
                         <th><?php echo $sql_lista['observaciones'] ?></th>

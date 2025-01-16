@@ -2,7 +2,9 @@
 <html lang="es">
 
 <?php
-
+/*
+VIENE DE guarda_cobros_con_voucher.php
+*/
 require "../../../funciones/fpdf/fpdf.php";
 $width = 200;
 $height = 150;
@@ -103,7 +105,7 @@ $pdf->MultiCell(0, 10, "Operador: $user");
 //echo "<br>";
 //echo "Fecha y hora" . $fecha;
 //echo "<br>";
-$nombre = $movil . "_" . $fecha;
+$nombre = $recibo_numero . "_" . $fecha . "_" . $movil;
 //echo "<br>";
 //echo "<br>";
 //echo "<br>";

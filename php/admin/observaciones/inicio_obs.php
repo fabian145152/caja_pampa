@@ -23,6 +23,7 @@ $semana_actual = date("W");
 <body>
 
     <h4 style="text-align: center; ">EDITAR OBSERVACIONES</h4>
+    <h4 style="text-align: center; ">TEXTO RECORDATODIO DEL MOVIL, APARECE EN LA PAGINA COBRAR EL MOVIL</h4>
     <br>
     <form style=" text-align:center;" method="post" action="ver_obs.php">
         Ingrese Movil:

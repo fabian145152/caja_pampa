@@ -26,6 +26,7 @@ echo "Celular: " . $celular = $_POST['cel_titu'];
 echo "<br>";
 echo "Licencia: " . $licencia = $_POST['licencia_titu'];
 echo "<br>";
+echo "Estado: " . $estado_admin = $_POST['estado'];
 
 
 
@@ -37,6 +38,7 @@ echo "<br>";
 //$sql_movil = "UPDATE completa SET movil = '$movil' WHERE id =" . $id_movil;
 
 $sql_movil = "UPDATE completa SET movil = '$movil',
+                                    estado_admin = '$estado_admin',
                                     nombre_titu = '$nombre',
                                     apellido_titu = '$apellido',
                                     dni_titu = '$dni',

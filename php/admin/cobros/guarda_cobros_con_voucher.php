@@ -62,6 +62,7 @@ $deposito_total = $dep_ft + $dep_mercado + $vou_con_dec;
 echo "<br>";
 
 
+
 $stmt_mov_movil = $con->prepare("INSERT INTO caja_movil (movil, 
                                                                 comisiones,
                                                                 deuda_anterior,
@@ -192,23 +193,6 @@ if ($stmt_voucher->execute()) {
     exit;
 }
 
-/*
-if ($deposito_total > $deuda_total) {
-    echo "SOBRANNNNNNNNNNNNNN " . $sobra = $deposito_total - $deuda_ant;
-    echo "<br>";
-    $sql_deu = "SELECT * FROM completa WHERE movil =" . $movil;
-    $sql_deud = $con->query($sql_deu);
-    $sql_deuda = $sql_deud->fetch_assoc();
-    echo "Deuda anterior leida a lo ultimo: " . $deu_ant = $sql_deuda['deuda_anterior'];
-} else {
-    echo "FALTANNNNNNNNNNNNNN " . $falta = $deuda_ant - $deposito_total;
-    echo "<br>";
-    $sql_deu = "SELECT * FROM completa WHERE movil =" . $movil;
-    $sql_deud = $con->query($sql_deu);
-    $sql_deuda = $sql_deud->fetch_assoc();
-    echo "Sobra platade la deuda anterior leida a lo ultimo: " . $deu_ant = $sql_deuda['deuda_anterior'];
-}
-*/
 echo "<br>";
 echo "Movil: " . $movil;
 echo "<br>";
