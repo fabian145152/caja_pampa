@@ -37,7 +37,7 @@ $con->set_charset("utf8mb4");
     $sql = "UPDATE completa SET deuda_anterior = $deuda_anterior WHERE movil = $movil";
     $result = $con->query($sql);
 
-    header("Location: ../../menu.php");
+    header("Location: ../../menu_admin.php");
 
     ?>
 </body>

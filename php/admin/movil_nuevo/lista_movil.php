@@ -118,30 +118,35 @@ if ($_SESSION['logueado']) {
                                 <?php
                                 $status = $row['estado_admin'];
                                 $estado = $row['id'];
+
                                 $sql_est = "SELECT * FROM estados_unidades WHERE id = $status ";
                                 $result_est = $con->query($sql_est);
-                                $row_estado = $result_est->fetch_assoc();
-
+                                if ($row_estado = $result_est->fetch_assoc()) {
                                 ?>
-                                <td><?php echo $row['nombre_titu'] ?></td>
-                                <td><?php echo $row['apellido_titu'] ?></td>
-                                <td><?php echo $row['dni_titu'] ?></td>
-                                <td><?php echo $row['direccion_titu'] ?></td>
-                                <td><?php echo $row['cp_titu'] ?></td>
-                                <td><?php echo $row['cel_titu'] ?></td>
-                                <td><?php echo $row['licencia_titu'] ?></td>
 
-                                <td><?php echo $row_estado['nombre'] ?></td>
-                                <td><?php
-                                    if ($row['tropa'] != 50) {
-                                        echo $row['tropa'];
-                                    } else {
-                                        echo " ";
-                                    }
-                                    ?></td>
+                                    <td><?php echo $row['nombre_titu'] ?></td>
+                                    <td><?php echo $row['apellido_titu'] ?></td>
+                                    <td><?php echo $row['dni_titu'] ?></td>
+                                    <td><?php echo $row['direccion_titu'] ?></td>
+                                    <td><?php echo $row['cp_titu'] ?></td>
+                                    <td><?php echo $row['cel_titu'] ?></td>
+                                    <td><?php echo $row['licencia_titu'] ?></td>
 
-                                <td> <a class="btn btn-primary btn-sm" href="#" onclick="updateProduct(<?php echo $row['id']; ?>)">Actualizar</td>
+                                    <td><?php echo $row_estado['nombre'] ?></td>
+                                    <td><?php
+                                        if ($row['tropa'] != 50) {
+                                            echo $row['tropa'];
+                                        } else {
+                                            echo " ";
+                                        }
+                                        ?></td>
 
+                                    <td> <a class="btn btn-primary btn-sm" href="#" onclick="updateProduct(<?php echo $row['id']; ?>)">Actualizar</td>
+                                <?php
+                                } else {
+                                    echo "Error en la consulta " . $con->error;
+                                }
+                                ?>
 
                                 </td>
 

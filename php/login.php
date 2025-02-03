@@ -1,6 +1,7 @@
 <?php
 
 include_once("../funciones/funciones.php");
+
 $con = conexion();
 $con->set_charset("utf8mb4");
 
@@ -15,6 +16,7 @@ $result = $con->query($sql);
 $row = $result->fetch_assoc();
 
 $permiso = $row['permiso'];
+
 
 if ($permiso === 'super') {
 

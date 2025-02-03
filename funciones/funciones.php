@@ -40,6 +40,10 @@ function foot()
             background: #fff;
             box-shadow: 1px 1px 5px #000;
             text-align: center;
+            left: 0;
+            /* Alinear con el borde izquierdo de la pantalla */
+            right: 0;
+            /* Alinear con el borde derecho de la pantalla */
         }
     </style>
 

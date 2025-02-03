@@ -114,6 +114,17 @@ if ($_SESSION['logueado']) {
             exit;
         }
 
+        
+        $sql_historial_de_pago = "TRUNCATE TABLE historial_de_pago";
+        if ($con->query($sql_historial_de_pago) === TRUE) {
+            echo "<br>";
+            echo "La tabla historial de pago se actualizo correctamente.";
+            echo "<br>";
+        } else {
+            echo "Error al actualizar los registros: " . $con->error;
+            exit;
+        }
+
 
         echo "<br></BR>";
         echo "<strong>TODOS LOS REGISTROS ACTUALIZADOS CORRECTAMENTE, NINGUNA UNIDAD DEBE NADA</strong>";

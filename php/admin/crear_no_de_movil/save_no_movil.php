@@ -15,11 +15,11 @@ $movil = $_POST['id'];
 $x_semana = 150;
 $x_viaje = 150;
 $tropa = 50;
+$estado = 1;
 
-
-$sql_movil = "INSERT INTO completa (movil, x_semana, x_viaje, tropa) VALUES (?,?,?,?)";
+$sql_movil = "INSERT INTO completa (movil, x_semana, x_viaje, tropa, estado_admin) VALUES (?,?,?,?,?)";
 $stmt_movil = $con->prepare($sql_movil);
-$stmt_movil->bind_param("iiii", $movil, $x_semana, $x_viaje, $tropa);
+$stmt_movil->bind_param("iiiii", $movil, $x_semana, $x_viaje, $tropa, $estado);
 
 $sql_semana = "INSERT INTO semanas (movil) VALUES (?)";
 $stmt_semana = $con->prepare($sql_semana);
@@ -35,7 +35,7 @@ $stmt_caja->bind_param("i", $movil);
 $stmt_movil->execute();
 $stmt_semana->execute();
 $stmt_caja->execute();
-if ($stmt_semana->execute() === TRUE) {
+if ($stmt_movil->execute() === TRUE) {
 ?>
     <script>
         alert("NUEVO MOVIL CREADO CON EXITO")

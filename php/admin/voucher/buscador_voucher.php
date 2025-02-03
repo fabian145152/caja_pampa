@@ -70,13 +70,30 @@ $con->set_charset("utf8mb4");
     $registros = $regis->num_rows;
 
     if ($registros == 0) {
-        echo "<h2>No hay Voucher de esta unidad</h2>";
+
+    ?>
+        <h2>"Presione VAUCHIN..."</h2>
+        <a href="../vauchin/exportar_tabla.php?q=<?php echo $movil ?>" class="btn btn-danger btn-sm">VAUCHIN</a>
+    <?php
     }
 
     ?>
-    <h2 class="titule"> <?php echo $registros ?> &nbsp; &nbsp; VOUCHER DE LA UNIDAD <?php echo $movil; ?> </h2>
+
+    &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+    &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+    &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+
     <a href="inicio_voucher.php" class="btn btn-success btn-sm">Volver</a>
+
+    &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+    &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+    &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+
     <button onclick="cerrarPagina()" class="btn btn-primary btn-sm">CERRAR PAGINA</button>
+
+
+    <h2 class="titule"> <?php echo $registros ?> &nbsp; &nbsp; VOUCHER DE LA UNIDAD <?php echo $movil; ?> </h2>
+
 
     <?php
 

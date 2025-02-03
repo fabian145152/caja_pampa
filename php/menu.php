@@ -2,6 +2,11 @@
 //session_destroy();
 session_start();
 include_once "../funciones/funciones.php";
+
+
+//include_once("../php/semana/semana.php");
+
+
 $con = conexion();
 $con->set_charset("utf8mb4");
 
@@ -72,7 +77,7 @@ if ($_SESSION['logueado']) {
                                 <p>Verificar que se haga de lunes a viernes a las 00:15</p>
                             </a></li>
         -->
-                        <li><a href="#" class=" btn btn-primary btn-block btn-sm">BACKUP 
+                        <li><a href="#" class=" btn btn-primary btn-block btn-sm">BACKUP
                                 <p>Se ejecuta automaticamente en el disco donde esta Apache D:respaldos_caja</p>
                                 <p>Verificar que se haga diariamente a las 08:10 AM</p>
                             </a></li>
@@ -97,13 +102,7 @@ if ($_SESSION['logueado']) {
                 </div>
                 <div class="col-md-3">
                     <ul class="list-group">
-                        <h3>SEMANAS</h3>
-
-                        <li><a href="semana/semana.php" class=" btn btn-primary btn-block btn-sm">SEMANA los lunes solamente...
-                                <p style="margin-top:0; margin-bottom:0;"><small>Una vez, los lunes al empezar.</small></p>
-
-                            </a></li>
-                        <br>
+                       
                         <h3>VOUCHER</h3>
 
                         <li><a href="ayuda/ayuda_voucher.php" target="_blank" class="btn btn-info btn-block btn-sm">AYUDA DE CARGA DE VOUCHER</a></li>
@@ -129,20 +128,16 @@ if ($_SESSION['logueado']) {
                 <div class="col-md-3">
                     <ul class="list-group">
                         <h3>MENU CAJA </h3>
-                        
                         <li><a href="ayuda/help.php" target="_blank" class="btn btn-info btn-block btn-sm">AYUDA DE COBROS</a></li>
                         <br>
-                        
                         <li> <a href="admin/genera_deuda/genera_deuda.php" class="btn btn-primary btn-block btn-sm" target="__blank">GENERAR DEUDA ANTERIOR</a></li>
                         <br>
-
                         <li><a href="admin/cobros/inicio_cobros.php" target="_blank" class=" btn btn-primary btn-block btn-sm">COBRAR A MOVIL</a></li>
                         <br>
                         <li><a href="admin/historial/inicio_resumen.php" target="_blank" class=" btn btn-primary btn-block btn-sm">HISTORIAL DE PAGOS DEL MOVIL</a></li>
                         <br>
                         <li><a href="admin/cobros/recibos" target="_blank" class=" btn btn-primary btn-block btn-sm">RECIBOS</a></li>
                         <br>
-                      
                         <li><a href="admin/moviminetos_de_caja/inicio_movimientos.php" target="_blank" class=" btn btn-danger btn-block btn-sm">EXTRACCIONES Y RESUMEN</a></li>
                         <br>
                         <h3>SIN TERMINAR</h3>

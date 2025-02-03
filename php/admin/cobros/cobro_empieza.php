@@ -68,19 +68,7 @@
   
 
     } elseif ($deuda_ant > 0) {
-        /*
-    echo "INSTANCIA 2...";
-    echo "<br>";
-    echo "COBRA sin VOUCHER...";
-    echo "<br>";
-    echo "COBRA CON DEUDA ANTERIOR...";
-    echo "<br>";
-    echo "COBRA CON SEMANAS...";
-    echo "<br>";
-    echo "COBRA CON VENTAS...";
-    echo "<br>";
-    */
-        //exit;
+      
         $_SESSION['variable'] = $movil;
 
         $sql_tiene_voucher = "SELECT * FROM voucher_validados WHERE movil=" . $movil;

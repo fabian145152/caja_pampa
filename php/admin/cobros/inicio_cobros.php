@@ -2,6 +2,9 @@
 
 session_start();
 include_once "../../../funciones/funciones.php";
+
+include "semana.php";
+
 $con = conexion();
 $con->set_charset("utf8mb4");
 $semana_actual = date("W");
@@ -27,7 +30,7 @@ $semana_actual = date("W");
     <br><br><br><br><br>
     <form style=" text-align:center;" method="post" action="cobro_empieza.php">
         Ingrese Movil:
-        <input type="text" id="movil" name="movil" autofocus>
+        <input type="text" id="movil" name="movil" autofocus required>
         <button type="submit">Continuar</button>
     </form>
     <br><br><br>
