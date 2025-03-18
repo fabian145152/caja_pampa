@@ -5,6 +5,8 @@ include_once "../../../funciones/funciones.php";
 
 include "semana.php";
 
+//include "semana.php";
+
 $con = conexion();
 $con->set_charset("utf8mb4");
 $semana_actual = date("W");
@@ -25,8 +27,9 @@ $semana_actual = date("W");
 </head>
 
 <body>
-
+    <!--
     <h4 style="text-align: center; ">SEMANA ACTUAL: <?php echo $semana_actual . " " ?>SE ESTA COBRANDO LA <?php echo $semana_actual - 1 ?></h4>
+    -->
     <br><br><br><br><br>
     <form style=" text-align:center;" method="post" action="cobro_empieza.php">
         Ingrese Movil:

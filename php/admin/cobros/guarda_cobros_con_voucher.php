@@ -5,6 +5,7 @@ include_once "../../../funciones/funciones.php";
 $con = conexion();
 $con->set_charset("utf8mb4");
 
+
 $obs_deu = "";
 $obs_ven = "";
 $vou_con_dec = "";
@@ -20,6 +21,8 @@ echo '<pre>';
 print_r($_POST);
 echo '</pre>';
 */
+
+
 ?>
 
 <a href="inicio_cobros.php">SALIR</a>
@@ -30,24 +33,36 @@ $_SESSION['time'] . '<br>';
 
 $usuario = $_SESSION['uname'];
 
-$movil = $_POST['movil'];
+echo "Movil: " . $movil = $_POST['movil'];
+echo "<br>";
+echo "Debe sumado: " . $debe_sumado = $_POST['debe_sumado'];
+echo "<br>";
+echo "Recaudado en Voucher: " . $tot_voucher = $_POST['tot_voucher'];
+echo "<br>";
+echo "90%: " . $noventa = $_POST['comiaaa'];
+echo "<br>";
+echo "Deposito en efectivo: " . $dep_ft = $_POST['dep_ft'];
+echo "<br>";
+echo "Deposito MP: " . $dep_mercado = $_POST['dep_mp'];
+echo "<br>";
+echo "Debe de semanas anteriores, no la necesito porque esta en debe sumado: " . $debe_sem_ant = $_POST['debe_sem_ant'];
+echo "<br>";
+echo "Observaciones: " . $obs = $_POST['obs'];
+echo "<br>";
+echo "Depositarle al movil: " . $dep_movil = $_POST['depo_mov'];
+echo "<br>";
+echo "Cantidad de viajes s cobrar: " . $cant_viajes = $_POST['cantidad_de_viajes_a_cobrar'];
+echo "<br>";
+echo "Paga x Viaje: " . $paga_x_viaje = $_POST['paga_x_viaje'];
+echo "<br>";
 
 
-$vou_con_dec = $_POST['para_movil'];
-$tot_voucher = $_POST['tot_voucher'];
-$can_viajes = $_POST['can_viajes'];
-$paga_x_viaje = $_POST['paga_x_viaje'];
-$comisiones = $_POST['comi'];
-$depositarle = $_POST['depo_mov'];
-$semanas = $_POST['debe_ant'];
-$deuda_ant = $_POST['deuda_ant'];
-$deuda_historica = $deuda_ant;
-$dep_ft = $_POST['dep_ft'];
-$dep_mercado = $_POST['dep_mp'];
-$otal_ventas = $_POST['prod'];
-$ventas = $_POST['prod'];
-$deuda_total = $deuda_ant + $semanas + $ventas;
 
+
+
+
+
+exit;
 $obs = $_POST['obs'];
 
 $pesos = $_POST['pesos']; //pesos a favor
@@ -57,11 +72,35 @@ $saldo_a_favor = $_POST['saldo_a_favor']; //Saldo a favor
 echo $fecha = date("Y-m-d H:i:s");
 echo "<br>";
 
+echo $cant_viajes = $_POST['cant_viajes'];
+echo "<br>";
+echo $paga_x_viaje = $_POST['paga_x_viaje'];
+echo "<br>";
+echo "Importe de viajes: " . $importe_de_viajes = $cant_viajes * $paga_x_viaje;
+
+
 
 $deposito_total = $dep_ft + $dep_mercado + $vou_con_dec;
 echo "<br>";
 
+exit;
 
+//$viajes_semana_nueva = 0;
+
+$sql_borra_viajes_ant = "UPDATE completa SET viajes_semana_actual = ? WHERE movil=" . $movil;
+$stmt_borra_viajes_ant = $con->prepare($sql_borra_viajes_ant);
+$stmt_borra_viajes_ant->bind_param("i", $can_viajes);
+$stmt_borra_viajes_ant->execute();
+
+if ($stmt_borra_viajes_ant->affected_rows > 0) {
+    echo "Registro actualizado exitosamente.";
+} else {
+    echo "No se pudo actualizar el registro de viajes de la semana actual." . $con->error;
+    echo "<br>";
+}
+
+
+//exit;
 
 $stmt_mov_movil = $con->prepare("INSERT INTO caja_movil (movil, 
                                                                 comisiones,
@@ -119,13 +158,14 @@ $venta_4 = 0;
 $venta_5 = 0;
 
 
-$sql_comp = "UPDATE completa SET deuda_anterior = ?, 
-                                    venta_1 = ?,
-                                    venta_2 = ?,
-                                    venta_3 = ?,
-                                    venta_4 = ?,
-                                    venta_5 = ?
-                                    WHERE movil=" . $movil;
+$sql_comp = "UPDATE completa SET viajes_semana_actual = ?, 
+                               deuda_anterior = ?, 
+                               venta_1 = ?,
+                        venta_2 = ?,
+                               venta_3 = ?,
+                               venta_4 = ?,
+                               venta_5 = ?
+                    WHERE movil=" . $movil;
 
 $stmt_comp = $con->prepare($sql_comp);
 if ($stmt_comp === false) {
@@ -133,7 +173,8 @@ if ($stmt_comp === false) {
 }
 
 $stmt_comp->bind_param(
-    "iiiiii",
+    "iiiiiii",
+    $viajes_semana_actual,
     $actualiza_deuda_anterior,
     $venta_1,
     $venta_2,
@@ -214,7 +255,7 @@ echo "Deposito total: " . $deposito_total;
 echo "<br>";
 echo "Deuda Total; " . $deuda_total;
 echo "<br>";
-echo "Saldo_a_favor: " . $saldo_a_favor;
+echo "Saldo a favor: " . $saldo_a_favor;
 echo "<br>";
 
 $sobra_plata = $deposito_total - $deuda_total;
@@ -227,6 +268,8 @@ if ($sobra_plata < 0) {
 if ($sobra_plata == 0) {
     echo "Pago exacto";
 }
+
+exit;
 
 echo "<br>";
 echo "<br>";
@@ -270,10 +313,11 @@ echo "Saldo a favor_sumado: " . $total_a_favor;
 echo "<br>";
 //exit;
 
+/*
 $sql_deu_ant = "UPDATE completa SET saldo_a_favor = ? WHERE movil = ?";
 
 $stmt_deu_ant = $con->prepare($sql_deu_ant);
-$stmt_deu_ant->bind_param('ii', $total_a_favor, $movil); // 's' para string, 'i' para integer // Ejecutar la sentencia 
+$stmt_deu_ant->bind_param('ii', $total_a_favor, $movil);
 if ($stmt_deu_ant->execute()) {
     echo "Registro actualizado correctamente.";
     echo "<br>";
@@ -281,7 +325,7 @@ if ($stmt_deu_ant->execute()) {
     echo "Error al actualizar el registro: " . $stmt_deu_ant->error;
     echo "<br>";
 }
-
+*/
 
 /*
 buscar lo que la plata que sobra y guardarla en competa saldo_a_favor

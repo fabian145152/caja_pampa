@@ -57,18 +57,16 @@
 
 
 
-    
+
 
 
     if ($hay_voucher > 0) {
- 
+
         $_SESSION['variable'] = $movil;
         include_once "cobro_con_voucher.php";
-
-  
-
+        
     } elseif ($deuda_ant > 0) {
-      
+
         $_SESSION['variable'] = $movil;
 
         $sql_tiene_voucher = "SELECT * FROM voucher_validados WHERE movil=" . $movil;

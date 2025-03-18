@@ -9,14 +9,10 @@ $mo = $_GET['q'];
 $movil = $mo;
 
 
-
 $sql = "SELECT * FROM voucher_validado WHERE movil = '$movil'";
 $datos = $con->query($sql);
 
-
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,7 +20,7 @@ $datos = $con->query($sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VOUCHIN</title>
-    <link rel="stylesheet" href="css/detalles.css">
+    <link rel="stylesheet" href="../../../css/detalles.css">
 
 </head>
 
@@ -37,9 +33,9 @@ $datos = $con->query($sql);
     <div>
 
 
-        <img src="imagenes/logo_pampa.png" alt="logo_pampa">
+        <img src="../../../imagenes/logo_pampa.png" alt="logo_pampa">
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <img src="imagenes/logo_porte.jpg" width="8%" alt="logo_porte">
+        <img src="../../../imagenes/logo_porte.jpg" width="8%" alt="logo_porte">
         <?php
         echo "<br>";
         //echo "Semana: " . $semana = date("W");

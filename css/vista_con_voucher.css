@@ -12,7 +12,7 @@ body {
     flex-wrap: wrap;
 }
 
-#contenedor>div {
+#contenedor {
     width: 50%;
 }
 

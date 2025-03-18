@@ -21,7 +21,7 @@ if ($_SESSION['logueado']) {
             exit;
         }
 
-        $sql_semanas = "UPDATE semanas SET total = 0";
+        $sql_semanas = "UPDATE semanas SET total = 0, fecha = '0000-00-00'";
 
         if ($con->query($sql_semanas) === TRUE) {
             echo "<br>";

@@ -131,6 +131,7 @@ if ($reg_remi > 0) {
             <th>Nom Pasajero</th>
             <th>Movil</th>
             <th>CC</th>
+            <th>Fecha</th>
             <th>Reloj</th>
             <th>Peaje</th>
             <th>Equipaje</th>
@@ -155,6 +156,7 @@ if ($reg_remi > 0) {
                     <td><?php echo $d['nom_pasaj']; ?></td>
                     <td><?php echo $d['movil']; ?></td>
                     <td><?php echo $d['cc']; ?></td>
+                    <td><?php echo $d['completado']; ?></td>
                     <td><?php echo $d['reloj']; ?></td>
                     <td><?php echo $d['peaje']; ?></td>
                     <td><?php echo $d['equipaje']; ?></td>

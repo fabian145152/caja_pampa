@@ -71,12 +71,12 @@ if ($_SESSION['logueado']) {
                         <li><a href="ayuda/help.php" target="_blank" class="btn btn-primary btn-block btn-sm">AYUDA</a></li>
 
                         <h3>BACKUP</h3>
-                        <!--
+
                         <li><a href="../Backup_DDBB/back.php" class=" btn btn-primary btn-block btn-sm">BACKUP desaparecio..
                                 <p>Este boton se ejecuta automatico en los otros menues tarea programada en el sercidor</p>
                                 <p>Verificar que se haga de lunes a viernes a las 00:15</p>
                             </a></li>
-        -->
+                        <br>
                         <li><a href="#" class=" btn btn-primary btn-block btn-sm">BACKUP
                                 <p>Se ejecuta automaticamente en el disco donde esta Apache D:respaldos_caja</p>
                                 <p>Verificar que se haga diariamente a las 08:10 AM</p>
@@ -100,9 +100,21 @@ if ($_SESSION['logueado']) {
 
                     </ul>
                 </div>
+
+
                 <div class="col-md-3">
                     <ul class="list-group">
-                       
+
+                        <h3>SEMANAS</h3>
+                        <li><a href="#" class=" btn btn-primary btn-block btn-sm">SEMANA los lunes solamente...
+                        <!-- <li><a href="actualiza_semana/semana.php" class=" btn btn-primary btn-block btn-sm">SEMANA los lunes solamente... -->
+                                <p style="margin-top:0; margin-bottom:0;"><small>Una vez, los lunes al empezar. se ejecuta cuando entra por primera vez a cobrar a moviles</small>
+                            este boton no hace nada, verificar el lunes si cobra 1 semana a todos los moviles</p>
+                            </a></li>
+                        <br>
+
+
+
                         <h3>VOUCHER</h3>
 
                         <li><a href="ayuda/ayuda_voucher.php" target="_blank" class="btn btn-info btn-block btn-sm">AYUDA DE CARGA DE VOUCHER</a></li>
@@ -175,7 +187,12 @@ if ($_SESSION['logueado']) {
                         <br><br>
                         <h3>INICIALIZAR PROGRAMA</h3>
 
-                        <button onclick="confirmarAccion()">INICIALIZAR DEUDAS</button>
+                        <button onclick="confirmarAccion()">INICIALIZAR DEUDAS
+                            <p>Este boton pone todos los importes en 0</p>
+                            <p>No borra ninguna unidad pero ninguna debe nada</p>
+                            <p>Se borran las listas de caja y extracciones</p>
+                            <p>No se modifica nada de los moviles, ni productos en venta</p>
+                        </button>
                         </li>
 
 

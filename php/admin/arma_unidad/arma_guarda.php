@@ -127,6 +127,11 @@ session_start();
                                 <br>
                                 <input type="submit" class="btn btn-primary" value="GUARDAR DATOS">
                             </div>
+                            <div class="text-center">
+                                <br>
+                                <a href="inicio_arma.php" class="btn btn-primary">VOLVER</a>
+
+                            </div>
 
                         </div>
                     </form>
