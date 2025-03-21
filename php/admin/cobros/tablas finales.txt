@@ -1,0 +1,11 @@
+Tabla 
+caja movil
+
+id
+movil
+usuario
+fecha
+dep_ft
+dep_mp
+depositarle
+

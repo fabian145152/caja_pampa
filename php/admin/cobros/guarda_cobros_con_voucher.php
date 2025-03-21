@@ -4,7 +4,7 @@ include_once "../../../funciones/funciones.php";
 
 $con = conexion();
 $con->set_charset("utf8mb4");
-
+$movil = $_POST['movil'];
 
 $obs_deu = "";
 $obs_ven = "";
@@ -15,12 +15,35 @@ $obs_sem = "";
 $sobra_plata = 0;
 $pesos = 0;
 
-## MUESTRA TODOS LOS POST QUE LLEGAN
-/*
-echo '<pre>';
-print_r($_POST);
-echo '</pre>';
-*/
+//---------------------------------------------------------------
+// Consulta de deuda anterior y resto de lo que pago de mas
+$sql_com = "SELECT * FROM completa WHERE movil = " . $movil;
+$res_com = $con->query($sql_com);
+$row_com = $res_com->fetch_assoc();
+echo $deuda_historica = $row_com['deuda_anterior'];
+echo "<br>";
+echo $resto = $row_com['saldo_a_favor'];
+echo "<br>";
+//-------------------------------------------------------------
+
+//exit;
+
+
+$saldo_a_favor = 0;
+
+$Sql_2 = "UPDATE completa SET saldo_a_favor = ? WHERE 
+                                    movil = '$movil'";
+$stmt_2 = $con->prepare($Sql_2);
+$stmt_2->bind_param('d', $saldo_a_favor);
+if ($stmt_2->execute()) {
+    echo "Saldo a favor actualizado correctamente.";
+    echo "<br>";
+} else {
+    echo "Error al actualizar el registro de saldo a favor: " . $stmt_2->error;
+    echo "<br>";
+}
+
+
 
 
 ?>
@@ -33,39 +56,91 @@ $_SESSION['time'] . '<br>';
 
 $usuario = $_SESSION['uname'];
 
-echo "Movil: " . $movil = $_POST['movil'];
+echo "Movil: " . $movil;
+echo "<br>";
+echo $fecha = date("Y-m-d H:i:s");
 echo "<br>";
 echo "Debe sumado: " . $debe_sumado = $_POST['debe_sumado'];
+echo "<br>";
+echo "Deposito en efectivo: " . $dep_ft = $_POST['dep_ft'];
+echo "<br>";
+echo "Deposito MP: " . $dep_mp = $_POST['dep_mp'];
+echo "<br>";
+echo "Observaciones: " . $obs = $_POST['obs'];
+echo "<br>";
+echo "Depositarle: " . $depositarle = $_POST['resultadoResta'];
+echo "<br>";
+echo "Saldo a Favor: " . $saldo_a_favor = $dep_ft + $dep_mp - $debe_sumado + $resto; //Saldo a favor
+echo "<br>";
+echo "Deuda anterior: " . $deuda_historica;
+echo "<br>";
+echo "Resto que pago de mas la semana anterior: " . $resto;
+
+exit;
+
+
+$Sql_3 = "UPDATE completa SET saldo_a_favor = ? WHERE 
+                                    movil = '$movil'";
+$stmt_3 = $con->prepare($Sql_3);
+$stmt_3->bind_param('d', $saldo_a_favor);
+if ($stmt_3->execute()) {
+    echo "Registro actualizado correctamente.";
+    echo "<br>";
+} else {
+    echo "Error al actualizar el registro de saldo a favor: " . $stmt_2->error;
+    echo "<br>";
+}
+
+
+
+
+
+echo "<br>";
+
+
+$sql_1 = "INSERT INTO caja_final (movil, 
+                                usuario, 
+                                fecha, 
+                                dep_ft, 
+                                dep_mp, 
+                                depositarle, 
+                                observaciones) VALUES (?,?,?,?,?,?,?)";
+$stmt_1 = $con->prepare($sql_1);
+//$stmt_1->bind_param('issddds', $movil, $usuario, $fecha, $dep_ft, $dep_mp, $depositarle, $obs);
+
+if ($stmt_1->execute() == TRUE) {
+    echo "Nuevo registro creado exitosamente.";
+    echo "<br>";
+} else {
+    echo "Error en la consulta: " . $stmt_1->error;
+}
+
+exit;
+
+
+echo "<br>";
 echo "<br>";
 echo "Recaudado en Voucher: " . $tot_voucher = $_POST['tot_voucher'];
 echo "<br>";
 echo "90%: " . $noventa = $_POST['comiaaa'];
 echo "<br>";
-echo "Deposito en efectivo: " . $dep_ft = $_POST['dep_ft'];
 echo "<br>";
-echo "Deposito MP: " . $dep_mercado = $_POST['dep_mp'];
 echo "<br>";
 echo "Debe de semanas anteriores, no la necesito porque esta en debe sumado: " . $debe_sem_ant = $_POST['debe_sem_ant'];
 echo "<br>";
-echo "Observaciones: " . $obs = $_POST['obs'];
-echo "<br>";
 echo "Depositarle al movil: " . $dep_movil = $_POST['depo_mov'];
+echo "<br>";
+echo "Debe el movil: " . $debe_el_movil = $_POST['paga_mov'];
 echo "<br>";
 echo "Cantidad de viajes s cobrar: " . $cant_viajes = $_POST['cantidad_de_viajes_a_cobrar'];
 echo "<br>";
 echo "Paga x Viaje: " . $paga_x_viaje = $_POST['paga_x_viaje'];
 echo "<br>";
+echo "<br>";
+echo "<br>";
+echo "Plata a cuenta de la proxima semana: " . $pesos = $_POST['pesos']; //pesos a favor
+echo "<br>";
 
-
-
-
-
-
-
-exit;
-$obs = $_POST['obs'];
-
-$pesos = $_POST['pesos']; //pesos a favor
 
 $saldo_a_favor = $_POST['saldo_a_favor']; //Saldo a favor
 
@@ -159,12 +234,12 @@ $venta_5 = 0;
 
 
 $sql_comp = "UPDATE completa SET viajes_semana_actual = ?, 
-                               deuda_anterior = ?, 
-                               venta_1 = ?,
-                        venta_2 = ?,
-                               venta_3 = ?,
-                               venta_4 = ?,
-                               venta_5 = ?
+                                deuda_anterior = ?, 
+                                venta_1 = ?,
+                                venta_2 = ?,
+                                venta_3 = ?,
+                                venta_4 = ?,
+                                venta_5 = ?
                     WHERE movil=" . $movil;
 
 $stmt_comp = $con->prepare($sql_comp);

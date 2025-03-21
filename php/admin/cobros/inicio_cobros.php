@@ -31,7 +31,7 @@ $semana_actual = date("W");
     <h4 style="text-align: center; ">SEMANA ACTUAL: <?php echo $semana_actual . " " ?>SE ESTA COBRANDO LA <?php echo $semana_actual - 1 ?></h4>
     -->
     <br><br><br><br><br>
-    <form style=" text-align:center;" method="post" action="cobro_empieza.php">
+    <form style=" text-align:center;" method="POST" action="cobro_empieza.php">
         Ingrese Movil:
         <input type="text" id="movil" name="movil" autofocus required>
         <button type="submit">Continuar</button>
