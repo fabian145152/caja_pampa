@@ -40,7 +40,7 @@ Es la calculadora de cantidad de viajes a cobrar y monto a depositar
 
     <form>
         <label for="numero">Viajes a cobrar:</label>
-        <input type="text" id="numero" onblur="calcularYRestar()" required autofocus>
+        <input type="text" id="numero" name="numero" onblur="calcularYRestar()" required autofocus>
         <h6><strong>Ingrese cantidad y presione la tecla TAB</strong></h6>
         <input type="hidden" id="resultadoMultiplicacion" readonly>
 

@@ -107,9 +107,9 @@ if ($_SESSION['logueado']) {
 
                         <h3>SEMANAS</h3>
                         <li><a href="#" class=" btn btn-primary btn-block btn-sm">SEMANA los lunes solamente...
-                        <!-- <li><a href="actualiza_semana/semana.php" class=" btn btn-primary btn-block btn-sm">SEMANA los lunes solamente... -->
+                                <!-- <li><a href="actualiza_semana/semana.php" class=" btn btn-primary btn-block btn-sm">SEMANA los lunes solamente... -->
                                 <p style="margin-top:0; margin-bottom:0;"><small>Una vez, los lunes al empezar. se ejecuta cuando entra por primera vez a cobrar a moviles</small>
-                            este boton no hace nada, verificar el lunes si cobra 1 semana a todos los moviles</p>
+                                    este boton no hace nada, verificar el lunes si cobra 1 semana a todos los moviles</p>
                             </a></li>
                         <br>
 
@@ -153,7 +153,10 @@ if ($_SESSION['logueado']) {
                         <li><a href="admin/moviminetos_de_caja/inicio_movimientos.php" target="_blank" class=" btn btn-danger btn-block btn-sm">EXTRACCIONES Y RESUMEN</a></li>
                         <br>
                         <h3>SIN TERMINAR</h3>
+
                         <h3>ESTADOS </h3>
+                        <li><a href="#" target="_blank" class=" btn btn-danger btn-block btn-sm">EDICION DE DEUDAS</a></li>
+                        <br>
                         <li><a href="" target="_blank" class=" btn btn-danger btn-block btn-sm">ABOGADO</a></li>
                         <br>
                         <li><a href="admin/uni_comp/estado/al_dia.php" target="_blank" class=" btn btn-success btn-block btn-sm">AL DIA</a></li>

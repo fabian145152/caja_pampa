@@ -82,7 +82,7 @@ if ($_SESSION['logueado']) {
             echo "Error al actualizar los registros: " . $con->error;
             exit;
         }
-
+/*
         $sql_caja_movil = "TRUNCATE TABLE caja_movil";
         if ($con->query($sql_caja_movil) === TRUE) {
             echo "<br>";
@@ -92,7 +92,7 @@ if ($_SESSION['logueado']) {
             echo "Error al actualizar los registros: " . $con->error;
             exit;
         }
-
+*/
         $sql_caja_final = "TRUNCATE TABLE caja_final";
         if ($con->query($sql_caja_final) === TRUE) {
             echo "<br>";

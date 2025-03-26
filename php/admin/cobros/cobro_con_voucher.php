@@ -270,6 +270,21 @@ if ($can_viajes > 0) {
         ?>
             </tbody>
     </table>
+    <style>
+        .put {
+            width: 50px;
+            /* Ajusta el ancho del campo */
+            text-align: center;
+            /* Centra el texto dentro */
+            /* padding: 1px;
+                                    /* Agrega un poco de espacio interior */
+            border: 2px solid #000;
+            /* Borde opcional */
+            border-radius: 5px;
+            /* Bordes redondeados opcionales */
+        }
+    </style>
+
     <?php
 
     $viajes_de_la_semana_anterior = $can_viajes - $viajes_de_esta_semana;
@@ -281,6 +296,7 @@ if ($can_viajes > 0) {
                 Viajes de la semana anterior: <?php echo "<strong>" . $viajes_de_la_semana_anterior . "</strong>" ?>
             </div>
             <div class="recuadro">
+
                 Viajes que se cobran la semana que viene: <?php echo "<strong>" .  $viajes_de_esta_semana . "</strong>" ?>
             </div>
             <div class="recuadro">
@@ -342,8 +358,9 @@ if ($can_viajes > 0) {
 
                     ?>
                     <li>
-                        <label class="mi-label">Debe <?php echo $cant_sem - 1 ?> semanas,
+                        <label class="mi-label">Debe <?php echo $cant_sem - 1 ?> semanas.
                         </label>
+                        <input type="hidden" id="cant_sem" name="cant_sem" value="<?php echo $cant_sem - 1 ?>">
                         <input type="text" id="debe_sem_ant" name="debe_sem_ant" value="<?php echo $cobra_semana_anterior ?>" readonly>
                     </li>
                     <li>
@@ -371,20 +388,38 @@ if ($can_viajes > 0) {
                         $cobra = $deu_ant + $cobra_semana_anterior + $total_ventas - $saldo_a_favor;
                     ?>
                         <label class="mi-label">Deuda anterior:</label>
-                        <input type="text" id="depo_mov" name="depo_mov" value="<?php echo $deu_ant  ?>" style="background-color: red; color: yellow;" readonly>
+                        <input type="text" id="deuda_ant" name="deuda_ant" value="<?php echo $deu_ant  ?>" style="background-color: red; color: yellow;" readonly>
                         <label class="mi-label">Deuda:</label>
                         <input type="text" id="depo_mov" name="depo_mov" value="<?php echo $cobra  ?>" style="background-color: red; color: yellow;" readonly>
                         <ul style="border: 2px solid black; padding: 5px; border-radius: 10px; list-style-type: none;">
                         <?php
                     }
+                    $total_de_viajes_que_se_cobran = $viajes_de_la_semana_anterior + $viajes_de_esta_semana;
                     if ($viajes_de_la_semana_anterior > 0) {
                         ?>
-                            <li>Se le deberian cobran <?php echo "<strong>" . $viajes_de_la_semana_anterior . " " . "</strong>" ?>viajes de la semana anterior</li>
+
+                            <li>
+                                <label for="viajes_nuevos">Se le deberian cobrar de la semana anterior: </label>
+                                <input class="put" type="text" id="viajes_nuevos" name="viajes_nuevos" value="<?php echo $viajes_de_la_semana_anterior ?>" readonly> Viajes.
+                            </li>
+                            <li>
+                                <input type="hidden" id="viajes_de_esta_semana" name="viajes_de_esta_semana" value="<?php echo
+                                                                                                                    $viajes_de_esta_semana ?>">
+                            </li>
+                            <li>
+                                <input type="hidden" id="tot_via" name="tot_via" value="<?php echo $total_de_viajes_que_se_cobran ?>">
+                            </li>
+
+
                         <?php
                     }
                     if ($viajes_que_no_se_cobraron != 0) {
                         ?>
-                            <li class="resaltado">Cobrarle <?php echo "<strong>" . $viajes_que_no_se_cobraron . " " . "</strong>" ?>viajes de la semana anterior que quedó pendiente</li>
+                            <li class="resaltado">
+                                <label for="viajes_anteriores">Cobrarle</label>
+                                <input class="put" type="text" id="viajes_anteriores" name="viajes_anteriores" value="<?php echo $viajes_que_no_se_cobraron ?>" readonly> no cobrados anteriormente.
+                            </li>
+
                         <?php
                     }
                         ?>
