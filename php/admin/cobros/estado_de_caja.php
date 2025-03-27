@@ -6,19 +6,8 @@ $con = conexion();
 $con->set_charset("utf8mb4");
 
 
-$leo_caj = "SELECT * FROM caja_final WHERE movil = 0 ORDER BY id DESC LIMIT 1";
+$leo_caj = "SELECT * FROM caja_final WHERE movil = 0 ORDER BY id DESC ";
 $res_le = $con->query($leo_caj);
-
-if ($res_le->num_rows > 0) {
-    $registro = $res_le->fetch_assoc();
-    $ftd_caja = $registro['dep_ft'];
-    $mpd_caja = $registro['dep_mp'];
-
-    echo "<br>";
-} else {
-    echo "Error en la lectura"  . $con->error;
-    exit;
-}
 
 
 
@@ -30,7 +19,13 @@ if ($res_le->num_rows > 0) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página con Columnas y Filas</title>
+    <title>Resumen de caja</title>
+    <?php head() ?>
+    <script>
+        function cerrarPagina() {
+            window.close();
+        }
+    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -74,37 +69,41 @@ if ($res_le->num_rows > 0) {
 </head>
 
 <body>
-    <!-- Sección de títulos con 6 columnas -->
-    <div class="header-columns">
-        <div>DEBER FT</div>
-        <div>HABER FT</div>
-        <div>SALDO FT</div>
-        <div>DEBER MP</div>
-        <div>HABER MP</div>
-        <div>SALDO MP</div>
-    </div>
+    <div>
+        <h1>Resumen de caja</h1>
+        <button onclick="cerrarPagina()" class="btn btn-primary btn-sm">CERRAR PAGINA</button>
 
-    <!-- Sección de filas separadas para datos -->
-    <div class="data-rows">
-        <div class="row">
-            <input type="text" value="<?php echo $ftd_caja ?>">
-            <input type="text" placeholder="Dato 2">
-            <input type="text" placeholder="Dato 3">
-            <input type="text" placeholder="Dato 4">
-            <input type="text" placeholder="Dato 5">
-            <input type="text" placeholder="Dato 6">
-        </div>
-        <div class="data-rows">
-            <div class="row">
-                <input type="text" placeholder="Dato 1">
-                <input type="text" placeholder="Dato 2">
-                <input type="text" placeholder="Dato 3">
-                <input type="text" placeholder="Dato 4">
-                <input type="text" placeholder="Dato 5">
-                <input type="text" placeholder="Dato 6">
-            </div>
-        </div>
-
+        <table style="border-collapse: collapse; width: 100%;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid black; padding: 8px;">DEBER FT</th>
+                    <th style="border: 1px solid black; padding: 8px;">HABER FT</th>
+                    <th style="border: 1px solid black; padding: 8px;">SALDO FT</th>
+                    <th style="border: 1px solid black; padding: 8px;">DEBER MP</th>
+                    <th style="border: 1px solid black; padding: 8px;">HABER MP</th>
+                    <th style="border: 1px solid black; padding: 8px;">SALDO MP</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $linea = 100;
+                if ($res_le->num_rows > 0) {
+                    while ($row = $res_le->fetch_assoc()) {
+                        echo '<tr>';
+                        echo '<td style="border: 1px solid black; padding: 8px;">' . $linea . '</td>';
+                        echo '<td style="border: 1px solid black; padding: 8px;">' . $row['dep_ft'] . '</td>';
+                        echo '<td style="border: 1px solid black; padding: 8px;">' . $linea . '</td>';
+                        echo '<td style="border: 1px solid black; padding: 8px;">' . $row['dep_mp'] . '</td>';
+                        echo '<td style="border: 1px solid black; padding: 8px;">' . $linea . '</td>';
+                        echo '<td style="border: 1px solid black; padding: 8px;">' . $linea . '</td>';
+                        echo '</tr>';
+                    }
+                } else {
+                    echo '<tr><td colspan="6" style="border: 1px solid black; text-align: center; padding: 8px;">No se encontraron registros: ' . $con->error . '</td></tr>';
+                }
+                ?>
+            </tbody>
+        </table>
     </div>
 </body>
 
