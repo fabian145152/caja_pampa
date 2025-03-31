@@ -206,23 +206,25 @@ if ($can_viajes > 0) {
     <table class="table table-bordered table-sm table-hover flex" style="zoom:80%">
         <thead>
             <tr>
-                <th class="col-sm-2">ID</th>
+                <!--<th class="col-sm-2">ID</th>-->
                 <th class="col-sm-2">CC</th>
                 <th class="col-sm-2">Fecha</th>
-                <th class="col-sm-2">Semana</th>
+                <!--<th class="col-sm-2">Semana</th> -->
                 <th class="col-sm-2">Numero</th>
+                <th class="col-sm-2">Importe</th>
             </tr>
         </thead>
         <?php
     }
     $viajes_de_esta_semana = 0;
     while ($row_voucher = $sql_voucher->fetch_assoc()) {
+        $id = $row_voucher['id'];
         if ($row_voucher['cc'] >= 0) {
         ?>
 
             <tbody>
                 <tr>
-                    <th class="col-sm-2"><?php echo $id = $row_voucher['id'] ?></th>
+                    <!-- <th class="col-sm-2"><?php echo $id ?></th> -->
                     <th class="col-sm-2"><?php echo $cc = $row_voucher['cc'] ?></th>
                     <?php
                     $fecha_original = $row_voucher['fecha'];
@@ -241,12 +243,10 @@ if ($can_viajes > 0) {
                     $se_ac = date('W');   //numero de semana actual
 
                     if ($numeroSemana != $se_ac) {
-                    ?>
-                        <th class="col-sm-2"><?php echo $numeroSemana ?></th>
-                    <?php
+                        $numeroSemana;
                     } else {
                     ?>
-                        <th class="col-sm-2">Viaje de la semana que viene</th>
+                        <!--   <th class="col-sm-2">Viaje de la semana que viene</th>  -->
                     <?php
                         $viajes_de_esta_semana++;
                     }
@@ -262,7 +262,7 @@ if ($can_viajes > 0) {
                     $total += $tot_voucher;
 
                     ?>
-                    <th class="col-sm-12"><?php $total ?></th>
+                    <th class="col-sm-12"><?php echo $tot_voucher ?></th>
                 </tr>
         <?php
         }
@@ -292,6 +292,7 @@ if ($can_viajes > 0) {
     if ($viajes_de_la_semana_anterior > 0) {
     ?>
         <div class="contenedor">
+            <!--
             <div class="recuadro">
                 Viajes de la semana anterior: <?php echo "<strong>" . $viajes_de_la_semana_anterior . "</strong>" ?>
             </div>
@@ -299,8 +300,15 @@ if ($can_viajes > 0) {
 
                 Viajes que se cobran la semana que viene: <?php echo "<strong>" .  $viajes_de_esta_semana . "</strong>" ?>
             </div>
+    -->
             <div class="recuadro">
                 Total de voucher: <?php echo "<strong>" .  "$" . $total . "-" . "</strong>" ?>
+            </div>
+            <div class="recuadro">
+                <?php
+                $total_descu = $total * .9;
+                ?>
+                Descuentos: <?php echo "<strong>" .  "$" . $total_descu . "-" . "</strong>" ?>
             </div>
         </div>
     <?php
@@ -347,7 +355,7 @@ if ($can_viajes > 0) {
             <div class="form-group">
                 <ul style="border: 2px solid black; padding: 5px; border-radius: 10px; list-style-type: none;">
                     <h5>-------------------------------------------------------------------------</h5>
-                    <h2>Estado de cuenta</h2>
+                    <h2>ESTADO DE CUENTA</h2>
 
                     <?php
                     $abo_sem = $row_semana['importe'];
@@ -395,12 +403,13 @@ if ($can_viajes > 0) {
                         <?php
                     }
                     $total_de_viajes_que_se_cobran = $viajes_de_la_semana_anterior + $viajes_de_esta_semana;
+
                     if ($viajes_de_la_semana_anterior > 0) {
                         ?>
 
                             <li>
-                                <label for="viajes_nuevos">Se le deberian cobrar de la semana anterior: </label>
-                                <input class="put" type="text" id="viajes_nuevos" name="viajes_nuevos" value="<?php echo $viajes_de_la_semana_anterior ?>" readonly> Viajes.
+                                <label for="viajes_nuevos">Deposito: </label>
+                                <input class="put" type="text" id="viajes_nuevos" name="viajes_nuevos" value="<?php echo $total_de_viajes_que_se_cobran ?>" readonly> Voucher.
                             </li>
                             <li>
                                 <input type="hidden" id="viajes_de_esta_semana" name="viajes_de_esta_semana" value="<?php echo
@@ -430,23 +439,23 @@ if ($can_viajes > 0) {
                 <ul style="border: 2px solid black; padding: 5px; border-radius: 10px; list-style-type: none;">
                     <input type="hidden" id="can_viajes" name="can_viajes" value="<?php echo $viajes_de_esta_semana ?>">
                     <li>
-                        <label class="mi-label">Debe sumado</label>
-                        <input type="text" id="debe_sumado" name="debe_sumado" value="<?php echo $debe_deuda  ?>"
+                        <!-- <label class="mi-label">Debe sumado</label> -->
+                        <input type="hidden" id="debe_sumado" name="debe_sumado" value="<?php echo $debe_deuda  ?>"
                             readonly>
                     </li>
                     <li>
-                        <label class="mi-label">RECAUDADO EN VOUCHER </label>
-                        <input type="text" id="tot_voucher" name="tot_voucher" value="<?php echo $total ?>"
+                        <!-- <label class="mi-label">RECAUDADO EN VOUCHER </label> -->
+                        <input type="hidden" id="tot_voucher" name="tot_voucher" value="<?php echo $total ?>"
                             readonly>
                     </li>
                     <li>
-                        <label class="mi-label">10% descuento de vouchers</label>
-                        <input type="text" id="comi" name="comi" value="<?php echo $diez = $total * .1 ?>"
+                        <!-- <label class="mi-label">10% descuento de vouchers</label> -->
+                        <input type="hidden" id="comi" name="comi" value="<?php echo $diez = $total * .1 ?>"
                             readonly>
                     </li>
                     <li>
-                        <label class="mi-label">90%</label>
-                        <input type="text" id="comiaaa" name="comiaaa" value="<?php echo $noventa = $total * .9;
+                        <!-- <label class="mi-label">90%</label> -->
+                        <input type="hidden" id="comiaaa" name="comiaaa" value="<?php echo $noventa = $total * .9;
                                                                                 $nov = $noventa + $deu_ant ?>"
                             readonly>
                     </li>

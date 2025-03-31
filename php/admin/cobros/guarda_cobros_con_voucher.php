@@ -42,34 +42,48 @@ $debe_semanas = $deuda_de_sem - $paga_x_semana;
 <a href="inicio_cobros.php">SALIR</a>
 <br>
 <?php
-echo "EVENTO REALIZADO POR: "  . $_SESSION['uname'] . '<br>';
+$_SESSION['uname'];
 $_SESSION['time'] . '<br>';
 
 echo "Usuario: " . $usuario = $_SESSION['uname'];
-
+echo "<br>";
 echo "Movil: " . $movil;
 echo "<br>";
 echo $fecha = date("Y-m-d H:i:s");
 echo "<br>";
 echo "Debe sumado: " . $debe_sumado = $_POST['debe_sumado'];
 echo "<br>";
-echo "Deuda anterior: " . $deuda_anterior;
+echo "Depositarle al movil: " . $noventa = $_POST['comiaaa'];
 echo "<br>";
+echo "Descuentos de voucher: " . $comision = $_POST['comi'];
 echo "<br>";
-echo "<br>";
-echo "<br>";
-
 echo "Deposito en efectivo: " . $dep_ft = $_POST['dep_ft'];
 echo "<br>";
 echo "Deposito MP: " . $dep_mp = $_POST['dep_mp'];
 echo "<br>";
+echo "Deposito en plata: " . $dep_plata = $dep_ft + $dep_mp;
+echo "<br>";
+echo $paga_movil = $_POST['paga_movil'];
 
 
+echo "<br>";
+echo "<br>";
+echo "<br>";
+
+echo "<br>";
+echo "<br>";
+echo "<br>";
+
+
+echo "Deuda anterior: " . $deuda_anterior;
 echo "Deposito en voucher: " . $dep_voucher = $_POST['tot_voucher'];
 echo "<br>";
-echo "10% de comision: " . $comision = $_POST['comi'];
 echo "<br>";
-echo "90% para el movil: " . $noventa = $_POST['comiaaa'];
+echo "<br>";
+
+
+echo "<br>";
+echo "<br>";
 echo "<br>";
 echo "Depositarle: " . $depositarle = $_POST['resultadoResta'];
 echo "<br>";
