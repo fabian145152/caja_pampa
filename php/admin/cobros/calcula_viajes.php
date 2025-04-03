@@ -46,6 +46,7 @@ Es la calculadora de cantidad de viajes a cobrar y monto a depositar
 
         <label for="resultadoResta">Total a depositarle:</label>
         <input type="text" id="resultadoResta" name="resultadoResta" readonly style="background-color: yellow;">
+        
     </form>
 </body>
 

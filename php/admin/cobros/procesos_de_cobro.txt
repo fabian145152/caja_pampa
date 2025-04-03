@@ -2,11 +2,18 @@
 COBRO CON VOUCHER
 COBRARLE AL MOVIL Y SOBRA DINERO
 
- leer viajes de la semana anterior
- sumarle los viajes de esta semana
- calcular los voucher
- restarle el 10% de los voucher y guardarlo en la caja.
- al 90% le resto los viajes, las semanas, deuda anterior.
+ actualizar los viajes de la semana anterior     ok
+
+ Guardado en caja final:
+                      MOVIL
+                      fecha
+                      depositarle
+                      usuario
+                      10%
+                      total de voucher
+                                       
+ 
+  al 90% le resto los viajes, las semanas, deuda anterior.
   
   restarle saldo a favor.
   borrar deuda anterior.

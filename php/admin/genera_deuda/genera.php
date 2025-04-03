@@ -11,6 +11,11 @@ $con->set_charset("utf8mb4");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <?php head() ?>
+    <script>
+        function cerrarPagina() {
+            window.close();
+        }
+    </script>
 </head>
 
 <body>
@@ -70,15 +75,11 @@ $con->set_charset("utf8mb4");
         <br><br>
         <input type="submit" value="GUARDAR" class=" btn btn-primary">
     </form>
-<br>
+    <br>
 
     <button onclick="cerrarPagina()" class="btn btn-primary btn-sm">CERRAR PAGINA</button>
 
-    <script>
-        function cerrarPagina() {
-            window.close();
-        }
-    </script>
+
     <?php foot() ?>
 </body>
 

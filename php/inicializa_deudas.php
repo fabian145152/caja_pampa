@@ -10,14 +10,14 @@ if ($_SESSION['logueado']) {
     // Si se envía el formulario
     if (isset($_POST['actualizar'])) {
         // Consulta para actualizar todos los registros
-        $sql_completa = "UPDATE completa SET deuda_anterior = 0, saldo_a_favor = 0, venta_1 = 0, venta_2 = 0, venta_3 = 0, venta_4 = 0, venta_5 = 0, viajes_semana_actual = 0";
+        $sql_completa = "UPDATE completa SET deuda_anterior = 0, saldo_a_favor_ft = 0, venta_1 = 0, venta_2 = 0, venta_3 = 0, venta_4 = 0, venta_5 = 0, viajes_semana_actual = 0";
 
         if ($con->query($sql_completa) === TRUE) {
             echo "<br>";
             echo "Los tabla completa se actualizo correctamente.";
             echo "<br>";
         } else {
-            echo "Error al actualizar los registros: " . $con->error;
+            echo "Error al actualizar la tabla completa: " . $con->error;
             exit;
         }
 
@@ -28,7 +28,7 @@ if ($_SESSION['logueado']) {
             echo "Los tabla semanas se actualizo correctamente.";
             echo "<br>";
         } else {
-            echo "Error al actualizar los registros: " . $con->error;
+            echo "Error al actualizar la tabla semana: " . $con->error;
             exit;
         }
 

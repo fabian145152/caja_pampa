@@ -15,135 +15,106 @@ $obs_sem = "";
 $sobra_plata = 0;
 $pesos = 0;
 
-//---------------------------------------------------------------
-// Consulta de deuda anterior y resto de lo que pago de mas
+// Cuenta la cantidad de viajes de la semana antyerior
+// Lee saldo a favor de la semana anterior
+
 $sql_com = "SELECT * FROM completa WHERE movil = " . $movil;
 $res_com = $con->query($sql_com);
 $row_com = $res_com->fetch_assoc();
-$deuda_anterior = $row_com['deuda_anterior'];
 $viaj_sem_ant = $row_com['viajes_semana_actual'];
+$saldo_fav_sem_ant = $row_com['saldo_a_favor_ft'];
+
+
+if (!$res_com) {
+    die("Error en la consulta viajes de la semana anterior : " . $con->error);
+    exit;
+}
 
 $sql_sem = "SELECT * FROM semanas WHERE movil = " . $movil;
-$res_sema = $con->query($sql_sem);
-$row_sem = $res_sema->fetch_assoc();
+$res_sem = $con->query($sql_sem);
+$row_sem = $res_sem->fetch_assoc();
 $paga_x_semana = $row_sem['x_semana'];
+$tot_semanas = $row_sem['total'];
 
-$deuda_de_sem = $row_sem['total'];
-echo "<br>";
-$debe_semanas = $deuda_de_sem - $paga_x_semana;
-
-
-//exit;
-
-
+if (!$res_sem) {
+    die("Error en la consulta de paga x semana : " . $con->error);
+    exit;
+}
 
 ?>
+
 
 <a href="inicio_cobros.php">SALIR</a>
 <br>
 <?php
+echo "<br>";
 $_SESSION['uname'];
 $_SESSION['time'] . '<br>';
-
+echo "<br>";
 echo "Usuario: " . $usuario = $_SESSION['uname'];
 echo "<br>";
 echo "Movil: " . $movil;
 echo "<br>";
 echo $fecha = date("Y-m-d H:i:s");
 echo "<br>";
+
+echo "Paga x semana: " . $paga_x_semana;
+echo "<br>";
+
+
 echo "Debe sumado: " . $debe_sumado = $_POST['debe_sumado'];
 echo "<br>";
 echo "Depositarle al movil: " . $noventa = $_POST['comiaaa'];
 echo "<br>";
 echo "Descuentos de voucher: " . $comision = $_POST['comi'];
 echo "<br>";
+echo "Total depositado en voucher: " . $total_vou = $_POST['to_vou'];
+echo "<br>";
 echo "Deposito en efectivo: " . $dep_ft = $_POST['dep_ft'];
 echo "<br>";
 echo "Deposito MP: " . $dep_mp = $_POST['dep_mp'];
 echo "<br>";
-echo "Deposito en plata: " . $dep_plata = $dep_ft + $dep_mp;
+echo "Deposito total: " . $dep_plata = $dep_ft + $dep_mp;
 echo "<br>";
-echo $paga_movil = $_POST['paga_movil'];
-
-
+echo "Debe abonar: " . $debe_abonar = $_POST['paga_mov'];
 echo "<br>";
+echo "Deuda anterior leida de la ddbb: " . $deud_ant_ddbb = $row_com['deuda_anterior'];
 echo "<br>";
-echo "<br>";
-
-echo "<br>";
-echo "<br>";
+echo "su_pago; " . $su_pago = $dep_mp + $dep_ft;
 echo "<br>";
 
 
-echo "Deuda anterior: " . $deuda_anterior;
-echo "Deposito en voucher: " . $dep_voucher = $_POST['tot_voucher'];
-echo "<br>";
-echo "<br>";
-echo "<br>";
+$act_deu_ant = $deud_ant_ddbb + $paga_x_semana;
 
+$actualiza_deudas = $act_deu_ant - $debe_abonar;
 
-echo "<br>";
-echo "<br>";
-echo "<br>";
-echo "Depositarle: " . $depositarle = $_POST['resultadoResta'];
-echo "<br>";
-echo "Deuda anterior: " . $deuda_anterior;
-echo "<br>";
-echo "Debe cantidad de semanas anteriores: " . $debe_cant_sem = $_POST['cant_sem'];
-echo "<br>";
-echo "Observaciones: " . $obs = $_POST['obs'];
-echo "<br>";
-echo "Paga a cuenta:  Esta mal"; //$a_cuenta = $dep_mp + $dep_ft - $debe_sumado;
-echo "<br>";
-echo "Hasta aca con deuda anterior, con semana, con vaucher y con viajes viejos ";
-echo "<br>";
-echo "Solo deuda de semanas";
-echo "<br>";
-$viajes_de_esta_semana = $_POST['viajes_de_esta_semana'];
-$cant_via = $_POST['viajes_nuevos'];
+$act_semanas = $tot_semanas - $paga_x_semana;
 
-echo "Productos que compro: " . $productos_copmprados = $_POST['prod'];
-echo "<br>";
-echo "Total de voucher depositados: " . $voucher = $viajes_de_esta_semana + $cant_via;
-echo "<br>";
-echo "Viajes no cobrados la semana anterior: " . $viajes_viejos = $_POST['viajes_anteriores'];
-echo "<br>";
-echo "Cantidad de viajes de esta semana: " . $cant_via = $_POST['viajes_nuevos'];
-echo "<br>";
-echo "Cantidad de viajes a cobrar la semana que viene." . $viajes_de_esta_semana = $_POST['viajes_de_esta_semana'];
-echo "<br>";
-echo "Viajes que quiere pagar: " . $viajes_cobrados = $_POST['numero'];
-echo "<br>";
-echo "total de viajes que quedan para la semana que viene: " . $t_viajes_sig_sem = $voucher + $viajes_viejos - $viajes_cobrados;
-echo "<br>";
-echo "Debe sumado + deuda anterior + Productos que compro: " . $debe_en_total = $debe_sumado + $deuda_anterior + $productos_copmprados;
-echo "<br>";
-echo $debe_semanas;
-echo "<br>";
-echo "<br>";
-echo "<br>";
+echo $falto_pagar = $debe_abonar - $su_pago;
 
+//exit;
 
-/*
-****
-**** ya cuarda todos los datos del pago del movil.
-**** Actualiza la cantidad de viajes de la semana anterior.
-*** Actualizo semanas primero.
+if ($actualiza_deudas == 0) {
+    echo "Actualiza semanas: " . $act_semanas = $paga_x_semana;
 
+    $act_sem = $con->prepare("UPDATE semanas SET total = ? WHERE movil = ?");
+    $act_sem->bind_param("di", $act_semanas, $movil);
 
-*/
+    if ($act_sem->execute()) {
+        echo "Semanas adeudadas actualizadas correctamente";
+        echo "<br>";
+    } else {
+        echo "Error al actualizar la deuda de semana anterior: " . $act_semanas->error;
+        exit;
+    }
 
+    $actualiza = $actualiza_deudas; //aca esta el importe actualizado de la deuda anterior
 
+    $sql_deu_ant = $con->prepare("UPDATE completa SET deuda_anterior = ? WHERE movil = ?");
+    $sql_deu_ant->bind_param("di", $actualiza, $movil);
 
-$stmt = $con->prepare("UPDATE completa SET viajes_semana_actual = ? WHERE movil = ?");
-if ($stmt) {
-    // Vincular parámetros (valores a actualizar)
-
-    $stmt->bind_param("ii", $t_viajes_sig_sem, $movil); // "si" significa string (s) y entero (i)
-
-    // Ejecutar la consulta
-    if ($stmt->execute()) {
-        echo "cant de viajes actualizado correctamente";
+    if ($sql_deu_ant->execute()) {
+        echo "Deuda anterior actualizada correctamente";
         echo "<br>";
     } else {
         echo "Error al actualizar cantidad de viajes de la semana anterior: " . $stmt->error;
@@ -151,81 +122,43 @@ if ($stmt) {
     }
 }
 
+/*
+Hacer otro if si la qoe pago es menor a lo que debe
+*/
 
-
-$sql_mo = "INSERT INTO caja_final (movil, 
-                                    fecha,
-                                    /*debe_sumado,*/
-                                    dep_ft,
-                                    dep_mp,
-                                    cant_viajes_esta_sem,
-                                    can_viajes_no_pagados,
-                                    viajes_cobrados,
-                                    dep_voucher,
-                                    diez,
-                                    noventa,
-                                    depositarle,
-                                    deuda_ant,
-                                    semanas_ant,
-                                    paga_a_cuenta,
-                                    observaciones,
-                                    usuario
-                                    ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+echo "<br>";
+echo "si tiene deuda anterior y/o debe semanas y paga en ft con cambio exacto esta andando....";
+echo "<br>";
+echo "Cuando paga de menos, revisarlo.lo tine que guardar en deuda anterior en la tabla completa...";
+echo "<br>";
+echo "hacer para cuando paga de más";
+echo "<br>";
+echo "<br>";
 
 
 
 
-$stmt_1 = $con->prepare($sql_mo);
-$stmt_1->bind_param(
-    'isddiiidddddidss',
-    $movil,
-    $fecha,
-    //$debe_en_total,
-    $dep_ft,
-    $dep_mp,
-    $cant_via,
-    $viajes_viejos,
-    $viajes_cobrados,
-    $dep_voucher,
-    $comision,
-    $noventa,
-    $depositarle,
-    $deuda_historica,
-    $debe_cant_sem,
-    $a_cuenta,
-    $obs,
-    $usuario
-);
+exit;
 
-if ($stmt_1->execute() == TRUE) {
+
+
+$sql_ca = "INSERT INTO caja_final (movil, fecha, depositarle, usuario, diez, dep_ft, dep_mp, dep_voucher) VALUES (?,?,?,?,?,?,?,?)";
+$stmt_ca = $con->prepare($sql_ca);
+$stmt_ca->bind_param('isdsdddd', $movil, $fecha, $depositarle, $usuario, $comision, $dep_ft, $dep_mp, $total_vou);
+
+
+if ($stmt_ca->execute() == TRUE) {
     echo "Nuevo registro creado exitosamente.";
     echo "<br>";
 } else {
-    echo "Error al guardar los datos del pago: " . $stmt_1->error;
+    echo "Error al guardar los datos del pago: " . $stmt_ca->error;
     exit;
 }
-//--------------------------------------------------------------------------------------
-// Actualizo la cantidad de viajes de la semana anterior.
-//--------------------------------------------------------------------------------------
 
-$stmt = $con->prepare("UPDATE completa SET viajes_semana_actual = ? WHERE movil = ?");
-if ($stmt) {
-    // Vincular parámetros (valores a actualizar)
 
-    $stmt->bind_param("ii", $t_viajes_sig_sem, $movil); // "si" significa string (s) y entero (i)
+exit;
 
-    // Ejecutar la consulta
-    if ($stmt->execute()) {
-        echo "Registro actualizado correctamente";
-    } else {
-        echo "Error al actualizar cantidad de viajes de la semana anterior: " . $stmt->error;
-        exit;
-    }
-}
 
-//--------------------------------------------------------------------------------------
-// Leo el efectivo que se deposito en la caja.
-//--------------------------------------------------------------------------------------
 
 
 $leo_caj = "SELECT * FROM caja_final ORDER BY id DESC LIMIT 1";

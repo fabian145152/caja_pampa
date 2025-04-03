@@ -17,6 +17,7 @@ $venta_2 = 0;
 $venta_3 = 0;
 $venta_4 = 0;
 $venta_5 = 0;
+$cobra = 0;
 $dep_para_movil = 0;
 
 if (isset($_GET['movil'])) {
@@ -28,7 +29,7 @@ $sql_comp = "SELECT * FROM completa WHERE movil = $movil";
 $res_comp = $con->query($sql_comp);
 $row_comp = $res_comp->fetch_assoc();
 $row_comp['movil'];
-$saldo_a_favor = $row_comp['saldo_a_favor'];
+$saldo_a_favor = $row_comp['saldo_a_favor_ft'];
 $viajes_que_no_se_cobraron = $row_comp['viajes_semana_actual'];
 $deu_ant = $row_comp['deuda_anterior'];
 
@@ -61,7 +62,7 @@ $ven_3 = 0;
 $ven_4 = 0;
 $ven_5 = 0;
 
-$saldo_a_favor = $row_comp['saldo_a_favor'];
+$saldo_a_favor = $row_comp['saldo_a_favor_ft'];
 $nombre_titu = $row_comp['nombre_titu'];
 $apellido_titu = $row_comp['apellido_titu'];
 $nombre_chof = $row_comp['nombre_chof_1'];
@@ -393,7 +394,10 @@ if ($can_viajes > 0) {
                     <?php
                     }
                     if ($deu_ant > 0 || $cant_sem > 1) {
-                        $cobra = $deu_ant + $cobra_semana_anterior + $total_ventas - $saldo_a_favor;
+
+                        $cobra = $deu_ant + $cobra_semana_anterior;
+                        // antes esta liea era
+                        //$cobra = $deu_ant + $cobra_semana_anterior + $total_ventas - $saldo_a_favor;  
                     ?>
                         <label class="mi-label">Deuda anterior:</label>
                         <input type="text" id="deuda_ant" name="deuda_ant" value="<?php echo $deu_ant  ?>" style="background-color: red; color: yellow;" readonly>
@@ -403,12 +407,14 @@ if ($can_viajes > 0) {
                         <?php
                     }
                     $total_de_viajes_que_se_cobran = $viajes_de_la_semana_anterior + $viajes_de_esta_semana;
-
-                    if ($viajes_de_la_semana_anterior > 0) {
+                        ?>
+                        <input type="hidden" name="to_vou" id="to_vou" value="<?php echo $total ?>" readonly>
+                        <?php
+                        if ($viajes_de_la_semana_anterior > 0) {
                         ?>
 
                             <li>
-                                <label for="viajes_nuevos">Deposito: </label>
+                                <label for="viajes_nuevos">Depositó: </label>
                                 <input class="put" type="text" id="viajes_nuevos" name="viajes_nuevos" value="<?php echo $total_de_viajes_que_se_cobran ?>" readonly> Voucher.
                             </li>
                             <li>
@@ -421,8 +427,8 @@ if ($can_viajes > 0) {
 
 
                         <?php
-                    }
-                    if ($viajes_que_no_se_cobraron != 0) {
+                        }
+                        if ($viajes_que_no_se_cobraron != 0) {
                         ?>
                             <li class="resaltado">
                                 <label for="viajes_anteriores">Cobrarle</label>
@@ -430,7 +436,7 @@ if ($can_viajes > 0) {
                             </li>
 
                         <?php
-                    }
+                        }
                         ?>
                         </ul>
             </div>
@@ -449,7 +455,7 @@ if ($can_viajes > 0) {
                             readonly>
                     </li>
                     <li>
-                        <!-- <label class="mi-label">10% descuento de vouchers</label> -->
+                        <!-- <label class="mi-label">10% descuento de vouchers</label> <!--  despues ocultarlo  -->
                         <input type="hidden" id="comi" name="comi" value="<?php echo $diez = $total * .1 ?>"
                             readonly>
                     </li>
@@ -471,8 +477,11 @@ if ($can_viajes > 0) {
                         } else {
                         ?>
                     <li>
+                        <?php
+                            $debe_abonar = $para_movil + $deu_ant;
+                        ?>
                         <label class="mi-label">Debe abonar:</label>
-                        <input type="text" id="paga_mov" name="paga_mov" value="<?php echo $para_movil + $deu_ant ?>"
+                        <input type="text" id="paga_mov" name="paga_mov" value="<?php echo $cobra ?>"
                             style="background-color: yellow;" readonly>
                         <input type="hidden" id="pesos" name="pesos" value="<?php ?>">
                         <input type="hidden" id="saldo_a_favor" name="saldo_a_favor" value="<?php  ?>">
