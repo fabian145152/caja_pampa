@@ -158,7 +158,7 @@ $sql_voucher = $con->query($sql_voucher);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VISTA CUENTA</title>
+    <title>VISTA COBRO</title>
     <?php head() ?>
     <link rel="stylesheet" href="../../../css/vista_con_voucher.css">
     <link rel="stylesheet" href="esta_pagina.css">
@@ -350,7 +350,8 @@ if ($can_viajes > 0) {
     }
     ?>
 
-    <form action="guarda_cobros_con_voucher.php" method="post" id="formulario" target="__blank">
+    <!-- <form action="guarda_cobros_con_voucher.php" method="post" id="formulario" target="__blank"> -->
+    <form action="elije_como_guardar.php" method="post" id="formulario" target="__blank">
         <input type="hidden" id="movil" name="movil" value="<?php echo $movil ?>">
         <div class="container">
             <div class="form-group">
@@ -467,6 +468,7 @@ if ($can_viajes > 0) {
                     </li>
                     <li>
                         <?php
+                        
                         $para_movil = $debe_deuda - $noventa;
                         $descuenta_cant_de_viajes = $viajes_de_la_semana_anterior * $paga_x_viaje;
                         ?>
@@ -481,6 +483,15 @@ if ($can_viajes > 0) {
                             $debe_abonar = $para_movil + $deu_ant;
                         ?>
                         <label class="mi-label">Debe abonar:</label>
+                        <?php
+                            if ($viajes_que_no_se_cobraron >= 1) {
+                                echo "<br>";
+                                echo "Se le suman " . $viajes_que_no_se_cobraron . " De la semana anterior. ";
+                                echo "<br>";
+                                $cobra = $viajes_que_no_se_cobraron * $paga_x_viaje + $cobra;
+                            }
+
+                        ?>
                         <input type="text" id="paga_mov" name="paga_mov" value="<?php echo $cobra ?>"
                             style="background-color: yellow;" readonly>
                         <input type="hidden" id="pesos" name="pesos" value="<?php ?>">

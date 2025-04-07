@@ -21,35 +21,48 @@ $pesos = 0;
 $sql_com = "SELECT * FROM completa WHERE movil = " . $movil;
 $res_com = $con->query($sql_com);
 $row_com = $res_com->fetch_assoc();
-$viaj_sem_ant = $row_com['viajes_semana_actual'];
-$saldo_fav_sem_ant = $row_com['saldo_a_favor_ft'];
+echo $viaj_sem_ant = $row_com['viajes_semana_actual'];
+echo "<br>";
+echo $saldo_fav_sem_ant = $row_com['saldo_a_favor_ft'];
+echo "<br>";
+echo $paga_x_viaje = $_POST['paga_x_viaje'];
+echo "<br>";
 
-
-if (!$res_com) {
-    die("Error en la consulta viajes de la semana anterior : " . $con->error);
+if ($row_com == TRUE) {
+    echo "Lectura de Viajes de la semana antterior y Saldo a favor...";
+    echo "<br>";
+} else {
+    echo "Error al leer Viajes de la semana antterior o Saldo a favor... ";
     exit;
 }
+
+//---------------------------------------------------------------------------------------
 
 $sql_sem = "SELECT * FROM semanas WHERE movil = " . $movil;
 $res_sem = $con->query($sql_sem);
 $row_sem = $res_sem->fetch_assoc();
-$paga_x_semana = $row_sem['x_semana'];
-$tot_semanas = $row_sem['total'];
-
-if (!$res_sem) {
-    die("Error en la consulta de paga x semana : " . $con->error);
+echo $paga_x_semana = $row_sem['x_semana'];
+echo "<br>";
+echo $tot_semanas = $row_sem['total'];
+echo "<br>";
+//exit;
+if ($row_sem == TRUE) {
+    echo "Lectura de Semanas adeudadas correctas...";
+    echo "<br>";
+} else {
+    echo "Error al leer semanas anteriores... ";
     exit;
 }
 
+//---------------------------------------------------------------------------------------
 ?>
 
 
-<a href="inicio_cobros.php">SALIR</a>
-<br>
 <?php
 echo "<br>";
 $_SESSION['uname'];
 $_SESSION['time'] . '<br>';
+echo "ID" . $id = $_POST['id'];
 echo "<br>";
 echo "Usuario: " . $usuario = $_SESSION['uname'];
 echo "<br>";
@@ -82,7 +95,9 @@ echo "Deuda anterior leida de la ddbb: " . $deud_ant_ddbb = $row_com['deuda_ante
 echo "<br>";
 echo "su_pago; " . $su_pago = $dep_mp + $dep_ft;
 echo "<br>";
-
+echo "Importe de los viajes de la semana anterior: " . $paga_x_viajes_adeudados = $viaj_sem_ant * $paga_x_viaje;
+echo "<br>";
+echo "Observaciones" . $obs = $_POST['obs'];
 
 $act_deu_ant = $deud_ant_ddbb + $paga_x_semana;
 
@@ -90,9 +105,14 @@ $actualiza_deudas = $act_deu_ant - $debe_abonar;
 
 $act_semanas = $tot_semanas - $paga_x_semana;
 
-echo $falto_pagar = $debe_abonar - $su_pago;
+$falto_pagar = $debe_abonar - $su_pago;
+echo "<br>";
+$actualiza_deudas = $tot_semanas - $su_pago -$paga_x_semana;
+echo "<br>";
+echo "Actualiza deudas..." . $actualiza_deudas;
 
-//exit;
+
+
 
 if ($actualiza_deudas == 0) {
     echo "Actualiza semanas: " . $act_semanas = $paga_x_semana;
@@ -117,7 +137,7 @@ if ($actualiza_deudas == 0) {
         echo "Deuda anterior actualizada correctamente";
         echo "<br>";
     } else {
-        echo "Error al actualizar cantidad de viajes de la semana anterior: " . $stmt->error;
+        echo "Error al actualizar cantidad de viajes de la semana anterior: " . $sql_deu_ant->error;
         exit;
     }
 }
@@ -135,16 +155,33 @@ echo "hacer para cuando paga de más";
 echo "<br>";
 echo "<br>";
 
+//exit;
 
+// -------------------GUARDA EL PAGO RELAIZADO EN FT Y MP-------------------
 
-
-exit;
-
-
-
-$sql_ca = "INSERT INTO caja_final (movil, fecha, depositarle, usuario, diez, dep_ft, dep_mp, dep_voucher) VALUES (?,?,?,?,?,?,?,?)";
+$sql_ca = "INSERT INTO caja_final (movil, 
+                                fecha, 
+                                depositarle, 
+                                usuario, 
+                                diez, 
+                                dep_ft, 
+                                dep_mp, 
+                                dep_voucher, 
+                                observaciones) 
+                        VALUES (?,?,?,?,?,?,?,?,?)";
 $stmt_ca = $con->prepare($sql_ca);
-$stmt_ca->bind_param('isdsdddd', $movil, $fecha, $depositarle, $usuario, $comision, $dep_ft, $dep_mp, $total_vou);
+$stmt_ca->bind_param(
+    'isdsdddds',
+    $movil,
+    $fecha,
+    $depositarle,
+    $usuario,
+    $comision,
+    $dep_ft,
+    $dep_mp,
+    $total_vou,
+    $obs
+);
 
 
 if ($stmt_ca->execute() == TRUE) {
@@ -156,18 +193,15 @@ if ($stmt_ca->execute() == TRUE) {
 }
 
 
-exit;
-
-
-
-
 $leo_caj = "SELECT * FROM caja_final ORDER BY id DESC LIMIT 1";
 $res_le = $con->query($leo_caj);
 
 if ($res_le->num_rows > 0) {
     $registro = $res_le->fetch_assoc();
-    $ftd_caja = $registro['dep_ft'];
-    $mpd_caja = $registro['dep_mp'];
+    echo "<br>";
+    echo $ftd_caja = $registro['dep_ft'];
+    echo "<br>";
+    echo $mpd_caja = $registro['dep_mp'];
 
     echo "<br>";
 } else {
@@ -176,13 +210,15 @@ if ($res_le->num_rows > 0) {
 }
 
 
+
+
 //--------------------------------------------------------------------------------------
 // Guardo el efectivo en la caja.
 //--------------------------------------------------------------------------------------
 
-$movil = 'caja';
+$movil = 0;
 
-$guar_ft = "INSERT INTO caja_final (movil, fecha, ing_ft_a_caja, ing_mp_a_caja, usuario) VALUES (?,?,?,?,?)";
+$guar_ft = "INSERT INTO caja_final (movil, fecha, haber_ft, haber_mp, usuario) VALUES (?,?,?,?,?)";
 $stmt_2 = $con->prepare($guar_ft);
 $stmt_2->bind_param('isdds', $movil, $fecha, $ftd_caja, $mpd_caja, $usuario);
 
@@ -197,5 +233,7 @@ if ($stmt_2->execute() == TRUE) {
 //--------------------------------------------------------------------------------------
 // Actualizo caja_final y boro el ft que deposito antes.
 //--------------------------------------------------------------------------------------
+
+header("Location: inicio_cobros.php");
 
 ?>

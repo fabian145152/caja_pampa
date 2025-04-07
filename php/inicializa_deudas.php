@@ -21,14 +21,19 @@ if ($_SESSION['logueado']) {
             exit;
         }
 
-        $sql_semanas = "UPDATE semanas SET total = 0, fecha = '0000-00-00', total = 9200";
+
+
+
+
+
+        $sql_semanas = "UPDATE semanas SET total = x_semana, fecha = '0000-00-00'";
 
         if ($con->query($sql_semanas) === TRUE) {
             echo "<br>";
-            echo "Los tabla semanas se actualizo correctamente.";
+            echo "La tabla semanas se actualizó correctamente.";
             echo "<br>";
         } else {
-            echo "Error al actualizar la tabla semana: " . $con->error;
+            echo "Error al actualizar la tabla semanas: " . $con->error;
             exit;
         }
 
@@ -82,7 +87,7 @@ if ($_SESSION['logueado']) {
             echo "Error al actualizar los registros: " . $con->error;
             exit;
         }
-/*
+        /*
         $sql_caja_movil = "TRUNCATE TABLE caja_movil";
         if ($con->query($sql_caja_movil) === TRUE) {
             echo "<br>";
