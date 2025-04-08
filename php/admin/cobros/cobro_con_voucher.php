@@ -1,13 +1,11 @@
 <?php
 
-
-
 include_once "../../../funciones/funciones.php";
 $con = conexion();
 $con->set_charset("utf8mb4");
-
-
+$deuda_ant = 0;
 // Obtener la variable desde la sesión
+
 $movul = $_SESSION['variable'];
 $movil = substr($movul, 1);
 $total_ventas = 0;
@@ -32,6 +30,7 @@ $row_comp['movil'];
 $saldo_a_favor = $row_comp['saldo_a_favor_ft'];
 $viajes_que_no_se_cobraron = $row_comp['viajes_semana_actual'];
 $deu_ant = $row_comp['deuda_anterior'];
+$saldo_a_favor = $row_comp['saldo_a_favor_ft'];
 
 
 if ($row_comp['movil'] == 0) {
@@ -396,8 +395,7 @@ if ($can_viajes > 0) {
                     }
                     if ($deu_ant > 0 || $cant_sem > 1) {
 
-                        $cobra = $deu_ant + $cobra_semana_anterior;
-                        // antes esta liea era
+                        $cobra = $deu_ant + $cobra_semana_anterior - $saldo_a_favor;                        // antes esta liea era
                         //$cobra = $deu_ant + $cobra_semana_anterior + $total_ventas - $saldo_a_favor;  
                     ?>
                         <label class="mi-label">Deuda anterior:</label>
@@ -468,7 +466,7 @@ if ($can_viajes > 0) {
                     </li>
                     <li>
                         <?php
-                        
+
                         $para_movil = $debe_deuda - $noventa;
                         $descuenta_cant_de_viajes = $viajes_de_la_semana_anterior * $paga_x_viaje;
                         ?>
@@ -484,6 +482,7 @@ if ($can_viajes > 0) {
                         ?>
                         <label class="mi-label">Debe abonar:</label>
                         <?php
+
                             if ($viajes_que_no_se_cobraron >= 1) {
                                 echo "<br>";
                                 echo "Se le suman " . $viajes_que_no_se_cobraron . " De la semana anterior. ";

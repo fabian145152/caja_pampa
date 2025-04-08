@@ -28,6 +28,10 @@ echo "<br>";
 echo $paga_x_viaje = $_POST['paga_x_viaje'];
 echo "<br>";
 
+
+echo "Cantidad de viajes: " . $numero = $_POST['numero'];
+echo "<br>";
+
 if ($row_com == TRUE) {
     echo "Lectura de Viajes de la semana antterior y Saldo a favor...";
     echo "<br>";
@@ -41,10 +45,10 @@ if ($row_com == TRUE) {
 $sql_sem = "SELECT * FROM semanas WHERE movil = " . $movil;
 $res_sem = $con->query($sql_sem);
 $row_sem = $res_sem->fetch_assoc();
-echo $paga_x_semana = $row_sem['x_semana'];
-echo "<br>";
-echo $tot_semanas = $row_sem['total'];
-echo "<br>";
+$paga_x_semana = $row_sem['x_semana'];
+
+$tot_semanas = $row_sem['total'];
+
 //exit;
 if ($row_sem == TRUE) {
     echo "Lectura de Semanas adeudadas correctas...";
@@ -59,20 +63,24 @@ if ($row_sem == TRUE) {
 
 
 <?php
-echo "<br>";
+
 $_SESSION['uname'];
 $_SESSION['time'] . '<br>';
-echo "ID" . $id = $_POST['id'];
-echo "<br>";
+$id = $_POST['id'];
+
+
 echo "Usuario: " . $usuario = $_SESSION['uname'];
 echo "<br>";
 echo "Movil: " . $movil;
 echo "<br>";
 echo $fecha = date("Y-m-d H:i:s");
 echo "<br>";
-
-echo "Paga x semana: " . $paga_x_semana;
+echo "Cantidad de Vochers: " . $numero = $_POST['numero'];
 echo "<br>";
+if ($numero > 0) {
+    include "fin_cobrar_con_voucher.php";
+}
+
 
 
 echo "Debe sumado: " . $debe_sumado = $_POST['debe_sumado'];
@@ -110,12 +118,15 @@ echo "<br>";
 $actualiza_deudas = $tot_semanas - $su_pago - $paga_x_semana;
 echo "<br>";
 echo "Actualiza deudas..." . $actualiza_deudas;
-
-
-
-if ($debe_sumado - $su_pago == 0) {
-    include "guarda_cobros_con_voucher.php";
-} else {
-    echo "No se puede guardar el cobro, el saldo no es cero... ";
-    exit;
+echo "<br>";
+/*
+echo $debe_sumado - $su_pago;
+echo "<br>";
+echo $numero = $_POST['numero'];
+echo "<br>";
+*/
+if ($numero > 0) {
+    include "cobro_con_voucher.php";
 }
+
+include "cobra_justo.php";
