@@ -47,13 +47,14 @@ $con->set_charset("utf8mb4");
 
     ?>
         <h3>La deuda anterior del movil <?php echo $row['movil'] ?> en de $ <?php echo $row['deuda_anterior'] ?>...</h3>
+
         <ul>
 
             <?php $row['id'] ?>
             <li><?php echo "Móvil " . $row['movil'] ?></li>
             <li><?php echo "Nombre del titular: " . $row['nombre_titu']; ?></li>
             <li><?php echo "Apellido del titular " . $row['apellido_titu'] ?></li>
-            <li><?php echo $row['deuda_anterior'] ?></li>
+            <li><?php echo $deu_ant = $row['deuda_anterior'] ?></li>
         </ul>
 
 
@@ -62,17 +63,19 @@ $con->set_charset("utf8mb4");
     } else {
         echo "No se encontraron registros.";
     }
+
+    
+
     ?>
 
     <form class="form" action="guarda_deuda_nueva.php?=q'$movil'" method="POST" name="movil">
         <h1>Ingrese nuevo Monto</h1>
-
         <br><br>
-
         <input type="hidden" name="movil" class="gui-input" value="<?php echo $movil ?>">
-        <br><br>
+        
         <input type="text" name="deuda_anterior" class="gui-input" autofocus>
-        <br><br>
+        
+        <input type="hidden" name="actualiza_deuda" class="gui-input" value="<?php echo $deu_ant ?>">
         <input type="submit" value="GUARDAR" class=" btn btn-primary">
     </form>
     <br>

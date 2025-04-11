@@ -16,9 +16,10 @@ Es la calculadora de cantidad de viajes a cobrar y monto a depositar
             const numero = document.getElementById('numero').value; // Capturamos el número ingresado
             if (!isNaN(numero) && numero !== "") { // Verificamos que sea un número válido
                 const resultadoMultiplicacion = numero * multiplicador; // Multiplicamos
-                const resultadoResta = otraVariable - resultadoMultiplicacion; // Realizamos la resta
+                const resultadoResta = otraVariable + resultadoMultiplicacion; // Realizamos la resta
                 document.getElementById('resultadoMultiplicacion').value = resultadoMultiplicacion; // Mostramos la multiplicación
-                document.getElementById('resultadoResta').value = resultadoResta; // Actualizamos la segunda variable
+                document.getElementById('resultadoResta').value = resultadoResta.toFixed(2); // Actualizamos la segunda variable
+                //document.getElementById('resultadoResta').value = resultadoResta; // Actualizamos la segunda variable
             } else {
                 document.getElementById('resultadoMultiplicacion').value = ""; // Limpiamos los resultados
                 document.getElementById('resultadoResta').value = "";
@@ -46,7 +47,7 @@ Es la calculadora de cantidad de viajes a cobrar y monto a depositar
 
         <label for="resultadoResta">Total a depositarle:</label>
         <input type="text" id="resultadoResta" name="resultadoResta" readonly style="background-color: yellow;">
-        
+
     </form>
 </body>
 

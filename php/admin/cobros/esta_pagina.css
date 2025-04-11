@@ -1,4 +1,5 @@
 .contenedor {
+
     display: inline-flex;
     /* Mantiene los elementos en la misma línea */
     align-items: center;
@@ -8,21 +9,15 @@
 
 .recuadro {
     display: inline-block;
-    /* Mantiene el recuadro en línea */
     border: 2px solid black;
-    /* Borde negro */
     padding: 5px;
-    /* Espaciado interno */
     background-color: #f0f0f0;
-    /* Fondo claro */
     border-radius: 5px;
-    /* Bordes redondeados */
 }
 
 .mi-label {
     width: 200px;
     display: inline-block;
-    /* Esto asegura que el label respete el ancho */
 }
 
 body {
@@ -35,16 +30,13 @@ body {
 .container {
     display: flex;
     justify-content: center;
-    /* Centra los recuadros horizontalmente */
     gap: 10px;
-    /* Espacio entre los recuadros */
 }
 
 .box {
     width: 30%;
     height: 150px;
     border: 2px solid #333;
-    /* Bordes del recuadro */
     border-radius: 10px;
 }
 
@@ -52,19 +44,15 @@ body {
     width: 30%;
     height: 150px;
     border: 2px solid #333;
-    /* Bordes del recuadro */
     border-radius: 10px;
 }
 
 .resaltado {
     background-color: orange;
-    /* Fondo amarillo para resaltar */
     font-weight: bold;
-    /* Texto en negrita */
     padding: 5px;
-    /* Espaciado dentro del elemento */
     border-radius: 5px;
-    /* Bordes redondeados */
+
 }
 
 body {

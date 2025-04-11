@@ -20,10 +20,17 @@ $con->set_charset("utf8mb4");
 
     $movil = $_POST['movil'];
     $deuda_anterior = $_POST['deuda_anterior'];
+    $actualiza_deuda = $_POST['actualiza_deuda'];
 
     echo $movil;
     echo "<br>";
     echo $deuda_anterior;
+    echo "<br>";
+    echo $actualiza_deuda;
+    echo "<br>";
+    echo $deuda_total = $deuda_anterior + $actualiza_deuda;
+    echo "<br>";
+
 
 
 
@@ -34,9 +41,9 @@ $con->set_charset("utf8mb4");
 
 
 
-    $sql = "UPDATE completa SET deuda_anterior = $deuda_anterior WHERE movil = $movil";
+    $sql = "UPDATE completa SET deuda_anterior = $deuda_total WHERE movil = $movil";
     $result = $con->query($sql);
-
+    
     header("Location: ../../menu_admin.php");
 
     ?>

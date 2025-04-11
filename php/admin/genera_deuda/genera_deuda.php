@@ -11,8 +11,11 @@ include_once "../../../funciones/funciones.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <?php head() ?>
-
-
+    <script>
+        function cerrarPagina() {
+            window.close();
+        }
+    </script>
 </head>
 
 <body>
@@ -28,11 +31,7 @@ include_once "../../../funciones/funciones.php";
     </div>
     <br><br><br>
     <button onclick="cerrarPagina()" class="btn btn-primary btn-sm">CERRAR PAGINA</button>
-    <script>
-        function cerrarPagina() {
-            window.close();
-        }
-    </script>
+
     <?php foot() ?>
 </body>
 
