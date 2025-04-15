@@ -24,8 +24,6 @@ if ($_SESSION['logueado']) {
 
 
 
-
-
         $sql_semanas = "UPDATE semanas SET total = x_semana, fecha = '0000-00-00'";
 
         if ($con->query($sql_semanas) === TRUE) {
@@ -58,6 +56,33 @@ if ($_SESSION['logueado']) {
             exit;
         }
 
+        $sql_caja_final = "TRUNCATE TABLE caja_final";
+        if ($con->query($sql_caja_final) === TRUE) {
+            echo "<br>";
+            echo "La tabla caja_final se actualizo correctamente.";
+            echo "<br>";
+        } else {
+            echo "Error al actualizar la Caja_final: " . $con->error;
+            exit;
+        }
+
+
+        $fecha = date("Y-m-d");
+        $sql_crea_reg_0 = "INSERT INTO caja_final (movil, fecha) VALUES (0, '$fecha' )";
+        $sql_guarda_reg_0 = $con->query($sql_crea_reg_0); // Ejecuta la consulta
+
+        // Verificamos el resultado de la ejecución
+        if ($sql_guarda_reg_0 === TRUE) {
+            echo "<br>";
+            echo "Registro 0 creado exitosamente.";
+            echo "<br>";
+        } else {
+            echo "Error al crear el registro 0: " . $con->error;
+            echo "<br>";
+            exit;
+        }
+
+
         $sql_voucher_temporales = "TRUNCATE TABLE voucher_temporales";
         if ($con->query($sql_voucher_temporales) === TRUE) {
             echo "<br>";
@@ -87,26 +112,7 @@ if ($_SESSION['logueado']) {
             echo "Error al actualizar los registros: " . $con->error;
             exit;
         }
-        /*
-        $sql_caja_movil = "TRUNCATE TABLE caja_movil";
-        if ($con->query($sql_caja_movil) === TRUE) {
-            echo "<br>";
-            echo "La tabla caja movil se actualizo correctamente.";
-            echo "<br>";
-        } else {
-            echo "Error al actualizar los registros: " . $con->error;
-            exit;
-        }
-*/
-        $sql_caja_final = "TRUNCATE TABLE caja_final";
-        if ($con->query($sql_caja_final) === TRUE) {
-            echo "<br>";
-            echo "La tabla caja final se actualizo correctamente.";
-            echo "<br>";
-        } else {
-            echo "Error al actualizar los registros: " . $con->error;
-            exit;
-        }
+
 
         // Ejemplo de uso
         $directorio = 'admin/cobros/recibos/';

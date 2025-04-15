@@ -24,17 +24,17 @@ $stmt_movil->bind_param("iiiii", $movil, $x_semana, $x_viaje, $tropa, $estado);
 $sql_semana = "INSERT INTO semanas (movil) VALUES (?)";
 $stmt_semana = $con->prepare($sql_semana);
 $stmt_semana->bind_param("i", $movil);
-
+/*
 $sql_caja = "INSERT INTO caja_movil (movil) VALUES (?)";
 $stmt_caja = $con->prepare($sql_caja);
 $stmt_caja->bind_param("i", $movil);
-
+*/
 
 //exit();
 
 $stmt_movil->execute();
 $stmt_semana->execute();
-$stmt_caja->execute();
+//$stmt_caja->execute();
 if ($stmt_movil->execute() === TRUE) {
 ?>
     <script>

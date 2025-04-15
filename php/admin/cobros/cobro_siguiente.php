@@ -351,9 +351,11 @@ if ($can_viajes > 0) {
     <?php
     }
     ?>
-
+<h5>La semana la cobra bien</h5>
+<h5>Varias semanas tambien</h5>
+<h5>Actualiza tamdien Deuda anterior tambien</h5>
     <!-- <form action="guarda_cobros_con_voucher.php" method="post" id="formulario" target="__blank"> -->
-    <form action="cobro_fin.php" method="post" id="formulario" target="__blank">
+    <form action="cobro_fin.php" method="post" id="formulario" target="_blank">
         <input type="hidden" id="movil" name="movil" value="<?php echo $movil ?>">
         <div class="container">
             <div class="form-group">

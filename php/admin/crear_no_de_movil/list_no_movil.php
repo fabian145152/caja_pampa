@@ -52,11 +52,11 @@ $con->set_charset("utf8mb4");
             }
         </style>
         <div class="btn-group d-flex w-50" role="group">
-            &nbsp; &nbsp; &nbsp; 
+            &nbsp; &nbsp; &nbsp;
             <a href="insert_no_movil.php" class="btn btn-primary btn-sm">NUEVO NUMERO DE MOVIL</a>
-            &nbsp; &nbsp; &nbsp; 
-                <button onclick="cerrarPagina()" class="btn btn-primary btn-sm">CERRAR PAGINA</button>
-            &nbsp; &nbsp; &nbsp; 
+            &nbsp; &nbsp; &nbsp;
+            <button onclick="cerrarPagina()" class="btn btn-primary btn-sm">CERRAR PAGINA</button>
+            &nbsp; &nbsp; &nbsp;
             <!-- <a href="ListaContacto.php" class="btn btn-primary btn-sm">LISTAR MOVILES</a>  -->
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
         </div>
@@ -81,12 +81,12 @@ $con->set_charset("utf8mb4");
             $sql_semana = "SELECT * FROM semanas WHERE 1";
             $res = $con->query($sql_semana);
             $variable2 = $res->num_rows;
-
+            /*
             $sql_caja = "SELECT * FROM caja_movil WHERE 1";
             $res_caja = $con->query($sql_caja);
             $variable3 = $res_caja->num_rows;
-
-            if ($variable1 !== $variable2 || $variable1 !== $variable3 || $variable2 !== $variable3) {
+*/
+            if ($variable1 !== $variable2) {
                 echo "Las variables no son iguales. Deteniendo el programa.";
                 exit; // Detener el programa
             }
