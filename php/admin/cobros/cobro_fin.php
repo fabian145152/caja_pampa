@@ -5,6 +5,7 @@ include_once "consultas_cobro_fin/consultas.php";
 $con = conexion();
 $con->set_charset("utf8mb4");
 
+session_start(); // Inicia la sesión
 $semanas = 0;
 $total_ventas = 0;
 $deuda_anterior = 0;
@@ -17,23 +18,28 @@ $dep_ft = 0;
 $dep_mp = 0;
 $saldo_ft = 0;
 $saldo_mp = 0;
-session_start(); // Inicia la sesión
+$paga_de_mas = 0;
+$paga_de_menos = 0;
+$venta_1 = 0;
+$venta_2 = 0;
+$venta_3 = 0;
+$venta_4 = 0;
+$venta_5 = 0;
 
 // Verificamos si la variable existe
 if (isset($_SESSION['saldo_ft'])) {
     unset($_SESSION['saldo_ft']);
-    echo "La variable de sesión 'nombre_variable' ha sido eliminada.";
+    //echo "La variable de sesión 'nombre_variable' ha sido eliminada.";
 } else {
     echo "La variable de sesión 'nombre_variable' no existe.";
 }
 if (isset($_SESSION['saldo_mp'])) {
     unset($_SESSION['saldo_mp']);
-    echo "La variable de sesión 'nombre_variable' ha sido eliminada.";
+    //echo "La variable de sesión 'nombre_variable' ha sido eliminada.";
 } else {
     echo "La variable de sesión 'nombre_variable' no existe.";
 }
 
-session_start();
 $fecha = date("Y-m-d");
 echo "Nombre de usuario: " . $usuario = $_SESSION['uname'];
 echo "<br>";
@@ -44,8 +50,7 @@ $paga_x_semana = $_POST['paga_x_semana'];
 echo "<br>";
 echo "Debe semanas: " . $debe_semanas = $_POST['debe_sem_ant'];
 echo "<br>";
-echo "Total de ventas: " . $total_ventas = $_POST['prod'];
-echo "<br>";
+$total_ventas = $_POST['prod'];
 echo "Deuda anterior: " . $deuda_anterior = $_POST['deuda_ant'];
 echo "<br>";
 echo "Viajes que se cobran: " . $viajes_q_se_cobran = $_POST['numero'];
@@ -72,7 +77,6 @@ echo "Depositos en ft: " . $new_dep_ft = $_POST['dep_ft'];
 echo "<br>";
 echo "Deposito en MP: " . $new_dep_mp = $_POST['dep_mp'];
 echo "<br>";
-
 $deu = $semanas + $total_ventas + $deuda_anterior + $importe_viaj - $saldo_a_favor;
 echo "Deuda= " . $deuda = abs($deu);
 echo "<br>";
@@ -81,6 +85,7 @@ echo "Paga x semana: " . $paga_x_semana;
 echo "<br>";
 echo "Debe semanas: " . $debe_semanas;
 echo "<br>";
+
 
 
 echo "**************************************************************************";
@@ -143,26 +148,6 @@ for ($i = 3; $i > 0; $i--) {
 
 //exit;
 
-if ($tot_voucher > 0) {
-
-    //exit;
-    // Actualiza saldo a favor.
-    $sql_actua_a_fav = $con->prepare("UPDATE completa SET saldo_a_favor_ft = ? WHERE movil = ?");
-    if (!$sql_actua_a_fav) {
-        die("Error en la preparación: " . $con->error);
-    }
-
-    $sql_actua_a_fav->bind_param("ii", $resto, $movil);
-
-
-    if ($sql_actua_a_fav->execute()) {
-        echo "Saldo a favor actualizado correctamente<br>";
-    } else {
-        echo "Error al actualizar saldo a favor: " . $con->error . "<br>";
-        exit;
-    }
-}
-
 $sql_actua_semanas = $con->prepare("UPDATE semanas SET total = ? WHERE movil = ?");
 if (!$sql_actua_semanas) {
     die("Error en la preparación de la actualizacion de semanas: " . $con->error);
@@ -192,18 +177,71 @@ $debe_semanas = $_POST['debe_sem_ant'];
 
 echo "Deposito en FT. " . $new_dep_ft;
 echo "<br>";
+echo "Deposito en MP. " . $new_dep_mp;
+echo "<br>";
 echo "Debe semanas. " . $debe_semanas;    // Traido con post
 echo "<br>";
 echo "Deuda anterior. " . $deuda_anterior;  //leido de la ddbb traido con POST
 echo "<br>";
-echo "falta: " . $falta_depo = $new_dep_ft - $debe_semanas;
+$falta_depo = $new_dep_ft + $new_dep_mp - $debe_semanas - $deuda_anterior - $total_ventas;
+//$depo = abs($falta_depo);
+$depo = $falta_depo;
+echo "Total de ventas: " . $total_ventas;
+echo "<br>";
+
+echo "si falta negativo, si sobra positivo..." . $depo;
+
+echo "<br>";
+if ($depo < 0) {
+    $paga_de_menos = $depo * -1;
+    echo "Falta: " . $paga_de_menos;
+    echo "<br>";
+} elseif ($depo > 0) {
+    $paga_de_mas = $depo;
+    echo "Sobra: " . abs($paga_de_mas);
+    echo "<br>";
+}
 
 
-$sql_deu_ant = $con->prepare("UPDATE completa SET deuda_anterior = ? WHERE movil = ?");
+echo "Falta: " . $paga_de_menos;
+echo "<br>";
+echo "Sobra: " . abs($paga_de_mas);
+echo "<br>";
+
+
+if ($paga_de_mas > 1) {
+    echo "<br>";
+    echo "<br>";
+    echo "<br>";
+    echo "Paga de masssssss: " . $paga_de_mas = abs($paga_de_mas);
+    echo "<br>";
+} elseif ($paga_de_menos > 1) {
+    echo "<br>";
+    echo "<br>";
+    echo "<br>";
+    echo "Paga de menossssss: " . $paga_de_menos = abs($paga_de_menos);
+    echo "<br>";
+}
+
+echo "<br>";
+echo "Paga de mas: " . $paga_de_mas;
+echo "<br>";
+echo "Paga de menos: " . $paga_de_menos;
+echo "<br>";
+
+
+$sql_deu_ant = $con->prepare("UPDATE completa SET deuda_anterior = ?,
+                                                        saldo_a_favor_ft = ?,
+                                                        venta_1 = ?,
+                                                        venta_2 = ?,
+                                                        venta_3 = ?,
+                                                        venta_4 = ?,
+                                                        venta_5 = ?
+                                                     WHERE movil = ?");
 if (!$sql_deu_ant) {
     die("Error en la preparación: " . $con->error);
 }
-$sql_deu_ant->bind_param("ii", $falta_depo, $movil);
+$sql_deu_ant->bind_param("iiiiiiii",  $paga_de_menos, $paga_de_mas, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5, $movil);
 
 // Ejecutar la consulta
 if ($sql_deu_ant->execute()) {
@@ -214,7 +252,30 @@ if ($sql_deu_ant->execute()) {
 }
 
 
-
+// Agregarlo al terminar esta parte
+//include_once("recibo.php");
 
 
 //header("Location: inicio_cobros.php");
+
+/*
+if ($tot_voucher > 0) {
+
+    //exit;
+    // Actualiza saldo a favor.
+    $sql_actua_a_fav = $con->prepare("UPDATE completa SET saldo_a_favor_ft = ? WHERE movil = ?");
+    if (!$sql_actua_a_fav) {
+        die("Error en la preparación: " . $con->error);
+    }
+
+    $sql_actua_a_fav->bind_param("ii", $resto, $movil);
+
+
+    if ($sql_actua_a_fav->execute()) {
+        echo "Saldo a favor actualizado correctamente<br>";
+    } else {
+        echo "Error al actualizar saldo a favor: " . $con->error . "<br>";
+        exit;
+    }
+}
+*/

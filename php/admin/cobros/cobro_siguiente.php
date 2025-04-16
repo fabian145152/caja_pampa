@@ -351,9 +351,12 @@ if ($can_viajes > 0) {
     <?php
     }
     ?>
-<h5>La semana la cobra bien</h5>
-<h5>Varias semanas tambien</h5>
-<h5>Actualiza tamdien Deuda anterior tambien</h5>
+    <h6>La semana la cobra bien con FT y MP terminad</h6>
+    <h6>Varias semanas tambien con FT y MP terminado</h6>
+    <h6>Deuda anterior CON SEMANAS ADEUDADAS terminado</h6>
+    <h6>Ventas con deuda y semanas TERMINADO</h6>
+    <h6>Falta Terminar paga de mas hay un error</h6>
+    <h6>Falta terminar tambien voucher</h6>
     <!-- <form action="guarda_cobros_con_voucher.php" method="post" id="formulario" target="__blank"> -->
     <form action="cobro_fin.php" method="post" id="formulario" target="_blank">
         <input type="hidden" id="movil" name="movil" value="<?php echo $movil ?>">
@@ -365,7 +368,7 @@ if ($can_viajes > 0) {
 
                     <?php
                     $abo_sem = $row_semana['importe'];
-                    $cant_sem =   $deuda_semanas_anteriores / $abo_sem;
+                    $cant_sem = $deuda_semanas_anteriores / $abo_sem;
                     $cobra_semana_anterior = $deuda_semanas_anteriores - $paga_x_semana;
                     $deudas_sumadas = $deuda_ant + $cobra_semana_anterior;
                     $debe_deuda = $total_ventas + $cobra_semana_anterior + $deuda_anterior - $saldo_a_favor;
@@ -395,24 +398,40 @@ if ($can_viajes > 0) {
                         <input type="text" id="saldo_a_favor" name="saldo_a_favor" value="<?php echo $saldo_a_favor ?>" style="background-color: yellow;" readonly>
                     <?php
                     }
-                    if ($saldo_a_favor == 0 && $deu_ant == 0 && $cobra_semana_anterior == 0) {
+                    if ($saldo_a_favor == 0 && $deu_ant == 0 && $cobra_semana_anterior == 0 && $total_ventas == 0) {
                     ?>
                         <label class="mi-label">Al dia...:</label>
                         <input type="text" id="depo_mov" name="depo_mov" value="Al dia..." style="background-color:  aqua;" readonly>
                     <?php
                     }
-                    if ($deu_ant > 0 || $cant_sem > 1) {
+                    if ($deu_ant > 0 || $cant_sem > 1 || $total_ventas > 1) {
 
-                        $cobra_1 = $deu_ant + $cobra_semana_anterior - $saldo_a_favor;                        // antes esta liea era
+                        echo "Cobra_1 " . $cobra_1 = $deu_ant + $cobra_semana_anterior - $saldo_a_favor + $total_ventas; // antes esta liea era
+
+                        /*
+                        if ($cobra_1 < 0) {
+                            $cuenta = $cobra_1 * -1;
+                          //  echo "<br> Negativo: " . $cuenta;
+                        } elseif ($cobra_1 > 0) {
+                            //echo "<br> Positivo: " . $cobra_1;
+                        } else {
+                           // echo "<br> El valor es cero.";
+                        }
+*/
 
 
+
+                        //$cobra_1 = $saldo_a_favor - $cobra_semana_anterior - $deu_ant - $total_ventas;
+                        //exit;
                     ?>
+
                         <label class="mi-label">Deuda anterior:</label>
                         <input type="text" id="deuda_ant" name="deuda_ant" value="<?php echo $deu_ant  ?>" style="background-color: red; color: yellow;" readonly>
-                        <label class="mi-label">Deuda:</label>
+                        <label class="mi-label">Deudaaaaaa:</label>
                         <input type="text" id="depo_mov" name="depo_mov" value="<?php echo $cobra_1  ?>" style="background-color: red; color: yellow;" readonly>
                         <ul style="border: 2px solid black; padding: 5px; border-radius: 10px; list-style-type: none;">
                         <?php
+                        //exit;
                     }
                     $total_de_viajes_que_se_cobran = $viajes_de_la_semana_anterior + $viajes_de_esta_semana;
                         ?>
@@ -499,10 +518,12 @@ if ($can_viajes > 0) {
                         $depot = $cobra_semana_anterior + $total_ventas + $deu_ant;
                         echo "Suma lo de arriba: " . $depot;
                         echo "<br>";
-                        $saldo_recuento = $depot - $noventa;
-
+                        $saldo_recuento = $depot - $noventa - $saldo_a_favor;
                         echo "Saldo_a_favor " . $saldo_a_favor;
                         echo "<br>";
+                        echo "Cuenta: " . $cuenta = $saldo_a_favor - $depot;
+                        echo "<br>";
+
 
 
                         if ($saldo_recuento > 0) {
@@ -525,11 +546,11 @@ if ($can_viajes > 0) {
                         <?php
 
                             $debe_abonar = $para_movil + $deu_ant;
+
                         ?>
                         <label class="mi-label">Debe abonar:</label>
                         <?php
                             $total_para_base = $cobra_semana_anterior + $total_ventas + $deu_ant - $saldo_a_favor;
-
 
 
                             if ($viajes_que_no_se_cobraron >= 1) {
@@ -538,6 +559,7 @@ if ($can_viajes > 0) {
                                 echo "<br>";
                                 $cobra = $viajes_que_no_se_cobraron * $paga_x_viaje + $cobra;
                             }
+                            echo $cuenta;
 
                         ?>
                         <input type="text" id="paga_mov" name="paga_mov" value="<?php echo $saldo_recuento ?>"
