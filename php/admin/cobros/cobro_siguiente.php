@@ -357,8 +357,13 @@ if ($can_viajes > 0) {
     <h6>Ventas con deuda y semanas TERMINADO</h6>
     <h6>Falta Terminar paga de mas hay un error</h6>
     <h6>Falta terminar tambien voucher</h6>
-    <!-- <form action="guarda_cobros_con_voucher.php" method="post" id="formulario" target="__blank"> -->
+
+
+
     <form action="cobro_fin.php" method="post" id="formulario" target="_blank">
+
+
+
         <input type="hidden" id="movil" name="movil" value="<?php echo $movil ?>">
         <div class="container">
             <div class="form-group">
@@ -406,18 +411,7 @@ if ($can_viajes > 0) {
                     }
                     if ($deu_ant > 0 || $cant_sem > 1 || $total_ventas > 1) {
 
-                        echo "Cobra_1 " . $cobra_1 = $deu_ant + $cobra_semana_anterior - $saldo_a_favor + $total_ventas; // antes esta liea era
-
-                        /*
-                        if ($cobra_1 < 0) {
-                            $cuenta = $cobra_1 * -1;
-                          //  echo "<br> Negativo: " . $cuenta;
-                        } elseif ($cobra_1 > 0) {
-                            //echo "<br> Positivo: " . $cobra_1;
-                        } else {
-                           // echo "<br> El valor es cero.";
-                        }
-*/
+                        $cobra_1 = $deu_ant + $cobra_semana_anterior - $saldo_a_favor + $total_ventas; // antes esta liea era
 
 
 
@@ -504,39 +498,40 @@ if ($can_viajes > 0) {
                         ?>
                         <input type="hidden" id="paga_x_viaje" name="paga_x_viaje" value="<?php echo $paga_x_viaje ?>">
                         <?php
-                        echo "<br>";
-                        echo "Debe de semanas: " . $cobra_semana_anterior;
-                        echo "<br>";
-                        echo "Total de ventas: " . $total_ventas;
-                        echo "<br>";
-                        echo "Deuda anterior: " . $deu_ant;
-                        echo "<br>";
-                        echo "Total de viajes: " . $pesos_viajes; //es la cabtidad de viajes
-                        echo "<br>";
-                        echo "Total de voucher: " . $noventa;
-                        echo "<br>";
+                        //echo "<br>";
+                        //echo "Debe de semanas: " . $cobra_semana_anterior;
+                        //echo "<br>";
+                        //echo "Total de ventas: " . $total_ventas;
+                        //echo "<br>";
+                        //echo "Deuda anterior: " . $deu_ant;
+                        //echo "<br>";
+                        //echo "Total de viajes: " . $pesos_viajes; //es la cabtidad de viajes
+                        //echo "<br>";
+                        //echo "Total de voucher: " . $noventa;
+                        //echo "<br>";
                         $depot = $cobra_semana_anterior + $total_ventas + $deu_ant;
                         echo "Suma lo de arriba: " . $depot;
                         echo "<br>";
-                        $saldo_recuento = $depot - $noventa - $saldo_a_favor;
+                        echo "Saldo recuento: " . $saldo_recuento = $depot - $saldo_a_favor; // - $noventa;
+                        echo "<br>";
                         echo "Saldo_a_favor " . $saldo_a_favor;
                         echo "<br>";
-                        echo "Cuenta: " . $cuenta = $saldo_a_favor - $depot;
+                        echo "Cuenta: " . $cuenta = $depot - $saldo_a_favor;
                         echo "<br>";
 
 
 
-                        if ($saldo_recuento > 0) {
-                            echo "Debe abonar: " . $dep_para_movil = $saldo_recuento;
+                        if ($saldo_recuento < 0) {
+                            echo "Debe abonar: " . $dep_para_movil = $cuenta;
                             echo "<br>";
                         } else if ($saldo_recuento == 0) {
                             echo "No debe abonar nada. Esta al dia: " . $saldo_recuento;
                             echo "<br>";
-                        } else if ($saldo_recuento) {
+                        } else if ($saldo_recuento > 0) {
                             echo "Depositarle: " . $dep = $saldo_recuento + $saldo_a_favor;
                             echo "<br>";
                         }
-
+                        //exit;
                         if ($para_movil < 0) {
                             $dep_para_movil = $para_movil;
                         } else {

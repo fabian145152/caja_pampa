@@ -110,6 +110,8 @@ if ($_SESSION['logueado']) {
                         <br>
                         <li> <a href="admin/genera_deuda/genera_deuda.php" class="btn btn-primary btn-block btn-sm" target="__blank">GENERAR DEUDA ANTERIOR</a></li>
                         <br>
+                        <li> <a href="admin/deposito_a_cuenta/genera_dep.php" class="btn btn-primary btn-block btn-sm" target="__blank">DEPOSITO A CUENTA DE LOS MOVILES</a></li>
+                        <br>
                         <li><a href="admin/cobros/inicio_cobros.php" target="_blank" class=" btn btn-primary btn-block btn-sm">COBRAR A MOVIL</a></li>
                         <br>
                         <li><a href="admin/cobros/estado_de_caja.php" target="_blank" class=" btn btn-primary btn-block btn-sm">RESUMEN DE CAJA</a></li>

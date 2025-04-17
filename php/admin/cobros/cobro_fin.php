@@ -39,11 +39,10 @@ if (isset($_SESSION['saldo_mp'])) {
 } else {
     echo "La variable de sesión 'nombre_variable' no existe.";
 }
-
 $fecha = date("Y-m-d");
-echo "Nombre de usuario: " . $usuario = $_SESSION['uname'];
-echo "<br>";
-echo "Hora: " . $_SESSION['time'];
+$usuario = $_SESSION['uname'];
+$_SESSION['time'];
+
 echo "<br>";
 echo "Movil " . $movil = $_POST['movil'];
 $paga_x_semana = $_POST['paga_x_semana'];
@@ -77,8 +76,24 @@ echo "Depositos en ft: " . $new_dep_ft = $_POST['dep_ft'];
 echo "<br>";
 echo "Deposito en MP: " . $new_dep_mp = $_POST['dep_mp'];
 echo "<br>";
-$deu = $semanas + $total_ventas + $deuda_anterior + $importe_viaj - $saldo_a_favor;
-echo "Deuda= " . $deuda = abs($deu);
+
+
+
+debeSemanas($con, $movil);
+$deu_sem = $imp_semana;
+
+$deu = $debe_semanas + $deuda_anterior - $new_dep_ft - $new_dep_mp;
+
+
+//$deu = $semanas + $total_ventas + $deuda_anterior + $importe_viaj - $saldo_a_favor;
+
+echo "<br>";
+echo "------------";
+echo "<br>";
+echo "Deuda:  " . $deu;
+echo "<br>";
+echo "------------";
+
 echo "<br>";
 
 echo "Paga x semana: " . $paga_x_semana;
@@ -97,26 +112,12 @@ echo "<br>";
 //guardaCaja($con, $fecha, $saldo_ft, $saldo_mp);
 
 
-ultimoSaldo($con);
-
-if (isset($_SESSION['saldo_ft']) && isset($_SESSION['saldo_mp'])) {
-    echo "Último saldo recuperado (saldo_ft): " . $_SESSION['saldo_ft'] . "<br>";
-    echo "Último saldo recuperado (saldo_mp): " . $_SESSION['saldo_mp'] . "<br>";
-} else {
-    echo "No se han encontrado valores de saldo.";
-    echo "<br>";
-}
-$guarda_ft = $_SESSION['saldo_ft'] + $new_dep_ft;
-$guarda_mp = $_SESSION['saldo_mp'] + $new_dep_mp;
-
 
 /*
     Guarda los depositos del movil en caja
     Actualiza la semana pagada
 */
 guardaCajaMovil($con, $movil, $fecha, $new_dep_ft, $new_dep_mp, $guarda_ft, $guarda_mp, $usuario);
-$dep_ft . "<br>";
-$dep_mp . "<br>";
 
 while ($debe_semanas > 0) {
 
@@ -202,26 +203,36 @@ if ($depo < 0) {
     echo "<br>";
 }
 
-
 echo "Falta: " . $paga_de_menos;
 echo "<br>";
 echo "Sobra: " . abs($paga_de_mas);
 echo "<br>";
 
 
-if ($paga_de_mas > 1) {
+//por aca esta el error con paga de mas y aga de menos
+if ($paga_de_mas < 1) {
     echo "<br>";
     echo "<br>";
     echo "<br>";
     echo "Paga de masssssss: " . $paga_de_mas = abs($paga_de_mas);
+    $paga_de_menos = 0;
     echo "<br>";
-} elseif ($paga_de_menos > 1) {
+} elseif ($paga_de_menos < 1) {
     echo "<br>";
     echo "<br>";
     echo "<br>";
     echo "Paga de menossssss: " . $paga_de_menos = abs($paga_de_menos);
+    $paga_de_mas = 0;
     echo "<br>";
 }
+
+//ve la deuda anterior de la tabla competa
+deudaAnterior($con, $movil);
+echo $deuda_anterior;
+echo $saldo_a_favor;
+
+
+exit;
 
 echo "<br>";
 echo "Paga de mas: " . $paga_de_mas;
@@ -229,19 +240,21 @@ echo "<br>";
 echo "Paga de menos: " . $paga_de_menos;
 echo "<br>";
 
-
+//exit;
 $sql_deu_ant = $con->prepare("UPDATE completa SET deuda_anterior = ?,
-                                                        saldo_a_favor_ft = ?,
-                                                        venta_1 = ?,
-                                                        venta_2 = ?,
-                                                        venta_3 = ?,
-                                                        venta_4 = ?,
-                                                        venta_5 = ?
-                                                     WHERE movil = ?");
+                                                    saldo_a_favor_ft = ?,
+                                                    venta_1 = ?,
+                                                    venta_2 = ?,
+                                                    venta_3 = ?,
+                                                    venta_4 = ?,
+                                                    venta_5 = ?
+                                                WHERE movil = ?");
+
+
 if (!$sql_deu_ant) {
     die("Error en la preparación: " . $con->error);
 }
-$sql_deu_ant->bind_param("iiiiiiii",  $paga_de_menos, $paga_de_mas, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5, $movil);
+$sql_deu_ant->bind_param("iiiiiiii",   $paga_de_menos, $paga_de_mas, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5, $movil);
 
 // Ejecutar la consulta
 if ($sql_deu_ant->execute()) {

@@ -30,34 +30,6 @@ function ultimosDep($con)
         return null;
     }
 }
-/*
-    Lee el ultimo saldo
-*/
-function ultimoSaldo($con)
-{
-
-
-    $query = "SELECT * FROM caja_final ORDER BY id DESC LIMIT 1";
-    $result = $con->query($query);
-
-    // Verificamos si se obtuvo algún registro
-    if ($result && $result->num_rows > 0) {
-        // Obtenemos los datos del último registro
-        $row = $result->fetch_assoc();
-        $saldo_ft = $row['saldo_ft'];
-        $saldo_mp = $row['saldo_mp'];
-
-        // Guardamos los valores en la sesión
-        $_SESSION['saldo_ft'] = $saldo_ft;
-        $_SESSION['saldo_mp'] = $saldo_mp;
-
-        // También puedes retornar los valores como array
-        return $row;
-    } else {
-        echo "No se encontraron registros.";
-        return null;
-    }
-}
 
 /*
     Guarda los depositos del movil en caja
@@ -142,4 +114,21 @@ function guardaCaja($con, $fecha, $saldo_ft, $saldo_mp)
     }
 }
 
-//$sql_sem = "UPDATE semanas SET x_semana = nuevo_valor WHERE condición;";
+function debeSemanas($con, $movil)
+{
+    $sql_sem = $con->query("SELECT * FROM semanas WHERE movil = '$movil'");
+    $row = $sql_sem->fetch_assoc(); // Almacenar el resultado en una variable
+    $imp_semana = $row['total']; // Acceder correctamente al valor
+    return $imp_semana;
+}
+
+function deudaAnterior($con, $movil)
+{
+    $stmt = $con->prepare("SELECT * FROM completa WHERE movil = ?");
+    $stmt->bind_param("s", $movil); // "s" indica tipo string para $movil
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $deuda_anterior = $row['deuda_anterior'];
+    $saldo_a_favor = $row['saldo_a_favor_ft'];
+}
