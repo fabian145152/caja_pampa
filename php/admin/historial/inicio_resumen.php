@@ -45,7 +45,7 @@ $res_le_1 = $con->query($leo_caj_1);
                     <th style="border: 1px solid black; padding: 8px;">FECHA</th>
                     <th style="border: 1px solid black; padding: 8px;">MOVIL</th>
                     <th style="border: 1px solid black; padding: 8px;">FT en caja</th>
-                    <th style="border: 1px solid black; padding: 8px;">OBSERVACIONES</th>
+                    <th style="border: 1px solid black; padding: 8px;">OBSERVACION</th>
                     <th style="border: 1px solid black; padding: 8px;">USUARIO</th>
 
                 </tr>
