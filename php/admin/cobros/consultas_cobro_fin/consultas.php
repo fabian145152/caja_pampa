@@ -70,6 +70,11 @@ function actualizaVenta1($con, $movil, $venta_1)
 //Entrar con los nuevos valores de deuda anterior y saldo a favor y movil
 function actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor)
 {
+    echo "<br>";
+    echo "Deuda anterior: " . $deuda_anterior;
+    echo "<br>";
+    echo "Saldo a favor: " . $saldo_a_favor;
+    //exit;
     // Definimos la consulta preparada
     $sql_deuda = "UPDATE completa SET deuda_anterior = ?, saldo_a_favor_ft = ? WHERE movil = ?";
     $stmt = $con->prepare($sql_deuda);
@@ -83,7 +88,9 @@ function actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor)
     $stmt->bind_param("iii", $deuda_anterior, $saldo_a_favor, $movil);
 
     if ($stmt->execute()) {
-        echo "Deuda anterior actualizada correctamente.";
+        echo "<br>";
+        echo "Deuda anterior y saldo a favor actualizada correctamente.";
+        echo "<br>";
         return true;
     } else {
         echo "Error al actualizar deuda anterior: " . $stmt->error;
@@ -145,7 +152,9 @@ function guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $usuario)
 
     // Ejecutamos la consulta
     if ($guarda_caja->execute()) {
+        echo "<br>";
         echo "Datos guardados en caja_final correctamente.";
+        echo "<br>";
         return true;
     } else {
         echo "Error al insertar datos en caja_final: " . $guarda_caja->error;

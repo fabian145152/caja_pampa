@@ -30,12 +30,18 @@ if (file_exists($archivo)) {
 
 
 
+
     // Verificar si la semana actual es diferente a la semana anterior
     if ($semana_actual != $semana_anterior) {
         // Si la semana ha cambiado, incrementar la variable
         $variable = 1; // Puedes cambiar este valor según tus necesidades
         // Nombre del archivo donde se guarda la semana
         // Guardar la semana actual en el archivo para futuras comparaciones
+
+        //procesarCobroSemanas($con, $movil);
+
+
+
         file_put_contents($archivo, $semana_actual);
         // Mostrar un mensaje o realizar cualquier otra acción cuando cambia la semana
         echo "¡La semana se ha incrementado!... " . $variable;
@@ -60,6 +66,11 @@ if (file_exists($archivo)) {
         //echo "Variable actual: " . $variable;
     }
 }
+
+
+    
+
+
 //echo "Semana anterior:" . $semana_anterior;
 //exit;
 //header("Location: ../menu.php");

@@ -12,7 +12,9 @@ $con = conexion();
 $con->set_charset("utf8mb4");
 $mov = $_POST['movil'];
 
-$mov;
+
+
+
 
 $movil = "A" . $mov;
 
@@ -61,6 +63,5 @@ $debe_semanas = $tiene_semanas['total'];
 
 
 
-    $_SESSION['variable'] = $movil;
-    include_once "cobro_siguiente.php";
-?>
+$_SESSION['variable'] = $movil;
+include_once "cobro_siguiente.php";

@@ -90,3 +90,67 @@ function deleteAllFilesInDirectory($dir)
 
     return true;
 }
+
+
+function procesarCobroSemanas($con, $movil)
+{
+    if ($con->connect_error) {
+        die("Error de conexión: " . $con->connect_error);
+    }
+
+    // Consulta SQL para obtener los datos del móvil
+    $sql = "SELECT c.movil, c.saldo_a_favor_ft, s.x_semana, s.total, 
+                   (c.saldo_a_favor_ft - s.x_semana) AS nuevo_saldo
+            FROM completa c
+            JOIN semanas s ON c.movil = s.movil
+            WHERE c.saldo_a_favor_ft >= s.x_semana AND c.movil = ?";
+
+    $stmt = $con->prepare($sql);
+    $stmt->bind_param("s", $movil);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+
+    // Verificar si hay resultados
+    if ($resultado->num_rows > 0) {
+        while ($fila = $resultado->fetch_assoc()) {
+            echo "<br>";
+            echo "<strong style='color: green;'>Procesando móvil: " . $fila["movil"] . "</strong><br>";
+
+            // Bucle para actualizar hasta que total sea igual a x_semana
+            while ($fila["total"] > $fila["x_semana"]) {
+                // Restar x_semana a saldo_a_favor_ft en completa
+                $sql_update_completa = "UPDATE completa SET saldo_a_favor_ft = saldo_a_favor_ft - ? WHERE movil = ?";
+                $stmt_completa = $con->prepare($sql_update_completa);
+                $stmt_completa->bind_param("is", $fila["x_semana"], $fila["movil"]);
+                $stmt_completa->execute();
+
+                if ($stmt_completa->affected_rows > 0) {
+                    echo "<strong style='color: blue;'>✅ Saldo actualizado en 'completa'.</strong><br>";
+                } else {
+                    echo "<strong style='color: orange;'>⚠ No se pudo actualizar el saldo en 'completa'.</strong><br>";
+                    break; // Si no se actualiza, salir del bucle
+                }
+
+                // Restar x_semana a total en semanas
+                $sql_update_semanas = "UPDATE semanas SET total = total - ? WHERE movil = ?";
+                $stmt_semanas = $con->prepare($sql_update_semanas);
+                $stmt_semanas->bind_param("is", $fila["x_semana"], $fila["movil"]);
+                $stmt_semanas->execute();
+
+                if ($stmt_semanas->affected_rows > 0) {
+                    echo "<strong style='color: blue;'>✅ Total actualizado en 'semanas'.</strong><br>";
+                } else {
+                    echo "<strong style='color: orange;'>⚠ No se pudo actualizar el total en 'semanas'.</strong><br>";
+                    break; // Si no se actualiza, salir del bucle
+                }
+
+                // Actualizar el valor de total en $fila para la próxima iteración
+                $fila["total"] -= $fila["x_semana"];
+            }
+
+            echo "<strong style='color: green;'>Debia semanas el móvil: " . $fila["movil"] . "</strong><br><hr>";
+        }
+    } else {
+        echo "<strong style='color: orange;'>⚠ No se descontaron semanas del saldo a favor.</strong>";
+    }
+}
