@@ -1,7 +1,7 @@
 <?php
 
 include_once "../../../funciones/funciones.php";
-include_once "consultas_cobro_fin/consultas.php";
+//include_once "consultas_cobro_fin/consultas.php";
 $con = conexion();
 $con->set_charset("utf8mb4");
 
@@ -85,6 +85,7 @@ $deposito = $new_dep_ft + $new_dep_mp;
 
 
 
+
 //exit;
 
 debeSemanas($con, $movil);
@@ -130,7 +131,7 @@ if ($resultado > 0) {
     echo "<br>";
     echo "Deposito total en voucher: " . $tot_voucher;
     echo "<br>";
-    if ($suma_gastos_semanales >= $tot_voucher) { //Si los gastos semanañes son mayores a los depositoe en voucher
+    if ($suma_gastos_semanales >= $tot_voucher) { //Si los gastos semanañes son mayores a los depositos en voucher
         echo "Deposito agregado en ft: " . $deposito;
         echo "<br>";
         echo "Suma de Voucher + FT : " . $vou_mas_ft = $descuentos + $deposito;
@@ -139,29 +140,19 @@ if ($resultado > 0) {
 
     // Pagos con Voucher ----------------------------------------------------------------------------------------------------------------
     $vou_menos_ventas =  $vou_mas_ft - $total_ventas;
-    //echo "Deposito menos venta: " . $vou_menos_ventas;
-    //echo "<br>";
     $vou_menos_ventas_deuda = $vou_mas_ft - $total_ventas - $deuda_anterior;
-    //echo "Deposito menos venta deuda: " . $vou_menos_ventas_deuda;
-    //echo "<br>";
     $vou_menos_ventas_deuda_semanas = $vou_mas_ft - $total_ventas - $deuda_anterior - $debe_semanas;
-    //echo "Deposito menos venta" . $vou_menos_ventas_deuda_semanas;
-    //echo "<br>";
+
+
     if ($tot_voucher > 0) {
 
         if ($total_ventas <= $vou_mas_ft) {
             //Para cubrir ventas con voucher
             $p_pag_prod = $suma_gastos_semanales - $deuda_anterior - $debe_semanas;
             $para_pagar_productos = abs($p_pag_prod);
-            //echo "<br>";
-            //echo "Total de ventas: " . $total_ventas;
-            //echo "<br>";
+
             $vou_menos_ventas =  $vou_mas_ft - $total_ventas;
             echo "Deposito menos venta: " . $vou_menos_ventas;
-            //echo "<br>";
-            //echo "<strong>Sobran: " . $vou_menos_ventas . "</strong>";
-            //echo "<br>";
-            //echo "<br>";
         } else {
             echo "Ventas al dia;";
             echo "<br>";
@@ -196,116 +187,98 @@ if ($resultado > 0) {
             echo "Semanas al dia;";
             echo "<br>";
         }
-        /*
-        echo "<br>";
-        echo "Calculo para pagar productos con voucher: " . $para_pagar_productos;
-        echo "<br>";
-        echo "Calculo para pagar deuda anterior con voucher: " . $para_pagar_deu;
-        echo "<br>";
-
-        echo "Calculo para actualizar semanas con voucher: " . $para_actualizar_sem;
-        echo "<br>";
-        echo "Aca actualizar la DDBB con todo a cero pagó con Voucher y sobro...";
-        */
     } else {
 
-
-
-
-        //exit;
-        /*
-        // Actualizar saldo_a_favor_ft en completa
-        $sql_update_completa = "UPDATE completa 
-                        SET saldo_a_favor_ft = saldo_a_favor_ft - ?
-                        WHERE movil = ?";
-
-        $stmt_completa = $con->prepare($sql_update_completa);
-        $stmt_completa->bind_param("is", $x_semana, $movil);
-        $stmt_completa->execute();
-
-        if ($stmt_completa->affected_rows > 0) {
-            echo "Saldo actualizado en 'completa'.<br>";
-        } else {
-            echo "No se pudo actualizar el saldo en 'completa'.<br>";
-        }
-
-        // Actualizar total en semanas
-        $sql_update_semanas = "UPDATE semanas 
-                       SET total = total - ?
-                       WHERE movil = ?";
-
-        $stmt_semanas = $con->prepare($sql_update_semanas);
-        $stmt_semanas->bind_param("is", $x_semana, $movil);
-        $stmt_semanas->execute();
-
-        if ($stmt_semanas->affected_rows > 0) {
-            echo "Total actualizado en 'semanas'.<br>";
-        } else {
-            echo "No se pudo actualizar el total en 'semanas'.<br>";
-        }
-*/
-        //exit;
+        echo "-----------------------------------------------------------------------<br>";
+        echo "<strong>deuda anterior y ventas va, ver con semanas no da bien<br></strong>";
+        echo "-----------------------------------------------------------------------<br>";
 
 
         //Pagos con FT ----------------------------------------------------------------------------------------------------------------
         echo "<br>";
 
-        if ($cant_semanas >= 1) {
-            echo "Prepara para actualizar semanas..";
+        //if ($cant_semanas >= 1) {
+
+        echo "Debe de semanas: " . $debe_semanas;
+        echo "<br>";
+        echo "Abono semanal: " . $paga_x_semana;
+        echo "<br>";
+        echo "Debe semanas: " . $debe_semanas . " | " .  "Deposito: " .  $deposito . "<br>";
+        echo "Deposito: " . $deposito;
+        echo "<br>";
+        echo "Resto que falta pagar: " . $resto_p_semanas = $debe_semanas - $deposito;
+        echo "<br>";
+
+
+        if ($paga_x_semana == $deposito) {
+            echo "-------------------------<br>";
+            echo "Paga x semana == depsoito<br>";
+            echo "-------------------------<br>";
+
+            $total = $paga_x_semana;
+            echo "Total para guardar cuando paga 1 semana solamente con el importe justo: " . $total;
             echo "<br>";
-            echo "Debe de semanas: " . $debe_semanas;
+            echo "Movil: " . $movil;
+            echo "<br>";
+            echo "Nuevo dep_ft: " . $new_dep_ft;
+            echo "<br>";
+            $new_dep_ft = $deposito;
+            $deuda_anterior = $resto_p_semanas;
+            echo "Nueva deuda anterior que falto pagar para cubrir semanas: " . $deuda_anterior;
+            echo "<br>";
+            actualizaSemPagadas($con, $movil, $total);
+            actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor);
+            guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $usuario);
+            header('Location:inicio_cobros');
+            //exit;
+        } else {
+            echo "-------------------------<br>";
+            echo "Paga x semana !== depsoito<br>";
+            echo "-------------------------<br>";
+
+
+            echo "Si el deposito es mayor que lo que paga x semana: " . $resto_p_semanas;
             echo "<br>";
             echo "Deposito: " . $deposito;
             echo "<br>";
-            echo "Abono semanal: " . $paga_x_semana;
-            $resto = $deposito % $paga_x_semana;
-            echo "<br>";
-            echo "El resto es: $resto";
+            echo "Debe semanas: " . $debe_semanas;
             echo "<br>";
 
-            $deposito = $resto;
-            echo "Nuevo deposito: " . $resto;
+            $sql_se = "SELECT * FROM semanas WHERE movil = '$movil'";
+            $sql_set = $con->query($sql_se);
+            $list = $sql_set->fetch_assoc();
+            echo $x_sem = $list['x_semana'];
+            $tot = $list['total'];
+            $total = $tot - $x_sem;
+
             echo "<br>";
-            //exit;
+            echo "Paga x semana " . $x_sem . "|" . "Total de semanas" .  $total;
+            $debe = $tot - $x_sem;
 
-            if ($deposito <= $paga_x_semana) {
-                echo "Resto es menor a una semana...";
-                echo "Actualiza semanas: ";
-                echo "<br>";
-                echo "---------------------------------";
-                echo "<br>";
-                echo "PARA cubrir semanas con FT";
-                echo "<br>";
-                echo "---------------------------------";
-                echo "<br>";
-                echo "Paga por semana: " . $paga_x_semana;
-                echo "<br>";
-                echo "Debe semanas: " . $debe_semanas;
-                echo "<br>";
-                echo "Deposito: " . $resto;
-                echo "<br>";
-                $p_ac_sem = $resto - $total_ventas - $deuda_anterior;
-                echo "Para actualizar semanas: " . $p_ac_sem;
+            echo "<br>";
+            echo "Debe pagar: " . $debe;
+            echo "<br>";
+            echo "Deposito: " . $new_dep_ft;
+            echo "<br>";
+            echo "Guardo en deuda anterior: " . $deuda_anterior =  $debe - $new_dep_ft;
+            echo "<br>";
+            echo "Guardar en total: " . $total = $x_sem;
 
-                echo "<strong>Actualizar ventas, deuda, semanas. Sobran: " . $dep_menos_ventas_deuda_semanas . "</strong>";
-                echo "<br>";
-                echo "Movil: " . $movil;
-                echo "<br>";
-                $total = $debe_semanas - $resto;
-                $total = $total + $paga_x_semana;
+            exit;
+            echo "<br>";
+            echo "";
+            echo "<br>";
 
-                echo "Para guardar en total de la tabla semanas: " . $total;
-                //actualizaSemPagadas($con, $movil, $total);
-                //guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $usuario);
-            } else {
-                echo "No actualiza semanas";
-            }
+
+
+            //actualizaSemPagadas($con, $movil, $total);
+            //actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor);
+            //guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $usuario);
+
         }
-        //exit;
+        //}
 
-
-
-
+        exit;
 
         if ($total_ventas <= $deposito) {
             echo "<br>";
@@ -319,6 +292,7 @@ if ($resultado > 0) {
             $p_pag_prod = $deposito - $deuda_anterior - $debe_semanas;
             $para_pagar_productos = abs($p_pag_prod);
             $dep_menos_ventas = $deposito - $total_ventas;
+
 
 
             if ($total_ventas > 0) {
@@ -336,27 +310,48 @@ if ($resultado > 0) {
                 echo "<br>";
                 echo "Saldo a Favor: " . $saldo_a_favor = $dep_menos_ventas;
                 echo "<br>";
+
                 actualizaVenta1($con, $movil, $venta_1);
                 actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor);
                 guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $usuario);
+            } else {
+                echo "-------------------------------------------------------<br>";
+                echo "No ejecuta actualizacion de ventas porque no alcanza...";
+                echo "<br>-------------------------------------------------------";
             }
-        } else {
-            echo "No elecuta actualizacion de ventas porque no alcanza...";
         }
 
-        echo "<br>";
-        //if ($deuda_anterior <= $dep_menos_ventas) {
-        echo "<br>";
-        echo "---------------------------------";
-        echo "<br>";
-        echo "PARA cubrir deuda anterior con FT";
-        echo "<br>";
-        echo "---------------------------------";
-        echo "<br>";
+
+        if ($deuda_anterior <= $dep_menos_ventas) {
+            echo "<br>";
+            echo "---------------------------------";
+            echo "<br>";
+            echo "PARA cubrir deuda anterior con FT";
+            echo "<br>";
+            echo "---------------------------------";
+            echo "<br>";
+            echo "Deuda anterior : " . $deuda_anterior;
+            echo "<br>";
+            echo "deposito: " . $deposito;
+            echo "<br>";
+            echo "Saldo a favor: " . $saldo_a_favor = 0;
+            echo "<br>";
+            $total = $paga_x_semana;
+            echo "Guardo semana cero: " . $total;
+            echo "<br>";
+            //actualizaSemPagadas($con, $movil, $total);
+            //actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor);
+            //guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $usuario);
+        }
+
+
 
         if (!$deuda_anterior == 0) {
+            echo "-------------------------------------------------------<br>";
             echo "No ejecuta funciones para actualizar deuda anterior porque no tiene";
+            echo "<br>-------------------------------------------------------";
             echo "<br>";
+
 
             $p_pag_deu = $deposito - $total_ventas - $debe_semanas;
             $dep_menos_ventas_deuda = $deuda_anterior - $deposito;
@@ -366,7 +361,8 @@ if ($resultado > 0) {
 
             $saldo_a_favor = $dep_menos_ventas_deuda;
 
-            if ($deuda_anterior > $p_pag_deu) {
+            if ($deuda_anterior < $p_pag_deu) {
+
                 echo "Deuda anterior:" . $deuda_anterior;
                 echo "<br>";
                 echo "Saldo a favor: " . $saldo_a_favor;
@@ -383,21 +379,45 @@ if ($resultado > 0) {
                 echo "Saldo a favoraaaaa: " . $saldo_a_favor;
                 echo "<br>";
             } else {
-                $deuda_anterior = 0;
-                echo "deuda anterior: " . $deuda_anterior;
-                echo "<br>";
-                echo "Saldo a Favor: " . $saldo_a_favor;
-                echo "<br>";
 
-                //actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor);
-                //guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $usuario);
+
+                echo "-----------------------------------------------<br>";
+                echo "----- NO ALCANZA PARA CUBRIR DEUDAS -----------<br>";
+                echo "-----------------------------------------------<br>";
+
+
+                echo "Venta 1: " . $venta_1 = 0;
+                echo "<br>";
+                echo "Deuda anterioraaaa: " . $deuda_anterior;
+
+                echo "<br>";
+                echo "Deposito: " . $deposito;
+                echo "<br>";
+                echo "Saldo a favor: " . $saldo_a_favor = 0;
+                echo "<br>";
+                echo "Venta: " . $total_ventas;
+
+                $queda_debiendo = $total_ventas - $deposito + $deuda_anterior;
+
+
+                echo "<br>";
+                echo "Queda debiendo: " . $queda_debiendo;
+                echo "<br>";
+                echo "Para guardar...";
+                echo "<br>";
+                echo "<br>";
+                $deuda_anterior = $queda_debiendo;
+                echo "Nueva deuda anterior: " . $deuda_anterior;
+                echo "<br>";
+                echo "<br>";
+                $new_dep_ft = $new_dep_ft = $deposito;
+                echo "Deposito en FT: " . $new_dep_ft;
+                echo "<br>";
+                actualizaVenta1($con, $movil, $venta_1);
+                actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor);
+                guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $usuario);
             }
-            //actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor);
-            //guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $usuario);
         }
-
-
-        echo "<br>";
     }
 }
 

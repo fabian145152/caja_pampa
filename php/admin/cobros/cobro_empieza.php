@@ -23,9 +23,9 @@ $movil = "A" . $mov;
 $sql_existe = "SELECT * FROM completa WHERE movil = " . $mov;
 $stmt = $con->prepare($sql_existe);
 $stmt->execute();
-$result = $stmt->get_result();
+$resu = $stmt->get_result();
 
-if ($result->num_rows > 0) {
+if ($resu->num_rows > 0) {
 } else {
     echo "El registro no existe.";
     header("Location: inicio_cobros.php");
@@ -52,6 +52,7 @@ $resu = $con->query($sql_tiene_ventas);
 $linea = $resu->fetch_assoc();
 $hay_ventas = $linea['venta_1'];
 $deuda_ant = $linea['deuda_anterior'];
+
 
 $sql_sem = "SELECT * FROM semanas WHERE movil = " . $mov;
 $sql_res = $con->query($sql_sem);
