@@ -209,76 +209,9 @@ if ($resultado > 0) {
         echo "Resto que falta pagar: " . $resto_p_semanas = $debe_semanas - $deposito;
         echo "<br>";
 
-
-        if ($paga_x_semana == $deposito) {
-            echo "-------------------------<br>";
-            echo "Paga x semana == depsoito<br>";
-            echo "-------------------------<br>";
-
-            $total = $paga_x_semana;
-            echo "Total para guardar cuando paga 1 semana solamente con el importe justo: " . $total;
-            echo "<br>";
-            echo "Movil: " . $movil;
-            echo "<br>";
-            echo "Nuevo dep_ft: " . $new_dep_ft;
-            echo "<br>";
-            $new_dep_ft = $deposito;
-            $deuda_anterior = $resto_p_semanas;
-            echo "Nueva deuda anterior que falto pagar para cubrir semanas: " . $deuda_anterior;
-            echo "<br>";
-            actualizaSemPagadas($con, $movil, $total);
-            actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor);
-            guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $usuario);
-            header('Location:inicio_cobros');
-            //exit;
-        } else {
-            echo "-------------------------<br>";
-            echo "Paga x semana !== depsoito<br>";
-            echo "-------------------------<br>";
-
-
-            echo "Si el deposito es mayor que lo que paga x semana: " . $resto_p_semanas;
-            echo "<br>";
-            echo "Deposito: " . $deposito;
-            echo "<br>";
-            echo "Debe semanas: " . $debe_semanas;
-            echo "<br>";
-
-            $sql_se = "SELECT * FROM semanas WHERE movil = '$movil'";
-            $sql_set = $con->query($sql_se);
-            $list = $sql_set->fetch_assoc();
-            echo $x_sem = $list['x_semana'];
-            $tot = $list['total'];
-            $total = $tot - $x_sem;
-
-            echo "<br>";
-            echo "Paga x semana " . $x_sem . "|" . "Total de semanas" .  $total;
-            $debe = $tot - $x_sem;
-
-            echo "<br>";
-            echo "Debe pagar: " . $debe;
-            echo "<br>";
-            echo "Deposito: " . $new_dep_ft;
-            echo "<br>";
-            echo "Guardo en deuda anterior: " . $deuda_anterior =  $debe - $new_dep_ft;
-            echo "<br>";
-            echo "Guardar en total: " . $total = $x_sem;
-
-            exit;
-            echo "<br>";
-            echo "";
-            echo "<br>";
-
-
-
-            //actualizaSemPagadas($con, $movil, $total);
-            //actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor);
-            //guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $usuario);
-
-        }
         //}
 
-        exit;
+        //exit;
 
         if ($total_ventas <= $deposito) {
             echo "<br>";
@@ -417,6 +350,75 @@ if ($resultado > 0) {
                 actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor);
                 guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $usuario);
             }
+        }
+
+
+        if ($paga_x_semana == $deposito) {
+            echo "-------------------------<br>";
+            echo "Paga x semana == depsoito<br>";
+            echo "-------------------------<br>";
+
+            $total = $paga_x_semana;
+            echo "Total para guardar cuando paga 1 semana solamente con el importe justo: " . $total;
+            echo "<br>";
+            echo "Movil: " . $movil;
+            echo "<br>";
+            echo "Nuevo dep_ft: " . $new_dep_ft;
+            echo "<br>";
+            $new_dep_ft = $deposito;
+            $deuda_anterior = $resto_p_semanas;
+            echo "Nueva deuda anterior que falto pagar para cubrir semanas: " . $deuda_anterior;
+            echo "<br>";
+            actualizaSemPagadas($con, $movil, $total);
+            actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor);
+            guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $usuario);
+
+            header('Location:inicio_cobros.php');
+        } else {
+
+            echo "-------------------------<br>";
+            echo "Paga x semana !== depsoito<br>";
+            echo "-------------------------<br>";
+
+
+            echo "Si el deposito es mayor que lo que paga x semana: " . $resto_p_semanas;
+            echo "<br>";
+            echo "Deposito: " . $deposito;
+            echo "<br>";
+            echo "Debe semanas: " . $debe_semanas;
+            echo "<br>";
+
+            $sql_se = "SELECT * FROM semanas WHERE movil = '$movil'";
+            $sql_set = $con->query($sql_se);
+            $list = $sql_set->fetch_assoc();
+            echo $x_sem = $list['x_semana'];
+            $tot = $list['total'];
+            $total = $tot - $x_sem;
+
+            echo "<br>";
+            echo "Paga x semana " . $x_sem . "|" . "Total de semanas" .  $total;
+            $debe = $tot - $x_sem;
+
+            echo "<br>";
+            echo "Debe pagar: " . $debe;
+            echo "<br>";
+            echo "Deposito: " . $new_dep_ft;
+            echo "<br>";
+            echo "Guardo en deuda anterior: " . $deuda_anterior =  $debe - $new_dep_ft;
+            echo "<br>";
+            echo "Guardar en total: " . $total = $x_sem;
+
+            //exit;
+            echo "<br>";
+            echo "";
+            echo "<br>";
+
+
+
+            //actualizaSemPagadas($con, $movil, $total);
+            //actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor);
+            //guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $usuario);
+
         }
     }
 }
