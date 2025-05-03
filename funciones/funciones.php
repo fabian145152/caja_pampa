@@ -1,5 +1,38 @@
 <?php
 ## conexion a la base de datos
+/* Listado de funciones
+1  conexion()                                        
+                                        conectarse a la DDBB
+2  leerArchivoTXT($rutaArchivo)                      
+                                        Lee archivo TXT para actualizar semanas
+3  head()                                            
+                                        encabezado de la pagina html
+4  foot()                                            
+                                        pie de pagina en html
+5  deleteAllFilesInDirectory($dir)                   
+                                        Borra toddos los archivos de la carpeta de los recibos
+6  procesarCobroSemanas($con, $movil)                
+                                        Procesa los debitos de la semana cuando depositan a cuenta de varias semanas 
+7  debeSemanas($con, $movil)                         
+                                        Lee las deuda de la semana
+8  actualizaSemPagadas($con, $movil, $total)         
+                                        Actualiza las semanas cuando se pagan
+9  actualizaVenta1($con, $movil, $venta_1)           
+                                        Actualiza las ventas
+10 actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor)
+                                        Actualiza deuda anterior y saldo a favor cuando paga en FT
+                                        Entrar con los nuevos valores de deuda anterior y saldo a favor y movil
+11 ultimosDep($con)                                   
+                                        Consulta para obtener el último registro
+12 guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $usuario)
+                                        Guarda el ultimomovimiento de caja                        
+13 guardaCaja($con, $fecha, $saldo_ft, $saldo_mp)
+                                        Guarda el ultimomovimiento de caja                        
+14 deudaAnterior($con, $movil)
+                                        Para lectura de la deuda anterior
+*/
+
+
 
 function conexion()
 {
@@ -30,7 +63,7 @@ function leerArchivoTXT($rutaArchivo)
 
 function foot()
 {
-?>
+    ?>
     <style>
         .footer {
             width: 100%;
@@ -48,12 +81,12 @@ function foot()
     </style>
 
     <div class="footer">Ver 1.2</div>
-<?php
+    <?php
 }
 
 function head()
 {
-?>
+    ?>
     <link rel="icon" href="imagenes/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
@@ -61,7 +94,7 @@ function head()
     <script src="../js/jquery-3.4.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/bootbox.min.js"></script>
-<?php
+    <?php
 }
 
 ## Esta funcion se utiliza para borrar todos los archivos de una carpeta
@@ -192,7 +225,8 @@ function actualizaSemPagadas($con, $movil, $total)
     $stmt->bind_param("ii", $total, $movil);
 
     if ($stmt->execute()) {
-        echo "Semanas actualizadas correctamente.";
+        echo "<br>";
+        echo "----------Semanas actualizadas correctamente.---------------";
         return true;
     } else {
         echo "<strong>Error al actualizar semanas: </strong>" . $stmt->error;
@@ -224,7 +258,7 @@ function actualizaVenta1($con, $movil, $venta_1)
         return false;
     }
 }
-//Actualiza deuda anterior y sado a favor cuando paga en FT
+//Actualiza deuda anterior y saldo a favor cuando paga en FT
 //Entrar con los nuevos valores de deuda anterior y saldo a favor y movil
 function actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor)
 {
