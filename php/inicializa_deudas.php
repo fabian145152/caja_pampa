@@ -24,16 +24,16 @@ if ($_SESSION['logueado']) {
 
 
 
-        $sql_semanas = "UPDATE semanas SET total = x_semana, fecha = '0000-00-00'";
-
-        if ($con->query($sql_semanas) === TRUE) {
-            echo "<br>";
-            echo "La tabla semanas se actualizó correctamente.";
-            echo "<br>";
+        $fecha = date("Y-m-d");
+        $sql = "UPDATE semanas SET total = x_semana, fecha = '$fecha'";
+        if ($con->query($sql) === TRUE) {
+            echo "Los valores se han actualizado correctamente.";
         } else {
-            echo "Error al actualizar la tabla semanas: " . $con->error;
-            exit;
+            echo "Error al actualizar los valores: " . $con->error;
         }
+
+
+
 
         $sql_recibo = "UPDATE recibo set numero = 1";
 
@@ -146,7 +146,7 @@ if ($_SESSION['logueado']) {
         echo "<BR></BR><BR></BR><BR></BR><BR></BR><BR></BR><BR></BR><BR></BR><BR></BR><BR></BR><BR></BR>";
     }
 
-?>
+    ?>
     <!DOCTYPE html>
     <html lang="en">
 
@@ -163,7 +163,8 @@ if ($_SESSION['logueado']) {
         <div class="col-md-3">
             <div class="list-group">
                 <form method="post">
-                    <button type="submit" name="actualizar" class=" btn btn-success btn-block btn-sm">BORRAR TODAS LAS DEUDAS</button>
+                    <button type="submit" name="actualizar" class=" btn btn-success btn-block btn-sm">BORRAR TODAS LAS
+                        DEUDAS</button>
                 </form>
                 <br><br><br>
                 <a href="menu.php" class=" btn btn-info btn-block btn-sm">NOBORRAR NADA Y VOLVER AL MENU PRINCIPAL</a>
@@ -175,6 +176,6 @@ if ($_SESSION['logueado']) {
     </html>
 
 
-<?php
+    <?php
 }
 ?>

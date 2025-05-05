@@ -30,7 +30,7 @@ function leerArchivoTXT($rutaArchivo)
 
 function foot()
 {
-?>
+    ?>
     <style>
         .footer {
             width: 100%;
@@ -48,12 +48,12 @@ function foot()
     </style>
 
     <div class="footer">Ver 1.2</div>
-<?php
+    <?php
 }
 
 function head()
 {
-?>
+    ?>
     <link rel="icon" href="imagenes/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
@@ -61,7 +61,7 @@ function head()
     <script src="../js/jquery-3.4.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/bootbox.min.js"></script>
-<?php
+    <?php
 }
 
 ## Esta funcion se utiliza para borrar todos los archivos de una carpeta
@@ -228,10 +228,7 @@ function actualizaVenta1($con, $movil, $venta_1)
 //Entrar con los nuevos valores de deuda anterior y saldo a favor y movil
 function actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor)
 {
-    echo "<br>";
-    echo "Deuda anterior de la funcion: " . $deuda_anterior;
-    echo "<br>";
-    echo "Saldo a favor de la funcion: " . $saldo_a_favor;
+
     //exit;
     // Definimos la consulta preparada
 
