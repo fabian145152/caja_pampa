@@ -559,78 +559,85 @@ $sql_voucher = $con->query($sql_voucher);
                             ?>
                             <input type="hidden" id="paga_x_viaje" name="paga_x_viaje" value="<?php echo $paga_x_viaje ?>">
                             <h2>DEPOSITO</h2>
-                            <input type="text" id="saldo_a_favor" name="saldo_a_favor" value="<?php echo $saldo_a_favor ?>"
 
-                                <?php
-                                //echo "<br>";
-                                //echo "Debe de semanas: " . $cobra_semana_anterior;
-                                //echo "<br>";
-                                //echo "Semanas adeudadas: " . $adu;
-                                //echo "<br>";
-                                //echo "Total de ventas: " . $total_ventas;
-                                //echo "<br>";
-                                //echo "Deuda anterior: " . $deu_ant;
-                                //echo "<br>";
-                                //echo "Total de viajes: " . $pesos_viajes; //es la cabtidad de viajes
-                                //echo "<br>";
-                                //echo "Total de voucher: " . $noventa;
-                                //echo "<br>";
-                                $dato_a_env = $noventa - $adu - $total_ventas - $deu_ant;
-                                //echo "Dato para enviar: " . $dato_a_env;
-                                $depot = $adu + $total_ventas + $deu_ant + $pesos_viajes;
-                                //echo "Suma lo de arriba: " . $depot;
-                                //echo "<br>";
-                                $saldo_recuento = $depot - $saldo_a_favor; // - $noventa;
-                                //echo "Saldo recuento: " . $saldo_recuento;
-                                //echo "<br>";
-                                //echo "Saldo_a_favor " . $saldo_a_favor;
-                                //echo "<br>";
-                                $cuenta = $noventa - $depot;
-                                //echo "Cuenta: " . $cuenta;
-                                //echo "<br>";
+                            <input type="hidden" id="saldo_a_favor" name="saldo_a_favor" value="<?php echo $saldo_a_favor ?>">
+                            <input type="hidden" id="deuda_ant" name="deuda_ant" value="<?php echo $deu_ant ?>">
+                            <input type="hidden" id="venta_1" name="venta_1" value="<?php echo $ven_1 ?>">
+                            <input type="hidden" id="venta_2" name="venta_2" value="<?php echo $ven_2 ?>">
+                            <input type="hidden" id="venta_3" name="venta_3" value="<?php echo $ven_3 ?>">
+                            <input type="hidden" id="venta_4" name="venta_4" value="<?php echo $ven_4 ?>">
+                            <input type="hidden" id="venta_5" name="venta_5" value="<?php echo $ven_5 ?>">
+
+                            <?php
+                            //echo "<br>";
+                            //echo "Debe de semanas: " . $cobra_semana_anterior;
+                            //echo "<br>";
+                            //echo "Semanas adeudadas: " . $adu;
+                            //echo "<br>";
+                            //echo "Total de ventas: " . $total_ventas;
+                            //echo "<br>";
+                            //echo "Deuda anterior: " . $deu_ant;
+                            //echo "<br>";
+                            //echo "Total de viajes: " . $pesos_viajes; //es la cabtidad de viajes
+                            //echo "<br>";
+                            //echo "Total de voucher: " . $noventa;
+                            //echo "<br>";
+                            $dato_a_env = $noventa - $adu - $total_ventas - $deu_ant;
+                            //echo "Dato para enviar: " . $dato_a_env;
+                            $depot = $adu + $total_ventas + $deu_ant + $pesos_viajes;
+                            //echo "Suma lo de arriba: " . $depot;
+                            //echo "<br>";
+                            $saldo_recuento = $depot - $saldo_a_favor; // - $noventa;
+                            //echo "Saldo recuento: " . $saldo_recuento;
+                            //echo "<br>";
+                            //echo "Saldo_a_favor " . $saldo_a_favor;
+                            //echo "<br>";
+                            $cuenta = $noventa - $depot;
+                            //echo "Cuenta: " . $cuenta;
+                            //echo "<br>";
 
 
 
-                                if ($saldo_recuento < 0) {
+                            if ($saldo_recuento < 0) {
 
-                                    if ($dep_para_movil < 0) {
-                                        echo "Debe abonar: " . $dep_para_movil = $cuenta;
-                                        echo "<br>";
-                                    }
-                                } else if ($saldo_recuento == 0) {
-                                    echo "No debe abonar nada. Esta al dia: " . $saldo_recuento;
-                                    echo "<br>";
-                                } else if ($saldo_recuento > 0) {
-                                    $dep = $saldo_recuento + $saldo_a_favor;
+                                if ($dep_para_movil < 0) {
+                                    echo "Debe abonar: " . $dep_para_movil = $cuenta;
                                     echo "<br>";
                                 }
-                                //exit;
-                                if ($para_movil < 0) {
-                                    $dep_para_movil = $para_movil;
-                                } else {
+                            } else if ($saldo_recuento == 0) {
+                                echo "No debe abonar nada. Esta al dia: " . $saldo_recuento;
+                                echo "<br>";
+                            } else if ($saldo_recuento > 0) {
+                                $dep = $saldo_recuento + $saldo_a_favor;
+                                echo "<br>";
+                            }
+                            //exit;
+                            if ($para_movil < 0) {
+                                $dep_para_movil = $para_movil;
+                            } else {
 
-                                ?>
-                                <li>
+                            ?>
+                        <li>
                             <?php
 
-                                    $debe_abonar = $para_movil + $deu_ant;
+                                $debe_abonar = $para_movil + $deu_ant;
 
                             ?>
                             <input type="hidden" id="debe_abonar" name="debe_abonar" value="<?php echo $debe_abonar ?>">
                             <label class="mi-label">Debe :</label>
 
                             <?php
-                                    $total_para_base = $cobra_semana_anterior + $total_ventas + $deu_ant - $saldo_a_favor;
+                                $total_para_base = $cobra_semana_anterior + $total_ventas + $deu_ant - $saldo_a_favor;
 
 
-                                    if ($viajes_que_no_se_cobraron >= 1) {
-                                        echo "<br>";
-                                        echo "Se le suman " . $viajes_que_no_se_cobraron . " De la semana anterior. ";
-                                        echo "<br>";
-                                        $cobra = $viajes_que_no_se_cobraron * $paga_x_viaje + $cobra;
-                                    }
+                                if ($viajes_que_no_se_cobraron >= 1) {
+                                    echo "<br>";
+                                    echo "Se le suman " . $viajes_que_no_se_cobraron . " De la semana anterior. ";
+                                    echo "<br>";
+                                    $cobra = $viajes_que_no_se_cobraron * $paga_x_viaje + $cobra;
+                                }
 
-                                    echo $a_cobrar = $deuda_semanas_anteriores - $paga_x_semana + $deuda_anterior;
+                                echo $a_cobrar = $deuda_semanas_anteriores - $paga_x_semana + $deuda_anterior;
                             ?>
                             <input type="hidden" id="paga_mov" name="paga_mov" value="<?php echo $saldo_recuento ?>"
                                 readonly>
@@ -640,21 +647,21 @@ $sql_voucher = $con->query($sql_voucher);
                             >
                         </li>
                     <?php
-                                }
+                            }
 
-                                if ($can_viajes > 0) {
-                                    $voucher = 1;
+                            if ($can_viajes > 0) {
+                                $voucher = 1;
                     ?>
                         <div class="recuadro" id="ing_via">
                             <?php
 
-                                    include "calcula_viajes.php";
+                                include "calcula_viajes.php";
                             ?>
                         </div>
                     <?php
-                                }
+                            }
 
-                                if ($para_movil > 0) {
+                            if ($para_movil > 0) {
                     ?>
                         <br>
                         <li>
@@ -667,9 +674,9 @@ $sql_voucher = $con->query($sql_voucher);
                         </li>
                         <p>debe cargar algun valor si no no seguira adelante</p>
                     <?php
-                                }
-                                if ($viajes_de_la_semana_anterior > 0) {
-                                }
+                            }
+                            if ($viajes_de_la_semana_anterior > 0) {
+                            }
 
                     ?>
 
