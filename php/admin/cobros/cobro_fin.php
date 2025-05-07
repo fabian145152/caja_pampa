@@ -228,13 +228,14 @@ if ($tot_voucher > 0) {
     echo "Cantidad de semanas: " . $cant_semanas = $_POST['cant_sem'];
 
 
-?>
+    ?>
     <ul>
         <li>Sin ventas - no debe semnasa</li>
         <li>Sin Ventas - debe semanas</li>
 
         <li>(cod 1) Error deuda anterior menor a cero</li>
         <li>(cod 2) Error saldo a favor menor que cero</li>
+        <br><br><br><br><br>
         <li>(cod 3) Error efectivo menor que cero</li>
         <li>(cod 4) Error Saldo a favor - deuda anterior mayores a 0</li>
         <li>(cod 5) Solo ventas</li>
@@ -262,7 +263,7 @@ if ($tot_voucher > 0) {
         <li>(cod 26) eposito - Semanas - Deuda anterior - Ventas</li>
 
     </ul>
-<?php
+    <?php
 
 
     // Llamada a la función debeSemanas
@@ -352,11 +353,11 @@ if ($tot_voucher > 0) {
     }
 
     //(cod 14) Semanas - Deuda anterior
-    if ($new_dep_ft == 33 && $debe_semanas == 0 && $saldo_a_favor > 0  && $deuda_anterior == 0 && $ventas > 0) {
+    if ($new_dep_ft == 33 && $debe_semanas == 0 && $saldo_a_favor > 0 && $deuda_anterior == 0 && $ventas > 0) {
         echo "(cod 14) Semanas - Deuda anterior...";
     }
     // (cod 15) Semanas - deuda anterior - ventas
-    if ($new_dep_ft == 0 && $debe_semanas > 0 && $saldo_a_favor == 0  && $deuda_anterior > 0 && $ventas > 0) {
+    if ($new_dep_ft == 0 && $debe_semanas > 0 && $saldo_a_favor == 0 && $deuda_anterior > 0 && $ventas > 0) {
         echo "(cod 15) Semanas - deuda anterior - ventas...";
     }
 
@@ -365,7 +366,7 @@ if ($tot_voucher > 0) {
     //----------------------------------------
 
     //(cod 16) Deposito - Ventas
-    if ($new_dep_ft > 0 && $debe_semanas == 0 && $saldo_a_favor == 0  && $deuda_anterior == 0 && $ventas > 0) {
+    if ($new_dep_ft > 0 && $debe_semanas == 0 && $saldo_a_favor == 0 && $deuda_anterior == 0 && $ventas > 0) {
         echo "(cod 16) Deposito - Ventas...";
         if ($new_dep_ft == $ventas) {
             echo "Paga la venta con importe justo...";
@@ -398,12 +399,12 @@ if ($tot_voucher > 0) {
         }
     }
     //(cod 17) Deposito - saldo a favor
-    if ($new_dep_ft > 0 && $debe_semanas == 0 && $saldo_a_favor > 0  && $deuda_anterior == 0 && $ventas == 0) {
+    if ($new_dep_ft > 0 && $debe_semanas == 0 && $saldo_a_favor > 0 && $deuda_anterior == 0 && $ventas == 0) {
         echo "(cod 17) Deposito - saldo a favor...";
     }
 
     //(cod 18) Deposito - saldo a favor - Ventas
-    if ($new_dep_ft > 0 && $debe_semanas == 0 && $saldo_a_favor > 0  && $deuda_anterior == 0 && $ventas > 0) {
+    if ($new_dep_ft > 0 && $debe_semanas == 0 && $saldo_a_favor > 0 && $deuda_anterior == 0 && $ventas > 0) {
         echo "(cod 18) Deposito - saldo a favor - Ventas...";
         $dep = $new_dep_ft + $saldo_a_favor;
         if ($dep > $ventas) {
@@ -423,7 +424,7 @@ if ($tot_voucher > 0) {
     }
 
     //(cod 19) Deposito - Deuda anterior
-    if ($new_dep_ft > 0 && $debe_semanas == 0 && $saldo_a_favor == 0  && $deuda_anterior > 0 && $ventas == 0) {
+    if ($new_dep_ft > 0 && $debe_semanas == 0 && $saldo_a_favor == 0 && $deuda_anterior > 0 && $ventas == 0) {
         echo "(cod 19) Deposito - Deuda anterior...";
         if ($new_dep_ft == $deuda_anterior) {
             echo "Paga justo...";
@@ -444,11 +445,11 @@ if ($tot_voucher > 0) {
         }
     }
     //(cod 20) Deposito - Deuda anterior - Ventas
-    if ($new_dep_ft > 0 && $debe_semanas == 0 && $saldo_a_favor == 0  && $deuda_anterior > 0 && $ventas > 0) {
+    if ($new_dep_ft > 0 && $debe_semanas == 0 && $saldo_a_favor == 0 && $deuda_anterior > 0 && $ventas > 0) {
         echo "(cod 20) Deposito - Deuda anterior - Ventas...";
     }
     //(cod 21) Deposito - semanas
-    if ($new_dep_ft > 0 && $debe_semanas > 0 && $saldo_a_favor == 0  && $deuda_anterior == 0 && $ventas == 0) {
+    if ($new_dep_ft > 0 && $debe_semanas > 0 && $saldo_a_favor == 0 && $deuda_anterior == 0 && $ventas == 0) {
         echo "(cod 21) Deposito - semanas...<br>";
         echo "Cant de semnas: " . $cant_semanas . "<br>";
         if ($new_dep_ft == $debe_semanas) {
@@ -478,7 +479,7 @@ if ($tot_voucher > 0) {
     }
     exit;
     //(cod 22) Deposito - Semanas - Ventas
-    if ($new_dep_ft > 0 && $debe_semanas > 0 && $saldo_a_favor == 0  && $deuda_anterior == 0 && $ventas > 0) {
+    if ($new_dep_ft > 0 && $debe_semanas > 0 && $saldo_a_favor == 0 && $deuda_anterior == 0 && $ventas > 0) {
         echo "(cod 22) Deposito - Semanas - Ventas...";
     }
     //(cod 23) Deposito - Semanas - Saldo a favor
@@ -486,15 +487,15 @@ if ($tot_voucher > 0) {
     //    echo "(cod 23) Deposito - Semanas - Saldo a favor...";
     //}
     //(cod 24) Deposito - semanas - saldo a favor - ventas
-    if ($new_dep_ft > 0 && $debe_semanas > 0 && $saldo_a_favor > 0  && $deuda_anterior == 0 && $ventas > 0) {
+    if ($new_dep_ft > 0 && $debe_semanas > 0 && $saldo_a_favor > 0 && $deuda_anterior == 0 && $ventas > 0) {
         echo "(cod 24) Deposito - semanas - saldo a favor - ventas...";
     }
     //(cod 25) Deposito - Semanas - Deuda anterior
-    if ($new_dep_ft > 0 && $debe_semanas > 0 && $saldo_a_favor == 0  && $deuda_anterior > 0 && $ventas == 0) {
+    if ($new_dep_ft > 0 && $debe_semanas > 0 && $saldo_a_favor == 0 && $deuda_anterior > 0 && $ventas == 0) {
         echo "(cod 25) Deposito - Semanas - Deuda anterior...";
     }
     //(cod 26) Deposito - Semanas - Deuda anterior - Ventas
-    if ($new_dep_ft > 0 && $debe_semanas > 0 && $saldo_a_favor == 0  && $deuda_anterior > 0 && $ventas > 0) {
+    if ($new_dep_ft > 0 && $debe_semanas > 0 && $saldo_a_favor == 0 && $deuda_anterior > 0 && $ventas > 0) {
         echo "(cod 26) Deposito - Semanas - Deuda anterior - Ventas...";
     }
 
