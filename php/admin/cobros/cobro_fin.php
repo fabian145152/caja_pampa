@@ -237,19 +237,32 @@ if ($tot_voucher > 0) {
         <li>(cod 2) Error saldo a favor menor que cero</li>
         <li>(cod 3) Error efectivo menor que cero</li>
         <li>(cod 4) Error Saldo a favor - deuda anterior mayores a 0</li>
-        <li>(cod 5) Esta al dia = Saldo a favor igual 0 y Deuda anterior = 0 deposito FT = 0 - y no debe semanas - ventas = 0 </li>
-        <li>(cod 6) Esta al dia = Saldo a favor igual 0 y Deuda anterior = 0 deposito FT = 0 - y no debe semanas - con ventas </li>
-        <li>(cod 7) deposito nenor o igual a debe semanas - Deuda = 0 - saldo a favor = 0</li>
-        <li>(cod 8) Deposito en ft es mayor a 0 y debe semanas y saldo a favor = 0 - ventas = 0</li>
-        <li>(cod 9) deposita para pagar deuda - no debe semanas - deposito en ft es mayor a 0 - deuda anterior mayor 0 - saldo a favor = 0 -sventas = 0</li>
-        <li>(cod 10) debe semanas - deposito en ft es mayor a 0 - saldo a favor = 0 - ventas = 0 - deposita para dejar saldo a favor - ventas = 0</li>
-        <li>(cod 11) no debe semanas - deposito en ft es mayor a 0 - saldo a favor = 0 - deuda anterior = 0 - deposita para dejar saldo a favor - con ventas</li>
-        <li>(cod 12) debe semanas - deposito en ft es mayor a 0 - deuda anterior mayor = 0 - saldo a favor = 0 - deposita para dejar saldo a favor - con ventas</li>
-        <li>(cod 13) debe semanas - deposito en ft es mayor a 0 - deuda anterior mayor 0 - deposita para pagar deuda - con ventas</li>
-        <li>(cod 14) debe semanas - deposito en ft es mayor a 0 - deuda anterior mayor = 0 - saldo a favor = 0 - deposita para dejar saldo a favor - con ventas</li>
-        <li>(cod 15) debe semanas - deposito = 0 - Saldo a favor igual 0 - Deuda anterior = 0 - Esta al dia - con ventas</li>
+        <li>(cod 5) Solo ventas</li>
+        <li>(cod 6) Solo saldo a favor</li>
+        <li>(cod 7) Saldo a favor - Ventas</li>
+        <li>(cod 8) Solo deuda anterior</li>
+        <li>(cod 9) Deuda anterior - ventas</li>
+        <li>(cod 10) Solo semanas</li>
+        <li>(cod 11) Ventas - Semanas</li>
+        <li>(cod 12) Semanas - Saldo a favor</li>
+        <li>(cod 13) Semanas - Saldo a favor - Ventas</li>
+        <li>(cod 14) Semanas - Deuda anterior</li>
+        <li>(cod 15) Semanas - deuda anterior - ventas</li>
+        <li>(cod 16) Deposito - Ventas</li>
+        <li>(cod 17) Deposito - saldo a favor</li>
+        <li>(cod 18) Deposito - saldo a favor - Ventas</li>
+        <li>(cod 19) Deposito - Deuda anterior</li>
+        <li>(cod 19) Deposito - Deuda anterior</li>
+        <li>vamos x el 20 (cod 20) Deposito - Deuda anterior - Ventas</li>
+        <li>(cod 21) Deposito - semanas</li>
+        <li>(cod 22) Deposito - Semanas - Ventas</li>
+        <!-- <li>(cod 23) Deposito - Semanas - Saldo a favor</li> -->
+        <li>(cod 24) Deposito - semanas - saldo a favor - ventas</li>
+        <li>(cod 25) Deposito - Semanas - Deuda anterior</li>
+        <li>(cod 26) eposito - Semanas - Deuda anterior - Ventas</li>
+
     </ul>
-    <?php
+<?php
 
 
     // Llamada a la función debeSemanas
@@ -268,128 +281,222 @@ if ($tot_voucher > 0) {
 
 
 
-    //Error Deuda anterior no puede ser nunca menor que cero
+    //(cod 1) Error Deuda anterior no puede ser nunca menor que cero
     if ($deuda_anterior < 0) {
-        echo "Error 1. Deuda anterior no puede ser nunca menor que cero...";
+        echo "(cod 1) Error. Deuda anterior no puede ser nunca menor que cero...";
         exit;
     }
-    //Error saldo a favor no puede ser menor a cero
+    //(cod 2) Error saldo a favor no puede ser menor a cero
     if ($saldo_a_favor < 0) {
-        echo "Error 2. saldo a favor no puede ser menor a cero...";
+        echo "(cod 2) Error. saldo a favor no puede ser menor a cero...";
         exit;
     }
-    //Error efectivo nunca menor que cero
+    //(cod 3) Error efectivo nunca menor que cero
     if ($new_dep_ft < 0) {
-        echo "Error 3. efectivo nunca menor que cero...";
+        echo "(cod 3) Error. efectivo nunca menor que cero...";
         exit;
     }
-    //Error Saldo a favor y deuda anterior mayores a 0
+    //(cod 4) Error Saldo a favor y deuda anterior mayores a 0
     if ($saldo_a_favor > 0 && $deuda_anterior > 0) {
-        echo "Error 4. Saldo a favor y deuda anterior no pueden ser mayores a 0...<br>";
+        echo "(cod 4) Error. Saldo a favor y deuda anterior no pueden ser mayores a 0...<br>";
         exit;
     }
-
-    //Esta al dia Saldo a favor igual 0 y Deuda anterior = 0 y no debe semanas - ventas = 0 
-    if ($new_dep_ft == 0 && $saldo_a_favor == 0 && $deuda_anterior == 0 && $debe_semanas == 0 && $ventas == 0) {
-        echo "(cod 5) Esta al dia...";
+    /*
     ?>
-        <script>
-            let movil = "<?php echo $movil; ?>";
-            alert("El móvil " + movil + " está al día.");
-            window.location.replace("inicio_cobros.php");
-        </script>
-    <?php
-    }
-    if ($new_dep_ft == 0 && $saldo_a_favor == 0 && $deuda_anterior == 0 && $debe_semanas == 0 && $ventas > 0) {
-        echo "(cod 6) Esta al dia...";
-    ?>
-        <script>
-            let movil = "<?php echo $movil; ?>";
-            alert("El móvil " + movil + " está al día.");
-            window.location.replace("inicio_cobros.php");
-        </script>
-    <?php
-    }
-    //(cod 7) deposito nenor o igual a debe semanas - Deuda = 0 - saldo a favor = 0
-    if ($new_dep_ft <= $x_semana && $debe_semanas > 0 && $deuda_anterior == 0 && $saldo_a_favor == 0 && $ventas == 0) {
-        echo "(cod 7) Paga una semana - sin deuda - sin saldo a favor " . "|" . " Debe de semanas: " . $total . "<br>";
-
-        if ($new_dep_ft == $total) {
-            echo "El monto es exactamente igual al total. Decuenta la semana";
-        } elseif ($new_dep_ft < $total) {
-            echo "El monto es menor al total. Descuenta la semana y guarda la diferencia en deuda anterior";
-        }
-    }
-
-    //(cod 8) Deposito en ft es mayor a 0 y debe semanas y saldo a favor = 0 - ventas = 0
-    if ($new_dep_ft > 0 && $debe_semanas == 0 && $saldo_a_favor == 0 && $deuda_anterior == 0 && $ventas == 0) {
-        echo "(cod 8) Deposita para dejar saldo a favor - deposito en ft es mayor a 0 y no debe semanas - sin ventas...<br>";
-        echo "Lee deuda anterior y saldo a favor, calcula y guarda.<br>";
-        echo "Deposita en saldo a favor";
-    }
-
-    //(cod 9) deposita para pagar deuda - no debe semanas - deposito en ft es mayor a 0 - tiene deuda anterior - saldo a favor = 0 -sventas = 0
-    if ($new_dep_ft > 0 && $debe_semanas == 0 && $saldo_a_favor == 0 && $deuda_anterior > 0 && $ventas == 0) {
-        //if ($new_dep_ft > 0) {
-        echo "(cod 9) Deposita para pagar deudas - no debe semanas- deuda anterior - ventas 0 0... <br>";
-        echo "Resta el pago de la deuda y guarda...";
-        //exit;
-    }
-    //(cod 10) debe semanas - deposito en ft es mayor a 0 - saldo a favor = 0 - ventas = 0 - deposita para dejar saldo a favor - ventas = 0
-    if ($new_dep_ft > 0 && $deuda_anterior > 0 && $saldo_a_favor == 0 && $debe_semanas > 0 && $ventas == 0) {
-        $deuda = $deuda_anterior + $total;
-        echo "(cod 10) Deposita para pagar deuda cuando sigue pagando semanas...<br>";
-        echo "Deuda " . $deuda . "<br>";
-        if ($new_dep_ft == $deuda) {
-            echo "El monto es exactamente igual al total. Decuenta la semana y la deuda";
-        } elseif ($new_dep_ft > $deuda_anterior) {
-            echo "El monto es menor al total. <br>Descuenta la semana y guarda la diferencia en deuda anterior";
-        }
-    }
-
-    //(cod 11) no debe semanas - deposito en ft es mayor a 0 - saldo a favor = 0 - deuda anterior = 0 - deposita para dejar saldo a favor - con ventas
-    if ($new_dep_ft > 0 && $deuda_anterior == 0 && $saldo_a_favor == 0 && $debe_semanas == 0 && $ventas > 0) {
-        echo "(cod 11) no debe semanas - deposito en ft es mayor a 0 - saldo a favor = 0 - deuda anterior = 0 - deposita para dejar saldo a favor - con ventas<br>";
-        if ($new_dep_ft == $ventas) {
-            echo "Pone en cero las ventas";
-        } elseif ($new_dep_ft < $ventas) {
-            echo "Pago de menos. Canela parte de la deuda";
-        } elseif ($new_dep_ft > $ventas) {
-            echo "Pago de mas. Cancela ventas y pone saldo a favor...";
-        }
-    }
-    //(cod 12) debe semanas - deposito en ft es mayor a 0 - deuda anterior mayor 0 - deposita para pagar deuda - con ventas
-
-    if ($new_dep_ft > 0 && $deuda_anterior > 0 && $saldo_a_favor == 0 && $debe_semanas > 0 && $ventas > 0) {
-        echo "(cod 12) debe semanas - deposito en ft es mayor a 0 - deuda anterior mayor 0 - deposita para pagar deuda - con ventas<br>";
-        $deuda = $deuda_anterior + $ventas + $debe_semanas;
-        echo $deuda . "<br>";
-        if ($new_dep_ft == $deuda) {
-            echo "ver deuda anterior mas semanas mas ventas. Pago justo";
-        } elseif ($new_dep_ft < $deuda) {
-            echo "Ver deuda anterior mas semanas mas ventas. Pago de menos";
-        } else {
-            echo "Ver deuda anterior mas semanas mas ventas. Pago de mas";
-        }
-    }
-
-    //(cod 13) Hay deposito en ft - debe semanas  saldo a favor mayor a 0 - con ventas
-    if ($new_dep_ft > 0 && $debe_semanas > 0 && $saldo_a_favor > 0 && $deuda_anterior == 0 && $ventas > 0) {
-        echo "(cod 13) Hay deposito en ft - debe semanas  saldo a favor mayor a 0 - con ventas";
-    }
-
-    //(cod 14) debe semanas - hay deposito - Saldo a favor mayor a 0 - Deuda anterior = 0 - Esta al dia - con ventas
-    if ($new_dep_ft == 33 && $debe_semanas == 0 && $saldo_a_favor > 0  && $deuda_anterior == 0 && $ventas > 0) {
-        echo "(cod 14) debe semanas - hay deposito - Saldo a favor igual 0 - Deuda anterior = 0 - Esta al dia - con ventas";
-    }
-    echo "-------------------------------------------------------------<br>";
-    echo "-------------------------------------------------------------<br>";
-    echo "-------------------------------------------------------------<br>";
-    echo "-------------------------------------------------------------<br>";
-    echo "Falta terminar el cod 13 y 14";
-    ?>
-
+    <script>
+        let movil = "<?php echo $movil; ?>";
+        alert("El móvil " + movil + " está al día.");
+        window.location.replace("inicio_cobros.php");
+    </script>
 <?php
+*/
+    //(cod 5) Solo ventas...; 
+    if ($new_dep_ft == 0 && $saldo_a_favor == 0 && $deuda_anterior == 0 && $debe_semanas == 0 && $ventas > 0) {
+        echo "(cod 5) Solo ventas...";
+    }
+    //(cod 5) Solo saldo a favor
+    if ($new_dep_ft == 0 && $saldo_a_favor > 0 && $deuda_anterior == 0 && $debe_semanas == 0 && $ventas == 0) {
+        echo "(cod 6) Solo saldo a Favor...";
+    }
+    //(cod 7) Saldo a favor - Ventas
+    if ($new_dep_ft == $x_semana && $debe_semanas == 0 && $deuda_anterior == 0 && $saldo_a_favor > 0 && $ventas > 0) {
+        echo "(cod 7) Solo saldo a Favor<br>";
+    }
+
+    //(cod 8) Solo deuda anterior
+    if ($new_dep_ft == 0 && $debe_semanas == 0 && $saldo_a_favor == 0 && $deuda_anterior > 0 && $ventas == 0) {
+        echo "(cod 8) Solo deuda anterior...<br>";
+    }
+
+    //(cod 9) Deuda anterior
+    if ($new_dep_ft == 0 && $debe_semanas == 0 && $saldo_a_favor == 0 && $deuda_anterior > 0 && $ventas == 0) {
+        //if ($new_dep_ft > 0) {
+        echo "(cod 9) Deuda anterior... <br>";
+    }
+    //(cod 10) Solo semanas
+    if ($new_dep_ft == 0 && $deuda_anterior == 0 && $saldo_a_favor == 0 && $debe_semanas > 0 && $ventas == 0) {
+        echo "(cod 10) (cod 10) Solo semanas...<br>";
+    }
+
+    //(cod 11) Ventas - Semanas
+    if ($new_dep_ft == 0 && $deuda_anterior == 0 && $saldo_a_favor == 0 && $debe_semanas > 0 && $ventas > 0) {
+        echo "(cod 11) Ventas - Semanas...<br>";
+    }
+    //(cod 12) Semanas - Saldo a favor
+    if ($new_dep_ft > 0 && $deuda_anterior > 0 && $saldo_a_favor == 0 && $debe_semanas > 0 && $ventas > 0) {
+        echo "(cod 12) Semanas - Saldo a favor...<br>";
+    }
+    //(cod 13)Semanas - saldo a favor - ventas
+    if ($new_dep_ft == 0 && $debe_semanas > 0 && $saldo_a_favor > 0 && $deuda_anterior == 0 && $ventas > 0) {
+        echo "(cod 13) Semanas - saldo a favor - ventas<br>";
+    }
+
+    //(cod 14) Semanas - Deuda anterior
+    if ($new_dep_ft == 33 && $debe_semanas == 0 && $saldo_a_favor > 0  && $deuda_anterior == 0 && $ventas > 0) {
+        echo "(cod 14) Semanas - Deuda anterior...";
+    }
+    // (cod 15) Semanas - deuda anterior - ventas
+    if ($new_dep_ft == 0 && $debe_semanas > 0 && $saldo_a_favor == 0  && $deuda_anterior > 0 && $ventas > 0) {
+        echo "(cod 15) Semanas - deuda anterior - ventas...";
+    }
+
+    //----------------------------------------
+    //----------------Deposito
+    //----------------------------------------
+
+    //(cod 16) Deposito - Ventas
+    if ($new_dep_ft > 0 && $debe_semanas == 0 && $saldo_a_favor == 0  && $deuda_anterior == 0 && $ventas > 0) {
+        echo "(cod 16) Deposito - Ventas...";
+        if ($new_dep_ft == $ventas) {
+            echo "Paga la venta con importe justo...";
+            $deuda_anterior = 0;
+            $saldo_a_favor = 0;
+            $venta_1 = 0;
+            $venta_2 = 0;
+            $venta_3 = 0;
+            $venta_4 = 0;
+            $venta_5 = 0;
+            actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
+        } elseif ($new_dep_ft > $ventas) {
+            $saldo_a_favor = $new_dep_ft - $ventas;
+            echo "Paga la venta y sobra..." . $saldo_a_favor;
+            $venta_1 = 0;
+            $venta_2 = 0;
+            $venta_3 = 0;
+            $venta_4 = 0;
+            $venta_5 = 0;
+            actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
+        } elseif ($new_dep_ft < $ventas) {
+            $deuda_anterior = $ventas - $new_dep_ft;
+            echo "No alcanza para pagar la venta..." . $deuda_anterior;
+            $venta_1 = 0;
+            $venta_2 = 0;
+            $venta_3 = 0;
+            $venta_4 = 0;
+            $venta_5 = 0;
+            actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
+        }
+    }
+    //(cod 17) Deposito - saldo a favor
+    if ($new_dep_ft > 0 && $debe_semanas == 0 && $saldo_a_favor > 0  && $deuda_anterior == 0 && $ventas == 0) {
+        echo "(cod 17) Deposito - saldo a favor...";
+    }
+
+    //(cod 18) Deposito - saldo a favor - Ventas
+    if ($new_dep_ft > 0 && $debe_semanas == 0 && $saldo_a_favor > 0  && $deuda_anterior == 0 && $ventas > 0) {
+        echo "(cod 18) Deposito - saldo a favor - Ventas...";
+        $dep = $new_dep_ft + $saldo_a_favor;
+        if ($dep > $ventas) {
+            echo "Le sobra para pagar la venta...:";
+        } elseif ($dep < $ventas) {
+            echo "No alcanza para pagar...";
+        } elseif ($dep == $ventas) {
+            echo "Paga justo...";
+            $saldo_a_favor = 0;
+            $venta_1 = 0;
+            $venta_2 = 0;
+            $venta_3 = 0;
+            $venta_4 = 0;
+            $venta_5 = 0;
+            actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
+        }
+    }
+
+    //(cod 19) Deposito - Deuda anterior
+    if ($new_dep_ft > 0 && $debe_semanas == 0 && $saldo_a_favor == 0  && $deuda_anterior > 0 && $ventas == 0) {
+        echo "(cod 19) Deposito - Deuda anterior...";
+        if ($new_dep_ft == $deuda_anterior) {
+            echo "Paga justo...";
+            $deuda_anterior = 0;
+            $saldo_a_favor = 0;
+            actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
+        } elseif ($new_dep_ft > $deuda_anterior) {
+            $saldo_a_favor = $new_dep_ft - $deuda_anterior;
+            echo "Deja saldo a favor...";
+            echo $saldo_a_favor;
+            $deuda_anterior = 0;
+            actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
+        } elseif ($new_dep_ft < $deuda_anterior) {
+            echo "No alcanza para pagar...<br>";
+            $deuda = $deuda_anterior - $new_dep_ft;
+            echo $deuda_anterior = $deuda;
+            //actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
+        }
+    }
+    //(cod 20) Deposito - Deuda anterior - Ventas
+    if ($new_dep_ft > 0 && $debe_semanas == 0 && $saldo_a_favor == 0  && $deuda_anterior > 0 && $ventas > 0) {
+        echo "(cod 20) Deposito - Deuda anterior - Ventas...";
+    }
+    //(cod 21) Deposito - semanas
+    if ($new_dep_ft > 0 && $debe_semanas > 0 && $saldo_a_favor == 0  && $deuda_anterior == 0 && $ventas == 0) {
+        echo "(cod 21) Deposito - semanas...<br>";
+        echo "Cant de semnas: " . $cant_semanas . "<br>";
+        if ($new_dep_ft == $debe_semanas) {
+            echo "Paga justo...<br>";
+            $total = $x_semana;
+            actualizaSemPagadas($con, $movil, $total);
+        } elseif ($new_dep_ft < $debe_semanas) {
+            echo "Pago de menos...";
+            echo $deuda_anterior = $debe_semanas - $new_dep_ft;
+            echo $total = $x_semana;
+            actualizaSemPagadas($con, $movil, $total);
+            actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
+        } elseif ($new_dep_ft > $debe_semanas) {
+            echo "Pago de mas...<br>";
+            $de_mas = $new_dep_ft - $debe_semanas;
+            $saldo_a_favor = $de_mas;
+            $saldo_a_favor;
+            $venta_1 = 0;
+            $venta_2 = 0;
+            $venta_3 = 0;
+            $venta_4 = 0;
+            $venta_5 = 0;
+            echo $total = $x_semana;
+            actualizaSemPagadas($con, $movil, $total);
+            actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
+        }
+    }
+    exit;
+    //(cod 22) Deposito - Semanas - Ventas
+    if ($new_dep_ft > 0 && $debe_semanas > 0 && $saldo_a_favor == 0  && $deuda_anterior == 0 && $ventas > 0) {
+        echo "(cod 22) Deposito - Semanas - Ventas...";
+    }
+    //(cod 23) Deposito - Semanas - Saldo a favor
+    //if ($new_dep_ft > 0 && $debe_semanas > 0 && $saldo_a_favor > 0  && $deuda_anterior == 0 && $ventas == 0) {
+    //    echo "(cod 23) Deposito - Semanas - Saldo a favor...";
+    //}
+    //(cod 24) Deposito - semanas - saldo a favor - ventas
+    if ($new_dep_ft > 0 && $debe_semanas > 0 && $saldo_a_favor > 0  && $deuda_anterior == 0 && $ventas > 0) {
+        echo "(cod 24) Deposito - semanas - saldo a favor - ventas...";
+    }
+    //(cod 25) Deposito - Semanas - Deuda anterior
+    if ($new_dep_ft > 0 && $debe_semanas > 0 && $saldo_a_favor == 0  && $deuda_anterior > 0 && $ventas == 0) {
+        echo "(cod 25) Deposito - Semanas - Deuda anterior...";
+    }
+    //(cod 26) Deposito - Semanas - Deuda anterior - Ventas
+    if ($new_dep_ft > 0 && $debe_semanas > 0 && $saldo_a_favor == 0  && $deuda_anterior > 0 && $ventas > 0) {
+        echo "(cod 26) Deposito - Semanas - Deuda anterior - Ventas...";
+    }
 
 
     exit;

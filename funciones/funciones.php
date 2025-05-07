@@ -30,7 +30,7 @@ function leerArchivoTXT($rutaArchivo)
 
 function foot()
 {
-    ?>
+?>
     <style>
         .footer {
             width: 100%;
@@ -48,12 +48,12 @@ function foot()
     </style>
 
     <div class="footer">Ver 1.2</div>
-    <?php
+<?php
 }
 
 function head()
 {
-    ?>
+?>
     <link rel="icon" href="imagenes/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
@@ -61,7 +61,7 @@ function head()
     <script src="../js/jquery-3.4.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/bootbox.min.js"></script>
-    <?php
+<?php
 }
 
 ## Esta funcion se utiliza para borrar todos los archivos de una carpeta
@@ -226,13 +226,19 @@ function actualizaVenta1($con, $movil, $venta_1)
 }
 //Actualiza deuda anterior y sado a favor cuando paga en FT
 //Entrar con los nuevos valores de deuda anterior y saldo a favor y movil
-function actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor)
+function actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5)
 {
 
     //exit;
     // Definimos la consulta preparada
 
-    $sql_deuda = "UPDATE completa SET deuda_anterior = ?, saldo_a_favor_ft = ? WHERE movil = ?";
+    $sql_deuda = "UPDATE completa SET deuda_anterior = ?, 
+                                        saldo_a_favor_ft = ?, 
+                                        venta_1 = ?, 
+                                        venta_2 = ?, 
+                                        venta_3 = ?, 
+                                        venta_4 = ?, 
+                                        venta_5 = ?  WHERE movil = ?";
     $stmt = $con->prepare($sql_deuda);
 
     if (!$stmt) {
@@ -241,7 +247,7 @@ function actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor)
     }
 
     // Asignamos los valores a los marcadores de posición
-    $stmt->bind_param("iii", $deuda_anterior, $saldo_a_favor, $movil);
+    $stmt->bind_param("iiiiiiii", $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5, $movil);
 
     if ($stmt->execute()) {
         echo "<br>";
