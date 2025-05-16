@@ -43,8 +43,8 @@ $res_le_1 = $con->query($leo_caj_1);
                 <tr>
                     <th style="border: 1px solid black; padding: 8px;">ID</th>
                     <th style="border: 1px solid black; padding: 8px;">FECHA</th>
-                    <th style="border: 1px solid black; padding: 8px;">FT en caja</th>
-                    <th style="border: 1px solid black; padding: 8px;">Efectivo actual</th>
+                    <th style="border: 1px solid black; padding: 8px;">DEPOSITÓ</th>
+                    <th style="border: 1px solid black; padding: 8px;">TOTAL EN CAJA</th>
                     <th style="border: 1px solid black; padding: 8px;">USUARIO</th>
                     <th style="border: 1px solid black; padding: 8px;">OBSERVACIONES</th>
 
