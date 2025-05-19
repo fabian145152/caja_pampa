@@ -288,13 +288,22 @@ function ultimosDep($con)
 */
 function guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $usuario)
 {
-    // leo el ultimo registro guardado en caja_final
+
+    //Lee el anteultiomo registro
+    $lee_anteultimo_registro = "SELECT * FROM caja_final WHERE 1 ORDER BY id LIMIT 1 OFFSET 1";
+    $res_le = $con->query($lee_anteultimo_registro);
+    $row_reg = $res_le->fetch_assoc();
+    echo "Total_caja: " . $total_caja = $row_reg['saldo_ft'];
+
+
+    //lee el ultimo registro 
     $sql_lee_caja = "SELECT * FROM caja_final WHERE movil = '$movil' ORDER BY id DESC LIMIT 1";
     $result = $con->query($sql_lee_caja);
     $row = $result->fetch_assoc();
-    $dep_ft = $row['dep_ft'];
+    echo $dep_ft = $row['dep_ft'];
 
-    $saldo_ft = $dep_ft + $new_dep_ft;
+    //$saldo_ft = $dep_ft + $new_dep_ft;
+    $saldo_ft = $new_dep_ft;
 
     // Definimos la consulta preparada
     $sql_gua_ca_fi = "INSERT INTO caja_final (movil, fecha, dep_ft, saldo_ft, usuario) 

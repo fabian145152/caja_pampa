@@ -186,16 +186,27 @@ $tot_voucher = $_POST['tot_voucher'];
 
 $desc = $_POST['comiaaa'];
 
-$debe_abonar = $_POST['debe_abonar'];
-//$deposito = $new_dep_ft + $new_dep_mp;
+
+if (isset($_POST['tot_voucher'])) {
+    $tot_voucher = $_POST['tot_voucher'];
+} else {
+    $tot_voucher = 0; // O un valor predeterminado
+}
+
+if (isset($_POST['debe_abonar'])) {
+    $debe_abonar = $_POST['debe_abonar'];
+} else {
+    $debe_abonar = 0; // O un valor predeterminado
+}
+
 
 
 $debe_abonar;
 $debe_semanas;
 $deuda_anterior;
 $tot_voucher;
-$viajes_q_se_cobran;
-$viajes_sem_que_viene;
+echo "Viajes de esta semana: " . $viajes_q_se_cobran;
+echo "Viajes de la semana que viene: " . $viajes_sem_que_viene;
 $imp_viajes = $paga_x_viaje * $viajes_q_se_cobran;
 $descuentos = $desc - $imp_viajes;
 $suma_gastos_semanales = $debe_semanas + $total_ventas + $deuda_anterior + $imp_viajes;
@@ -207,16 +218,205 @@ $para_depositar = $sub_saldo - $suma_gastos_semanales;
 
 
 if ($tot_voucher > 0) {
+    //ACA EMPIEZA COBRO CON VOUCHER
+    //ACA EMPIEZA COBRO CON VOUCHER
+    //ACA EMPIEZA COBRO CON VOUCHER
+    //ACA EMPIEZA COBRO CON VOUCHER
+    //ACA EMPIEZA COBRO CON VOUCHER
+    //ACA EMPIEZA COBRO CON VOUCHER
     echo "si hay voucher ejecuta esta rutina";
+    echo "<br>Total de voucher: " . $tot_voucher = $_POST['tot_voucher'] . "<br>";
+    echo "Comisión: " . $desc = $_POST['comiaaa'] . "<br>";
+
+    echo "Deposito en efectivo: " . $new_dep_ft = $_POST['dep_ft'] . "<br>";
+
+?>
+    <ul>
+        <li>(cod 27) Voucher solo</li>
+        <li>(cod 28) Voucher - Ventas</li>
+        <li>(cod 29) Voucher - saldo a favor</li>
+        <li>(cod 30) Voucher - Saldo a favor - Ventas</li>
+        <li>(cod 31) voucher - Deuda anterior</li>
+        <li>(cod 32) voucher - Deuda anterior - ventas</li>
+        <li>(err cod 33) voucher - Deuda anterior - saldo a favor</li>
+        <li>(err cod 34) voucher - Deuda anterior - saldo a favor - ventas</li>
+        <li>(cod 35) voucher semanas</li>
+        <li>(cod 36) voucher - semanas - ventas</li>
+        <li>(cod 37) voucher - semanas - saldo_a_favor</li>
+        <li>(cod 38) voucher - semanas - saldo a favor - ventas</li>
+        <li>(cod 39) voucher - semanas - Deuda anterior</li>
+        <li>(cod 40) voucher - Semanas - deuda anterior - ventas</li>
+        <li>(err cod 41) voucher - Semanas - deuda anterior - Saldo a favor</li>
+        <li>(err cod 42) voucher - semanas - deuda anterior - Saldo a favor - ventas</li>
+        <li>(cod 43) voucher - Deposito</li>
+        <li>(cod 44) voucher - Deposito - Ventas</li>
+        <li>(cod 45) voucher - deposito - saldo a favor</li>
+        <li>(cod 46) voucher - deposito - saldo a favor - ventas</li>
+        <li>(cod 47) voucher - deposito - deuda anterior</li>
+        <li>(cod 48) voucher - deposito - deuda anterior - ventas</li>
+        <li>(err cod 49) voucher - deposito - deuda anterior - saldo a favor</li>
+        <li>(err cod 50) voucher - deposito - deuda anterior - saldo a favor - ventas</li>
+        <li>(cod 51) voucher - deposito - semanas</li>
+        <li>(cod 52) voucher - deposito - semanas - ventas</li>
+        <li>(cod 53) voucher - deposito - semanas - saldo a favor - ventas</li>
+        <li>(cod 54) voucher - deposito - semanas - saldo a favor - ventas</li>
+        <li>(cod 55) voucher - deposito - semanas - deuda anterior</li>
+        <li>(cod 56) voucher - deposito - semanas - deuda anterior - ventas</li>
+        <li>(err cod 57) voucher - deposito - semanas - deuda anterior - saldo a favor</li>
+        <li>(err cod 58) voucher - deposito - semanas- deuda anterior - saldo a favor - ventas</li>
+    </ul>
+
+    <?php
+    //(cod 27) Voucher solo
+    if ($tot_voucher > 0 && $new_dep_ft == 0 && $debe_semanas == 0 && $deuda_anterior == 0 && $saldo_a_favor == 0  && $ventas == 0) {
+        echo "(cod 27) Voucher solo...";
+    }
+    //(cod 28) Voucher - Ventas
+    if ($tot_voucher > 0 && $new_dep_ft > 0 && $debe_semanas == 0 && $deuda_anterior == 0 && $saldo_a_favor == 0  && $ventas == 0) {
+        echo "(cod 28) Voucher - Ventas...";
+    }
+    //(cod 29) Voucher - saldo a favor
+    if ($tot_voucher > 0 && $new_dep_ft == 0 && $debe_semanas == 0 && $deuda_anterior == 0 && $saldo_a_favor == 0  && $ventas > 0) {
+        echo "(cod 29) Voucher - saldo a favor...";
+    }
+    //(cod 30) Voucher - Saldo a favor - Ventas
+    if ($tot_voucher > 0 && $new_dep_ft == 0 && $debe_semanas == 0 && $deuda_anterior == 0 && $saldo_a_favor > 0  && $ventas == 0) {
+        echo "(cod 30) Voucher - Saldo a favor - Ventas...";
+    }
+    //(cod 31) voucher - Deuda anterior
+    if ($tot_voucher > 0 && $new_dep_ft == 0 && $debe_semanas == 0 && $deuda_anterior > 0 && $saldo_a_favor == 0  && $ventas == 0) {
+        echo "(cod 31) voucher - Deuda anterior...";
+    }
+    //(cod 32) voucher - Deuda anterior - ventas
+    if ($tot_voucher > 0 && $new_dep_ft == 0 && $debe_semanas == 0 && $deuda_anterior > 0 && $saldo_a_favor == 0  && $ventas > 0) {
+        echo "(cod 32) voucher - Deuda anterior - ventas...";
+    }
+    //(err cod 33) voucher - Deuda anterior - saldo a favor
+    if ($tot_voucher > 0 && $new_dep_ft == 0 && $debe_semanas == 0 && $deuda_anterior > 0 && $saldo_a_favor > 0  && $ventas == 0) {
+        echo "(err cod 33) voucher - Deuda anterior - saldo a favor...";
+        exit;
+    }
+    //(err cod 34) voucher - Deuda anterior - saldo a favor - ventas
+    if ($tot_voucher > 0 && $new_dep_ft == 0 && $debe_semanas == 0 && $deuda_anterior > 0 && $saldo_a_favor > 0  && $ventas > 0) {
+        echo "(err cod 34) voucher - Deuda anterior - saldo a favor - ventas...";
+        exit;
+    }
+    //(cod 35) voucher - semanas
+    if ($tot_voucher > 0 && $new_dep_ft == 0 && $debe_semanas > 0 && $deuda_anterior == 0 && $saldo_a_favor == 0  && $ventas == 0) {
+        echo "(cod 35) voucher - semanas...";
+    }
+    //(cod 36) voucher - semanas - ventas
+    if ($tot_voucher > 0 && $new_dep_ft == 0 && $debe_semanas > 0 && $deuda_anterior == 0 && $saldo_a_favor == 0  && $ventas > 0) {
+        echo "(cod 36) voucher - semanas - ventas...";
+    }
+    //(cod 37) voucher - semanas - saldo_a_favor
+    if ($tot_voucher > 0 && $new_dep_ft == 0 && $debe_semanas > 0 && $deuda_anterior == 0 && $saldo_a_favor > 0  && $ventas == 0) {
+        echo "(cod 37) voucher - semanas - saldo_a_favor...";
+    }
+    //(cod 38) voucher - semanas - saldo a favor - ventas
+    if ($tot_voucher > 0 && $new_dep_ft == 0 && $debe_semanas > 0 && $deuda_anterior == 0 && $saldo_a_favor > 0  && $ventas > 0) {
+        echo "(cod 38) voucher - semanas - saldo a favor - ventas...";
+    }
+    //(cod 39) voucher - semanas - Deuda anterior
+    if ($tot_voucher > 0 && $new_dep_ft == 0 && $debe_semanas > 0 && $deuda_anterior > 0 && $saldo_a_favor == 0  && $ventas == 0) {
+        echo "(cod 39) voucher - semanas - Deuda anterior...";
+    }
+    //(cod 40) voucher - Semanas - deuda anterior - ventas
+    if ($tot_voucher > 0 && $new_dep_ft == 0 && $debe_semanas > 0 && $deuda_anterior > 0 && $saldo_a_favor == 0  && $ventas > 0) {
+        echo "(cod 40) voucher - Semanas - deuda anterior - ventas...";
+    }
+    //(err cod 41) voucher - Semanas - deuda anterior - Saldo a favor
+    if ($tot_voucher > 0 && $new_dep_ft == 0 && $debe_semanas > 0 && $deuda_anterior > 0 && $saldo_a_favor > 0  && $ventas == 0) {
+        echo "(err cod 41) voucher - Semanas - deuda anterior - Saldo a favor...";
+        exit;
+    }
+    //(err cod 42) voucher - semanas - deuda anterior - Saldo a favor - ventas
+    if ($tot_voucher > 0 && $new_dep_ft == 0 && $debe_semanas > 0 && $deuda_anterior > 0 && $saldo_a_favor > 0  && $ventas > 0) {
+        echo "(err cod 42) voucher - semanas - deuda anterior - Saldo a favor - ventas...";
+        exit;
+    }
+    //(cod 43) voucher - Deposito
+    if ($tot_voucher > 0 && $new_dep_ft > 0 && $debe_semanas == 0 && $deuda_anterior == 0 && $saldo_a_favor == 0  && $ventas == 0) {
+        echo "(cod 43) voucher - Deposito...";
+    }
+    //(cod 44) voucher - Deposito - Ventas
+    if ($tot_voucher > 0 && $new_dep_ft > 0 && $debe_semanas == 0 && $deuda_anterior == 0 && $saldo_a_favor == 0  && $ventas > 0) {
+        echo "(cod 44) voucher - Deposito - Ventas...";
+    }
+    //(cod 45) voucher - deposito - saldo a favor
+    if ($tot_voucher > 0 && $new_dep_ft > 0 && $debe_semanas == 0 && $deuda_anterior == 0 && $saldo_a_favor > 0  && $ventas == 0) {
+        echo "(cod 45) voucher - deposito - saldo a favor...";
+    }
+    //(cod 46) voucher - deposito - saldo a favor - ventas
+    if ($tot_voucher > 0 && $new_dep_ft > 0 && $debe_semanas == 0 && $deuda_anterior == 0 && $saldo_a_favor > 0  && $ventas > 0) {
+        echo "(cod 45) voucher - deposito - saldo a favor...";
+    }
+    //(cod 47) voucher - deposito - deuda anterior
+    if ($tot_voucher > 0 && $new_dep_ft > 0 && $debe_semanas == 0 && $deuda_anterior > 0 && $saldo_a_favor == 0  && $ventas == 0) {
+        echo "(cod 47) voucher - deposito - deuda anterior...";
+    }
+    //(cod 48) voucher - deposito - deuda anterior - ventas
+    if ($tot_voucher > 0 && $new_dep_ft > 0 && $debe_semanas == 0 && $deuda_anterior > 0 && $saldo_a_favor == 0  && $ventas > 0) {
+        echo "(cod 48) voucher - deposito - deuda anterior - ventas...";
+    }
+    //(err cod 49) voucher - deposito - deuda anterior - saldo a favor
+    if ($tot_voucher > 0 && $new_dep_ft > 0 && $debe_semanas == 0 && $deuda_anterior > 0 && $saldo_a_favor > 0  && $ventas == 0) {
+        echo "(err cod 49) voucher - deposito - deuda anterior - saldo a favor...";
+        exit;
+    }
+    //(err cod 50) voucher - deposito - deuda anterior - saldo a favor - ventas
+    if ($tot_voucher > 0 && $new_dep_ft > 0 && $debe_semanas == 0 && $deuda_anterior > 0 && $saldo_a_favor > 0  && $ventas > 0) {
+        echo "(err cod 50) voucher - deposito - deuda anterior - saldo a favor - ventas...";
+        exit;
+    }
+    //(cod 51) voucher - deposito - semanas
+    if ($tot_voucher > 0 && $new_dep_ft > 0 && $debe_semanas > 0 && $deuda_anterior == 0 && $saldo_a_favor == 0  && $ventas == 0) {
+        echo "(cod 51) voucher - deposito - semanas...";
+    }
+    //(cod 52) voucher - deposito - semanas - ventas
+    if ($tot_voucher > 0 && $new_dep_ft > 0 && $debe_semanas > 0 && $deuda_anterior == 0 && $saldo_a_favor == 0  && $ventas > 0) {
+        echo "(cod 52) voucher - deposito - semanas - ventas...";
+    }
+    //(cod 53) voucher - deposito - semanas - saldo a favor - ventas
+    if ($tot_voucher > 0 && $new_dep_ft > 0 && $debe_semanas > 0 && $deuda_anterior == 0 && $saldo_a_favor > 0  && $ventas == 0) {
+        echo "(cod 52) voucher - deposito - semanas - ventas...";
+    }
+    //(cod 54) voucher - deposito - semanas - saldo a favor - ventas
+    if ($tot_voucher > 0 && $new_dep_ft > 0 && $debe_semanas > 0 && $deuda_anterior == 0 && $saldo_a_favor > 0  && $ventas > 0) {
+        echo "(cod 54) voucher - deposito - semanas - saldo a favor - ventas...";
+    }
+    //(cod 55) voucher - deposito - semanas - deuda anterior
+    if ($tot_voucher > 0 && $new_dep_ft > 0 && $debe_semanas > 0 && $deuda_anterior > 0 && $saldo_a_favor == 0  && $ventas == 0) {
+        echo "(cod 55) voucher - deposito - semanas - deuda anterior...";
+    }
+    //(cod 56) voucher - deposito - semanas - deuda anterior - ventas
+    if ($tot_voucher > 0 && $new_dep_ft > 0 && $debe_semanas > 0 && $deuda_anterior > 0 && $saldo_a_favor == 0  && $ventas > 0) {
+        echo "(cod 56) voucher - deposito - semanas - deuda anterior - ventas...";
+    }
+    //(err cod 57) voucher - deposito - semanas - deuda anterior - saldo a favor
+    if ($tot_voucher > 0 && $new_dep_ft > 0 && $debe_semanas > 0 && $deuda_anterior > 0 && $saldo_a_favor > 0  && $ventas == 0) {
+        echo "(err cod 57) voucher - deposito - semanas - deuda anterior - saldo a favor...";
+        exit;
+    }
+    //(err cod 58) voucher - deposito - semanas- deuda anterior - saldo a favor - ventas
+    if ($tot_voucher > 0 && $new_dep_ft > 0 && $debe_semanas > 0 && $deuda_anterior > 0 && $saldo_a_favor > 0  && $ventas > 0) {
+        echo "(err cod 58) voucher - deposito - semanas- deuda anterior - saldo a favor - ventas...";
+        exit;
+    }
+
+
+
+
+    //ACA TERMINA COBRO CON VOUCHER
+    //ACA TERMINA COBRO CON VOUCHER
+    //ACA TERMINA COBRO CON VOUCHER
+    //ACA TERMINA COBRO CON VOUCHER
+    //ACA TERMINA COBRO CON VOUCHER
+    //ACA TERMINA COBRO CON VOUCHER
+    //ACA TERMINA COBRO CON VOUCHER
+
 } else {
-    // if ($debe_semanas > 0) {      //Por si paga menos de 1 semana
-    /* 
-    echo "-------------------------------------------<br>";
-     echo "Paga x semana == deposito<br>";
-     echo "Ejecuta solo la funcion actualizaSemPagadas<br>";
-     echo "-------------------------------------------<br>";
-    
-     */
+
     echo "Deposito: " . $new_dep_ft;
     echo "<br>";
     echo "Saldo a favor: " . $saldo_a_favor;
@@ -228,7 +428,7 @@ if ($tot_voucher > 0) {
     echo "Cantidad de semanas: " . $cant_semanas = $_POST['cant_sem'];
 
 
-?>
+    ?>
     <ul>
         <li>Sin ventas - no debe semnasa</li>
         <li>Sin Ventas - debe semanas</li>
@@ -247,6 +447,7 @@ if ($tot_voucher > 0) {
         <li>(cod 13) Semanas - Saldo a favor - Ventas</li>
         <li>(cod 14) Semanas - Deuda anterior</li>
         <li>(cod 15) Semanas - deuda anterior - ventas</li>
+
         <li>(cod 16) Deposito - Ventas</li>
         <li>(cod 17) Deposito - saldo a favor</li>
         <li>(cod 18) Deposito - saldo a favor - Ventas</li>
@@ -258,7 +459,7 @@ if ($tot_voucher > 0) {
         <li>(cod 23) Deposito - Semanas - Saldo a favor</li>
         <li>(cod 24) Deposito - semanas - saldo a favor - ventas</li>
         <li>(cod 25) Deposito - Semanas - Deuda anterior</li>
-        <li>(cod 26) eposito - Semanas - Deuda anterior - Ventas</li> -->
+        <li>(cod 26) eposito - Semanas - Deuda anterior - Ventas</li>
     </ul>
     <?php
 
@@ -424,13 +625,6 @@ if ($tot_voucher > 0) {
         </script>
         <?php
     }
-
-
-
-
-
-
-
     //(cod 16) Deposito - Ventas
     if ($new_dep_ft > 0 && $debe_semanas == 0 && $saldo_a_favor == 0 && $deuda_anterior == 0 && $ventas > 0) {
         echo "(cod 16) Deposito - Ventas...";
@@ -458,7 +652,7 @@ if ($tot_voucher > 0) {
             $venta_3 = 0;
             $venta_4 = 0;
             $venta_5 = 0;
-            exit;
+            //exit;
             //actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
             //guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $usuario);
 

@@ -9,10 +9,12 @@ $con->set_charset("utf8mb4");
 
 
 
+
 $leo_caj_1 = "SELECT * FROM caja_final WHERE 1 ORDER BY id DESC LIMIT 10 ";
 
 $res_le_1 = $con->query($leo_caj_1);
 
+//echo $leo_caj_1['dep_ft'];
 //--------------------------------------------------------------------------------------
 
 ?>
@@ -59,6 +61,16 @@ $res_le_1 = $con->query($leo_caj_1);
                 //if ($res_le->num_rows > 0) {
 
                 while ($row = $res_le_1->fetch_assoc()) {
+                    $dep_ft = $row['dep_ft'] . "<br><br>";
+                    $saldo_caja = $row['saldo_ft'] . "<br>";
+                    $dep_ft = abs($dep_ft);
+                    $saldo_caja = abs($saldo_caja);
+
+                    $tot_caja = $dep_ft + $saldo_caja;
+
+                    
+
+                    echo "Total caja: " . $tot_caja . "<br>";
                     $saldo_ft = $row['haber_ft'] - $row['debe_ft'];
                     $saldo_mp = $row['haber_mp'] - $row['debe_mp'];
                 ?>
@@ -67,10 +79,12 @@ $res_le_1 = $con->query($leo_caj_1);
                         ?>
                         <tr>
                             <th style="border: 1px solid black; padding: 8px;"><?php echo $row['id'] ?></th>
-                            <th style="border: 1px solid black; padding: 8px;"><?php echo $row['fecha'] ?></th>
+                            <th style="border: 1px solid black; padding: 8px;"><?php $fechazz = $row['fecha'];
+                                                                                echo substr($fechazz, 0, 10)  ?></th>
                             <th style="border: 1px solid black; padding: 8px;"><?php echo $row['dep_ft'] ?></th>
-                            <th style="border: 1px solid black; padding: 8px;"><?php echo $row['saldo_ft'] ?></th>
+                            <th style="border: 1px solid black; padding: 8px;"><?php echo $saldo_caja ?></th>
                             <th style="border: 1px solid black; padding: 8px;"><?php echo $row['usuario'] ?></th>
+                            
                             <th style="border: 1px solid black; padding: 8px;"><?php echo $row['observaciones'] ?></th>
 
                         </tr>
