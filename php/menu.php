@@ -191,6 +191,7 @@ if ($_SESSION['logueado']) {
                         <br>
                         <li><a href="admin/listados/lista_numeros.php" class=" btn btn-info btn-block btn-sm">LISTADO DE MOVILES X NUMERO</a></li>
                         <br>
+                        <li><a href="admin/cobros/codigos_y_errores.php" class=" btn btn-info btn-block btn-sm" target="_blank">LISTADO DE CODIGOS Y ERRORES</a></li>
                         <br><br>
                         <h3>INICIALIZAR PROGRAMA</h3>
 

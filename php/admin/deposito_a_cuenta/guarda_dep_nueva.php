@@ -113,4 +113,4 @@ if ($para_guardar_a_favor > 0) {
     }
 }
 
-header("Location: ../../menu_admin.php");
+header("Location: ../../menu.php");

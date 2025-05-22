@@ -174,8 +174,6 @@ function debeSemanas($con, $movil)
     }
 }
 
-
-
 //Consulta para actualizar semanas pagadas por movil
 function actualizaSemPagadas($con, $movil, $total)
 {
@@ -260,8 +258,6 @@ function actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $vent
     }
 }
 
-
-
 function ultimosDep($con)
 {
     // Consulta para obtener el último registro
@@ -290,38 +286,31 @@ function guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $usuario)
 {
 
     //Lee el anteultiomo registro
-    $lee_anteultimo_registro = "SELECT * FROM caja_final WHERE 1 ORDER BY id LIMIT 1 OFFSET 1";
+    $lee_anteultimo_registro = "SELECT saldo_ft, dep_ft FROM caja_final ORDER BY id DESC LIMIT 1";;
     $res_le = $con->query($lee_anteultimo_registro);
     $row_reg = $res_le->fetch_assoc();
-    echo "Total_caja: " . $total_caja = $row_reg['saldo_ft'];
+    $total_caja = $row_reg['saldo_ft'];
+    echo "<br>Total_caja anteultimo registro: " . $total_caja;
 
 
-    //lee el ultimo registro 
-    $sql_lee_caja = "SELECT * FROM caja_final WHERE movil = '$movil' ORDER BY id DESC LIMIT 1";
-    $result = $con->query($sql_lee_caja);
-    $row = $result->fetch_assoc();
-    echo $dep_ft = $row['dep_ft'];
+    echo "<br>Depsoito en ft " . $new_dep_ft;
 
     //$saldo_ft = $dep_ft + $new_dep_ft;
-    $saldo_ft = $new_dep_ft;
+    $saldo_ft = $new_dep_ft + $total_caja;
+    echo "<br>Saldo actual de caja: " . $saldo_ft;
 
-    // Definimos la consulta preparada
-    $sql_gua_ca_fi = "INSERT INTO caja_final (movil, fecha, dep_ft, saldo_ft, usuario) 
-                      VALUES (?, ?, ?, ?, ?)";
 
-    // Preparamos la consulta
-    $guarda_caja = $con->prepare($sql_gua_ca_fi);
+    $sql_gua_ca_ft = "INSERT INTO caja_final (movil, fecha, dep_ft, saldo_ft, usuario) ";
+    $sql_gua_ca_ft .= "VALUES (?, ?,?,?, ?)";
+    $guarda_caja = $con->prepare($sql_gua_ca_ft);
 
     if (!$guarda_caja) {
         echo "Error al preparar la consulta: " . $con->error;
         return false;
     }
 
-    // Asignamos los valores a los marcadores de posición
     $guarda_caja->bind_param("isiis", $movil, $fecha, $new_dep_ft, $saldo_ft, $usuario);
 
-
-    // Ejecutamos la consulta
     if ($guarda_caja->execute()) {
         echo "<br>";
         echo "Datos guardados en caja_final correctamente.";
@@ -341,38 +330,27 @@ function guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $usuario)
     Actualiza la semana pagada
 */
 
-function guardaCaja($con, $fecha, $saldo_ft, $saldo_mp)
+function debitaCaja($con, $movil)
 {
-    // Definimos la consulta preparada
-    $sql_gua_ca_fi = "INSERT INTO caja_final (fecha,                                               
-                                              saldo_ft, 
-                                              saldo_mp) 
-                      VALUES (?, ?, ?)";
+    $lee_ca = "SELECT * FROM caja_final ORDER BY id DESC LIMIT 1";
 
-    // Preparamos la consulta
-    $guarda_caja = $con->prepare($sql_gua_ca_fi);
+    $lee_caja = $con->query($lee_ca);
 
-    if (!$guarda_caja) {
-        echo "Error al preparar la consulta: " . $con->error;
-        return false;
+    // Verificamos si la consulta se ejecutó correctamente
+    if (!$lee_caja) {
+        die("Error en la consulta: " . $con->error);
     }
-    // Asignamos los valores a los marcadores de posición
-    $guarda_caja->bind_param(
-        "sdd",
-        $fecha,
-        $saldo_ft,
-        $saldo_mp
-    );
 
-    // Ejecutamos la consulta
-    if ($guarda_caja->execute()) {
-        echo "Datos guardados en caja_final correctamente.";
-        return true;
+    // Verificamos si hay registros antes de acceder a los datos
+    if ($row = $lee_caja->fetch_assoc()) {
+        return $saldo_leido = $row['saldo_ft']; // Retornamos el saldo
     } else {
-        echo "Error al insertar datos en caja_final: " . $guarda_caja->error;
-        return false;
+        return null; // Retorna null si no hay datos
     }
 }
+
+
+
 
 
 function deudaAnterior($con, $movil)

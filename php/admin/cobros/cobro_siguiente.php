@@ -379,8 +379,8 @@ $sql_voucher = $con->query($sql_voucher);
 -->
 
 
-        <form action="cobro_fin.php" method="post" id="formulario" target="_blank">
-            <!-- <form action="cobro_fin.php" method="post" id="formulario"> -->
+        <!-- <form action="cobro_fin.php" method="post" id="formulario" target="_blank"> -->
+        <form action="cobro_fin.php" method="post" id="formulario">
 
 
 
@@ -390,10 +390,7 @@ $sql_voucher = $con->query($sql_voucher);
                     <ul style="border: 2px solid black; padding: 5px; border-radius: 10px; list-style-type: none;">
                         <h5>-------------------------------------------------------------------------</h5>
                         <h2>ESTADO DE CUENTA</h2>
-                        <h4>Orden</h4>
-                        <h5>Ventas</h5>
-                        <h5>Deuda</h5>
-                        <h5>Semana</h5>
+
 
                         <?php
                         $abo_sem = $row_semana['importe'];
@@ -520,7 +517,7 @@ $sql_voucher = $con->query($sql_voucher);
                                 <li class="resaltado">
                                     <label for="viajes_anteriores">Cobrarle</label>
                                     <input class="put" type="text" id="viajes_anteriores" name="viajes_anteriores"
-                                        value="<?php echo $viajes_que_no_se_cobraron ?>" readonly> no cobrados anteriormente.
+                                        value="<?php echo $viajes_que_no_se_cobraron ?>" readonly> viajes no cobrados anteriormente.
                                 </li>
 
                             <?php
@@ -550,6 +547,7 @@ $sql_voucher = $con->query($sql_voucher);
                             <input type="hidden" id="comiaaa" name="comiaaa" value="<?php echo $noventa = $total * .9;
                                                                                     $nov = $noventa + $deu_ant ?>" readonly>
                         </li>
+                        <li><?php echo $noventa ?></li>
                         <li>
                             <?php
 
