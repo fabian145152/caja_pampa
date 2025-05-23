@@ -3,11 +3,20 @@ include_once "../../../funciones/funciones.php";
 $con = conexion();
 $con->set_charset("utf8mb4");
 $resto = 0;
+$usuario = $_SESSION['uname'];
 
 $movil = $_POST['movil'];
 
 $deposito = $_POST['deposito'];
 $deuda_anterior = $_POST['deuda_anterior'];
+echo $usuario;
+
+$lee_ca = "SELECT * FROM caja_final ORDER BY id DESC LIMIT 1";
+$res = $con->query($lee_ca);
+$reg = $res->fetch_assoc();
+$saldo_ft = $reg['saldo_ft'];
+
+
 
 
 $sql = "SELECT * FROM completa WHERE movil = '$movil'";
@@ -24,6 +33,7 @@ $salda_deuda = $deuda_anterior - $deposito;
 $paga_parte = $deuda_anterior - $deposito;
 $de_mas = $deposito + $saldo_a_favor;
 $paga_parte = $de_mas;
+$observaciones = "";
 echo "Movil: " . $movil;
 echo "<br>";
 echo "Deuda anterior: " . $deuda_anterior;
@@ -111,6 +121,10 @@ if ($para_guardar_a_favor > 0) {
             exit;
         }
     }
+    $observaciones = "Deposito a cuenta del movil. " . $movil;
+    $fecha = date("Y-m-d H:i:s");
+    $new_dep_ft = $deposito;
+    guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $saldo_ft, $usuario, $observaciones);
 }
 
-header("Location: ../../menu.php");
+echo "<script>window.close();</script>";

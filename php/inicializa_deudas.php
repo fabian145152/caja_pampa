@@ -10,7 +10,7 @@ if ($_SESSION['logueado']) {
     // Si se envía el formulario
     if (isset($_POST['actualizar'])) {
         // Consulta para actualizar todos los registros
-        $sql_completa = "UPDATE completa SET deuda_anterior = 0, saldo_a_favor_ft = 0, venta_1 = 0, venta_2 = 0, venta_3 = 0, venta_4 = 0, venta_5 = 0, viajes_semana_actual = 0";
+        $sql_completa = "UPDATE completa SET deuda_anterior = 0, saldo_a_favor_ft = 0, venta_1 = 0, venta_2 = 0, venta_3 = 0, venta_4 = 0, venta_5 = 0, v_sem_siguiente = 0";
 
         if ($con->query($sql_completa) === TRUE) {
             echo "<br>";
@@ -63,6 +63,16 @@ if ($_SESSION['logueado']) {
             echo "<br>";
         } else {
             echo "Error al actualizar la Caja_final: " . $con->error;
+            exit;
+        }
+
+        $sql_dep_mov = "TRUNCATE TABLE depositos_a_moviles";
+        if ($con->query($sql_dep_mov) === TRUE) {
+            echo "<br>";
+            echo "La tabla depositos a moviles se actualizo correctamente.";
+            echo "<br>";
+        } else {
+            echo "Error al actualizar La tabla depositos a moviles: " . $con->error;
             exit;
         }
 
@@ -146,7 +156,7 @@ if ($_SESSION['logueado']) {
         echo "<BR></BR><BR></BR><BR></BR><BR></BR><BR></BR><BR></BR><BR></BR><BR></BR><BR></BR><BR></BR>";
     }
 
-    ?>
+?>
     <!DOCTYPE html>
     <html lang="en">
 
@@ -176,6 +186,6 @@ if ($_SESSION['logueado']) {
     </html>
 
 
-    <?php
+<?php
 }
 ?>

@@ -282,7 +282,7 @@ function ultimosDep($con)
 /*
     Guarda los depositos del movil en caja
 */
-function guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $usuario)
+function guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $saldo_ft, $usuario, $observaciones)
 {
 
     //Lee el anteultiomo registro
@@ -300,8 +300,8 @@ function guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $usuario)
     echo "<br>Saldo actual de caja: " . $saldo_ft;
 
 
-    $sql_gua_ca_ft = "INSERT INTO caja_final (movil, fecha, dep_ft, saldo_ft, usuario) ";
-    $sql_gua_ca_ft .= "VALUES (?, ?,?,?, ?)";
+    $sql_gua_ca_ft = "INSERT INTO caja_final (movil, fecha, dep_ft, saldo_ft, usuario, observaciones) ";
+    $sql_gua_ca_ft .= "VALUES (?, ?,?,?,?,?)";
     $guarda_caja = $con->prepare($sql_gua_ca_ft);
 
     if (!$guarda_caja) {
@@ -309,7 +309,7 @@ function guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $usuario)
         return false;
     }
 
-    $guarda_caja->bind_param("isiis", $movil, $fecha, $new_dep_ft, $saldo_ft, $usuario);
+    $guarda_caja->bind_param("isiiss", $movil, $fecha, $new_dep_ft, $saldo_ft, $usuario, $observaciones);
 
     if ($guarda_caja->execute()) {
         echo "<br>";
@@ -362,4 +362,58 @@ function deudaAnterior($con, $movil)
     $row = $result->fetch_assoc();
     $deuda_anterior = $row['deuda_anterior'];
     $saldo_a_favor = $row['saldo_a_favor_ft'];
+}
+
+// VOUCHER VOUCHER
+// VOUCHER VOUCHER
+// VOUCHER VOUCHER
+// VOUCHER VOUCHER
+
+
+//GUARDA CANTIDAD DE VIAJES QUE SE COBRARAN LA SEMANA SIGUIENTE
+function  viajesSemSig($con, $movil, $viajes_semana_que_viene)
+{
+    $sql = "UPDATE completa SET v_sem_siguiente = '$viajes_semana_que_viene' WHERE movil = '$movil'";
+    if ($con->query($sql) === TRUE) {
+        echo "<br>cantidad de viajes guardados para la semana que viene correctamente";
+    } else {
+        echo "<br>Error al guardar viajes para la semana que viene: " . $con->error;
+    }
+}
+
+// GUARDA DEPOSITOS A LOS MOVILES
+function depositosAMoviles($con, $movil, $fecha, $resto_dep_mov, $estado)
+{
+    $stmt = $con->prepare("INSERT INTO depositos_a_moviles (movil, fecha, importe, est) VALUES (?, ?, ?, ?)");
+    if (!$stmt) {
+        die("<br>Error en la preparación de la consulta: " . $con->error);
+    }
+    $stmt->bind_param("isdi", $movil, $fecha, $resto_dep_mov, $estado);
+    if ($stmt->execute()) {
+        echo "<br>Depósito a móvil guardado correctamente.";
+    } else {
+        echo "<br>Error al depositar al móvil: " . $stmt->error;
+    }
+    $stmt->close();
+}
+
+function borraVoucher($con, $movil)
+{
+    // Verificar conexión
+    if ($con->connect_error) {
+        die("Conexión fallida: " . $con->connect_error);
+    }
+    // Preparar la consulta
+    $stmt = $con->prepare("DELETE FROM voucher_validado WHERE movil = ?");
+    // Vincular parámetros
+    $stmt->bind_param("i", $movil);
+    // Ejecutar la consulta
+    if ($stmt->execute()) {
+        echo "Registro eliminado correctamente";
+    } else {
+        echo "Error al eliminar el registro: " . $stmt->error;
+    }
+    // Cerrar la consulta y la conexión
+    $stmt->close();
+    $con->close();
 }

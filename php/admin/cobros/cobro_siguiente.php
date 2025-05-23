@@ -36,7 +36,7 @@ $res_comp = $con->query($sql_comp);
 $row_comp = $res_comp->fetch_assoc();
 $row_comp['movil'];
 $saldo_a_favor = $row_comp['saldo_a_favor_ft'];
-$viajes_que_no_se_cobraron = $row_comp['viajes_semana_actual'];
+$viajes_que_no_se_cobraron = $row_comp['v_sem_siguiente'];
 $deu_ant = $row_comp['deuda_anterior'];
 
 
@@ -379,8 +379,8 @@ $sql_voucher = $con->query($sql_voucher);
 -->
 
 
-        <!-- <form action="cobro_fin.php" method="post" id="formulario" target="_blank"> -->
-        <form action="cobro_fin.php" method="post" id="formulario">
+        <form action="cobro_fin.php" method="post" id="formulario" target="_blank">
+            <!-- <form action="cobro_fin.php" method="post" id="formulario"> -->
 
 
 
@@ -437,6 +437,7 @@ $sql_voucher = $con->query($sql_voucher);
                         </li>
 
                         <li>
+                            <!-- <label class="mi-label">Paga x viajes:</label> -->
                             <input type="hidden" id="viajes" name="viajes"
                                 value="<?php echo $viajes_de_la_semana_anterior * $paga_x_viaje ?>" readonly>
                         </li>
@@ -547,7 +548,7 @@ $sql_voucher = $con->query($sql_voucher);
                             <input type="hidden" id="comiaaa" name="comiaaa" value="<?php echo $noventa = $total * .9;
                                                                                     $nov = $noventa + $deu_ant ?>" readonly>
                         </li>
-                        <li><?php echo $noventa ?></li>
+
                         <li>
                             <?php
 
@@ -691,9 +692,11 @@ $sql_voucher = $con->query($sql_voucher);
             </div>
             </div>
         </form>
-
-
-        <a href=" inicio_cobros.php" class="btn btn-info">VOLVER</a></li>
+        <div>
+            <a href="../vauchin/exportar_tabla.php?q=<?php echo $movil ?> " class="btn btn-primary" target="_blank">VAUCHIN</a>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="inicio_cobros.php" class="btn btn-info">VOLVER</a></li>
+        </div>
 
         <br><br><br>
         <br><br><br>

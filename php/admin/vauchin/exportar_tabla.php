@@ -9,7 +9,7 @@ $mo = $_GET['q'];
 $movil = $mo;
 
 
-$sql = "SELECT * FROM voucher_validado WHERE movil = '$movil'";
+$sql = "SELECT * FROM voucher_validado WHERE movil = $movil";
 $datos = $con->query($sql);
 
 ?>
@@ -22,13 +22,19 @@ $datos = $con->query($sql);
     <title>VOUCHIN</title>
     <link rel="stylesheet" href="../../../css/detalles.css">
 
+
+    <script>
+        function cerrarPagina() {
+            window.close();
+        }
+    </script>
 </head>
 
 <body>
     <h3>Movil: <?php echo $movil ?></h3>
     <br>
 
-    <a href="../voucher/buscador_voucher.php?movil=<?php $movil ?>">VOLVER</a>
+    <a href="../voucher/buscador_voucher.php?movil=<?php $movil ?>"></a>
 
     <div>
 
@@ -112,6 +118,7 @@ $datos = $con->query($sql);
     </tr>
 </table>
 <br><br>
+<button onclick="cerrarPagina()" style="background-color: blue; color: white;">CERRAR PAGINA</button>
 
 
 </body>
