@@ -380,7 +380,7 @@ $sql_voucher = $con->query($sql_voucher);
 
 
         <form action="cobro_fin.php" method="post" id="formulario" target="_blank">
-            <!-- <form action="cobro_fin.php" method="post" id="formulario"> -->
+            <!--<form action="cobro_fin.php" method="post" id="formulario">-->
 
 
 

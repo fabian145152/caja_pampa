@@ -78,8 +78,7 @@ $res_le_1 = $con->query($leo_caj_1);
                     $saldo_mp = $row['haber_mp'] - $row['debe_mp'];
                 ?>
                     <form action="#" method="">
-                        <?php
-                        ?>
+
                         <tr>
                             <th style="border: 1px solid black; padding: 8px;"><?php echo $row['id'] ?></th>
                             <th style="border: 1px solid black; padding: 8px;"><?php $fechazz = $row['fecha'];

@@ -282,26 +282,38 @@ function ultimosDep($con)
 /*
     Guarda los depositos del movil en caja
 */
-function guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $saldo_ft, $usuario, $observaciones)
+function guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $saldo_ft, $saldo_voucher, $dep_voucher, $usuario, $observaciones)
 {
 
     //Lee el anteultiomo registro
-    $lee_anteultimo_registro = "SELECT saldo_ft, dep_ft FROM caja_final ORDER BY id DESC LIMIT 1";;
+    $lee_anteultimo_registro = "SELECT saldo_ft, dep_ft, dep_voucher, saldo_voucher FROM caja_final ORDER BY id DESC LIMIT 1";;
     $res_le = $con->query($lee_anteultimo_registro);
     $row_reg = $res_le->fetch_assoc();
     $total_caja = $row_reg['saldo_ft'];
-    echo "<br>Total_caja anteultimo registro: " . $total_caja;
+    $total_caja_voucher = $row_reg['saldo_voucher'];
 
 
+
+    echo "<br>Total_caja anteultimo registro ft: " . $total_caja;
     echo "<br>Depsoito en ft " . $new_dep_ft;
-
-    //$saldo_ft = $dep_ft + $new_dep_ft;
     $saldo_ft = $new_dep_ft + $total_caja;
     echo "<br>Saldo actual de caja: " . $saldo_ft;
 
 
-    $sql_gua_ca_ft = "INSERT INTO caja_final (movil, fecha, dep_ft, saldo_ft, usuario, observaciones) ";
-    $sql_gua_ca_ft .= "VALUES (?, ?,?,?,?,?)";
+
+
+
+    echo "<br>Total_caja anteultimo registro voucher: " . $total_caja_voucher;
+    echo "<br>Depsoito en voucher " . $dep_voucher;
+    $saldo_voucher = $dep_voucher + $total_caja_voucher;
+    echo "<br>Saldo actual de caja en voucher: " . $saldo_voucher;
+
+    //exit;
+
+
+
+    $sql_gua_ca_ft = "INSERT INTO caja_final (movil, fecha, dep_ft, saldo_ft, dep_voucher, saldo_voucher, usuario, observaciones) ";
+    $sql_gua_ca_ft .= "VALUES (?,?,?,?,?,?,?,?)";
     $guarda_caja = $con->prepare($sql_gua_ca_ft);
 
     if (!$guarda_caja) {
@@ -309,7 +321,7 @@ function guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $saldo_ft, $usuario,
         return false;
     }
 
-    $guarda_caja->bind_param("isiiss", $movil, $fecha, $new_dep_ft, $saldo_ft, $usuario, $observaciones);
+    $guarda_caja->bind_param("isiiiiss", $movil, $fecha, $new_dep_ft, $saldo_ft, $dep_voucher, $saldo_voucher, $usuario, $observaciones);
 
     if ($guarda_caja->execute()) {
         echo "<br>";
@@ -322,13 +334,6 @@ function guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $saldo_ft, $usuario,
     }
 }
 
-
-
-
-/*
-    Genera movimiento de caja. cada vez que deposita un movil crea este registro actualizando el saldo
-    Actualiza la semana pagada
-*/
 
 function debitaCaja($con, $movil)
 {
@@ -348,10 +353,6 @@ function debitaCaja($con, $movil)
         return null; // Retorna null si no hay datos
     }
 }
-
-
-
-
 
 function deudaAnterior($con, $movil)
 {
@@ -414,6 +415,5 @@ function borraVoucher($con, $movil)
         echo "Error al eliminar el registro: " . $stmt->error;
     }
     // Cerrar la consulta y la conexión
-    $stmt->close();
-    $con->close();
+
 }
