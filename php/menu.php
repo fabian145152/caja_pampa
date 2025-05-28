@@ -180,9 +180,9 @@ if ($_SESSION['logueado']) {
                 </div>
                 <div class="col-md-3">
                     <ul class="list-group">
-                        <h3>SIN TERMINAR</h3>
-                        <li><a href="" target="_blank" class=" btn btn-info btn-block btn-sm">DEPOSITOS A REALIZAR PARA LOS CHOFERES</a></li>
+                        <li><a href="admin/dep_a_moviles/inicio_dep_mov.php" target="_blank" class=" btn btn-info btn-block btn-sm">DEPOSITOS A REALIZAR PARA LOS CHOFERES</a></li>
                         <br>
+                        <h3>SIN TERMINAR</h3>
                         <li><a href="#" class=" btn btn-INFO btn-block btn-sm">INGRESOS</a></li>
                         <br>
                         <li><a href="#" class="btn btn-info btn-block">F-MAILER</a></li>

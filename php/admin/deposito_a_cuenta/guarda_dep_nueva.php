@@ -17,6 +17,8 @@ $reg = $res->fetch_assoc();
 $saldo_ft = $reg['saldo_ft'];
 
 
+$saldo_voucher = 0;
+$dep_voucher = 0;
 
 
 $sql = "SELECT * FROM completa WHERE movil = '$movil'";
@@ -124,7 +126,7 @@ if ($para_guardar_a_favor > 0) {
     $observaciones = "Deposito a cuenta del movil. " . $movil;
     $fecha = date("Y-m-d H:i:s");
     $new_dep_ft = $deposito;
-    guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $saldo_ft, $usuario, $observaciones);
+    guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $saldo_ft, $saldo_voucher, $dep_voucher, $usuario, $observaciones);
 }
 
 echo "<script>window.close();</script>";

@@ -48,7 +48,7 @@ $res_le_1 = $con->query($leo_caj_1);
                     <th style="border: 1px solid black; padding: 8px;">MOVIL</th>
                     <th style="border: 1px solid black; padding: 8px;">ULT DEP FT</th>
                     <th style="border: 1px solid black; padding: 8px;">TOTAL EN FT</th>
-                    <th style="border: 1px solid black; padding: 8px;">ULTO DEP VOUCHER </th>
+                    <th style="border: 1px solid black; padding: 8px;">ULT DEP VOUCHER </th>
                     <th style="border: 1px solid black; padding: 8px;">TOTAL EN VOUCHER</th>
                     <th style="border: 1px solid black; padding: 8px;">USUARIO</th>
                     <th style="border: 1px solid black; padding: 8px;">OBSERVACIONES</th>
@@ -78,15 +78,20 @@ $res_le_1 = $con->query($leo_caj_1);
                     $saldo_mp = $row['haber_mp'] - $row['debe_mp'];
                 ?>
                     <form action="#" method="">
+                        <?php
+                        $deposito_ft = $row['dep_ft'];
+                        $pesos = number_format($deposito_ft, 2, ',', '.');
+                        $saldo_caja = $row['saldo_ft'];
+                        $saldo_ca = number_format($saldo_caja, 2, ',', '.');
 
+                        ?>
                         <tr>
                             <th style="border: 1px solid black; padding: 8px;"><?php echo $row['id'] ?></th>
                             <th style="border: 1px solid black; padding: 8px;"><?php $fechazz = $row['fecha'];
                                                                                 echo substr($fechazz, 0, 10)  ?></th>
                             <th style="border: 1px solid black; padding: 8px;"><?php echo $row['movil'] ?></th>
-                            <th style="border: 1px solid black; padding: 8px;"><?php echo $row['dep_ft'] ?></th>
-                            <!-- <th style="border: 1px solid black; padding: 8px;"><?php echo $saldo_caja ?></th>-->
-                            <th style="border: 1px solid black; padding: 8px;"><?php echo $row['saldo_ft'] ?></th>
+                            <th style="border: 1px solid black; padding: 8px;"><?php echo $pesos ?></th>
+                            <th style="border: 1px solid black; padding: 8px;"><?php echo $saldo_ca ?></th>
                             <th style="border: 1px solid black; padding: 8px;"><?php echo $row['dep_voucher'] ?></th>
                             <th style="border: 1px solid black; padding: 8px;"><?php echo $row['saldo_voucher'] ?></th>
                             <th style="border: 1px solid black; padding: 8px;"><?php echo $row['usuario'] ?></th>

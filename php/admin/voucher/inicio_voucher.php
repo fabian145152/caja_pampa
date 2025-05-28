@@ -87,7 +87,7 @@ if ($reg_remi > 0) {
         &nbsp; &nbsp;
 
         <form method="post" id="busca" action="buscador_voucher.php" enctype="multipart/form-data" role="form">
-            <h6>Buscar x<input type="text" style="width : 100px " id="movil" name="movil" placeholder="MOVIL">
+            <h6>Buscar x<input type="text" style="width : 100px " id="movil" name="movil" placeholder="MOVIL" autofocus>
                 <button>Buscar</button>
                 <input type="reset" value="Reset buscador" class="btn btn-success btn-sm">
             </h6>

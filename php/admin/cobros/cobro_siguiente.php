@@ -387,10 +387,9 @@ $sql_voucher = $con->query($sql_voucher);
             <input type="hidden" id="movil" name="movil" value="<?php echo $movil ?>">
             <div class="container">
                 <div class="form-group">
-                    <ul style="border: 2px solid black; padding: 5px; border-radius: 10px; list-style-type: none;">
-                        <h5>-------------------------------------------------------------------------</h5>
+                    <ul style="border: 2px solid black; padding: 56px; border-radius: 10px; list-style-type: none;">
+                        <!--   <h5>-------------------------------------------------------------------------</h5>  -->
                         <h2>ESTADO DE CUENTA</h2>
-
 
                         <?php
                         $abo_sem = $row_semana['importe'];
@@ -402,8 +401,7 @@ $sql_voucher = $con->query($sql_voucher);
 
                         ?>
                         <li>
-                            <label class="mi-label">Debe <?php echo $cant_sem - 1 ?> semanas.
-                            </label>
+                            <label class="mi-label">Debe <?php echo $cant_sem - 1 ?> semanas.</label>
                             <input type="hidden" id="cant_sem" name="cant_sem" value="<?php echo $cant_sem - 1 ?>">
                             <br>
                             <?php
@@ -568,32 +566,15 @@ $sql_voucher = $con->query($sql_voucher);
                             <input type="hidden" id="venta_5" name="venta_5" value="<?php echo $ven_5 ?>">
 
                             <?php
-                            //echo "<br>";
-                            //echo "Debe de semanas: " . $cobra_semana_anterior;
-                            //echo "<br>";
-                            //echo "Semanas adeudadas: " . $adu;
-                            //echo "<br>";
-                            //echo "Total de ventas: " . $total_ventas;
-                            //echo "<br>";
-                            //echo "Deuda anterior: " . $deu_ant;
-                            //echo "<br>";
-                            //echo "Total de viajes: " . $pesos_viajes; //es la cabtidad de viajes
-                            //echo "<br>";
-                            //echo "Total de voucher: " . $noventa;
-                            //echo "<br>";
+
                             $dato_a_env = $noventa - $adu - $total_ventas - $deu_ant;
-                            //echo "Dato para enviar: " . $dato_a_env;
+
                             $depot = $adu + $total_ventas + $deu_ant + $pesos_viajes;
-                            //echo "Suma lo de arriba: " . $depot;
-                            //echo "<br>";
+
                             $saldo_recuento = $depot - $saldo_a_favor; // - $noventa;
-                            //echo "Saldo recuento: " . $saldo_recuento;
-                            //echo "<br>";
-                            //echo "Saldo_a_favor " . $saldo_a_favor;
-                            //echo "<br>";
+
                             $cuenta = $noventa - $depot;
-                            //echo "Cuenta: " . $cuenta;
-                            //echo "<br>";
+
 
 
 
@@ -656,6 +637,7 @@ $sql_voucher = $con->query($sql_voucher);
 
                                 include "calcula_viajes.php";
                             ?>
+
                         </div>
                     <?php
                             }
@@ -683,20 +665,20 @@ $sql_voucher = $con->query($sql_voucher);
                     </li>
                     </ul>
                 </div>
-                <div class="texare">
-                    <label for="mi-textarea">Observaciones del pago / Recordatorios.</label>
-                    <textarea id="mi-textarea" name="obs" rows="4" cols="30"
-                        style="border-radius: 10px; border: 2px solid black; padding: 10px; "></textarea><br>
+
+                <div>
+
                     <button type="submit" class="btn btn-danger">GUARDAR</button>
                 </div>
+
             </div>
+            <div>
+                <a href="inicio_cobros.php" class="btn btn-info">VOLVER</a></li>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="../vauchin/exportar_tabla.php?q=<?php echo $movil ?> " class="btn btn-primary" target="_blank">VAUCHIN</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </div>
         </form>
-        <div>
-            <a href="../vauchin/exportar_tabla.php?q=<?php echo $movil ?> " class="btn btn-primary" target="_blank">VAUCHIN</a>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="inicio_cobros.php" class="btn btn-info">VOLVER</a></li>
-        </div>
 
         <br><br><br>
         <br><br><br>

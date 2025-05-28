@@ -61,7 +61,7 @@ function head()
     <script src="../js/jquery-3.4.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/bootbox.min.js"></script>
-<?php
+    <?php
 }
 
 ## Esta funcion se utiliza para borrar todos los archivos de una carpeta
@@ -397,7 +397,7 @@ function depositosAMoviles($con, $movil, $fecha, $resto_dep_mov, $estado)
     }
     $stmt->close();
 }
-
+//Borra los voucher validados
 function borraVoucher($con, $movil)
 {
     // Verificar conexión
@@ -416,4 +416,115 @@ function borraVoucher($con, $movil)
     }
     // Cerrar la consulta y la conexión
 
+}
+
+function DescuetaCaja($con, $movil, $para_movil, $usuario, $fecha)
+{
+
+    $lee_comp = "SELECT * FROM completa WHERE movil = '$movil'";
+    $resu = $con->query($lee_comp);
+    $row = $resu->fetch_assoc();
+    $saldo_a_favor = $row['saldo_a_favor_ft'];
+
+
+    $lee_ca = "SELECT * FROM caja_final ORDER BY id DESC LIMIT 1";
+    $lee_caja = $con->query($lee_ca);
+    // Verificamos si la consulta se ejecutó correctamente  
+    $row = $lee_caja->fetch_assoc();
+    $saldo_leido = $row['saldo_ft']; // Retornamos el saldo
+    $id = $row['id'];
+    echo "<br>Saldo actual de caja: " . $saldo_leido;
+
+    echo "<br>Para movil: " . $para_movil;
+    echo "<br>Movil: " . $movil;
+    $saldo_caja = $saldo_leido - $para_movil + $saldo_a_favor;
+    echo "<br>Saldo descontado de caja: " . $saldo_caja;
+    $observaciones = "Al móvil: " . $movil . " Se le depositaran: " . "$" . $para_movil;
+    echo "<br>Para guardar en observaciones: " . $observaciones;
+    if ($saldo_caja > 0) {
+        echo "<br>Sobra plata en caja: ";
+        //exit;
+        $saldo_a_favor = $para_movil;
+    } elseif ($saldo_caja == 0) {
+        echo "<br>Caja con saldo 0 ";
+    } elseif ($saldo_caja < 0) {
+        $saldo_a_favor = 0;
+        echo "<strong style='color: red;'>No hay saldo suficiente en caja para descontar el importe del móvil.</strong>";
+    ?>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            Swal.fire({
+                icon: "warning",
+                title: "<span style='color: red;'>Saldo insuficiente</span>",
+                html: "<span style='color: red;'>No hay saldo suficiente en caja para descontar el importe al móvil. Deposite mas efectivo...</span>",
+                confirmButtonText: "Aceptar"
+            }).then(() => {
+                // Cerrar la pestaña
+                window.close();
+
+                // Redireccionar a otra página
+                window.location.href = "inicio_cobros.php";
+            });
+        </script>
+    <?php
+        return; // Salir de la función si no hay saldo suficiente
+    }
+
+    $saldo_caja = $saldo_caja + $saldo_a_favor;
+
+    // Preparar la consulta
+    $stmt = $con->prepare("INSERT INTO caja_final (saldo_ft, observaciones, fecha, usuario) VALUES (?, ?, ?, ?)");
+    // Vincular parámetros
+    $stmt->bind_param("dsss", $saldo_caja, $observaciones, $fecha, $usuario);
+
+    // Ejecutar la consulta
+    if ($stmt->execute()) {
+        echo "Saldo registrado correctamente en la caja.";
+    } else {
+        echo "Error al registrar el saldo en la caja: " . $stmt->error;
+    }
+}
+
+function saldoCaja($con, $para_movil)
+{
+    $lee_ca = "SELECT * FROM caja_final ORDER BY id DESC LIMIT 1";
+    $lee_caja = $con->query($lee_ca);
+
+    // Verificamos si la consulta se ejecutó correctamente  
+    if ($lee_caja && $row = $lee_caja->fetch_assoc()) {
+        $saldo_leido = $row['saldo_ft']; // Guardamos el saldo
+        $id = $row['id'];
+
+        //return $saldo_leido; // Retornamos el saldo leído correctamente
+
+    } else {
+        echo "<br>Error al obtener el saldo de la caja.";
+        return null; // Devolvemos null si hay un error en la consulta
+    }
+
+    if ($saldo_leido >= $para_movil) {
+
+        return $saldo_leido; // Retornamos el saldo si es suficiente
+    } else {
+    ?>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            Swal.fire({
+                icon: "warning",
+                title: "<span style='color: red;'>Saldo insuficiente</span>",
+                html: "<span style='color: red;'>No hay saldo suficiente en caja para descontar el importe al móvil. Deposite mas efectivo...</span>",
+                confirmButtonText: "Aceptar"
+            }).then(() => {
+                // Cerrar la pestaña
+                window.close();
+
+                // Redireccionar a otra página
+                window.location.href = "inicio_cobros.php";
+            });
+        </script>
+
+<?php
+        //echo "<strong style='color: red;'>No hay saldo suficiente en caja para descontar el importe del móvil.</strong>";
+        return null; // Retornamos null si no hay saldo suficiente
+    }
 }
