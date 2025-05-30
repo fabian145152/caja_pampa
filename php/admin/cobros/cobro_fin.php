@@ -655,6 +655,7 @@ if ($tot_voucher > 0) {
     echo "<br>";
     echo "Cantidad de semanas: " . $cant_semanas = $_POST['cant_sem'];
     ?>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         Swal.fire({
@@ -811,23 +812,36 @@ if ($tot_voucher > 0) {
         echo "<br>Saldo a favor: " . $saldo_a_favor;
         echo "<br>Total: " . $total = $saldo_a_favor - $debe_semanas;
         echo "<br>Paga x semana" . $x_semana;
+
         if ($saldo_a_favor == $debe_semanas) {
             $saldo = $saldo_a_favor - $x_semana;
             echo "<br>Saldo a favor - Semanas: " . $total;
             $total = $x_semana;
             $saldo_a_favor = 0;
-            //actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
-            //actualizaSemPagadas($con, $movil, $total);
-            //guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $saldo_ft, $usuario, $observaciones)
-        } else {
-            echo "<br>No alcanza para pagar la semana...";
+            actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
+            actualizaSemPagadas($con, $movil, $total);
+            guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $saldo_ft, $saldo_voucher, $dep_voucher, $usuario, $observaciones);
+        } elseif ($saldo_a_favor > $debe_semanas) {
+            echo "<br>Paga la semana y sobra...";
+            echo "<br>Saldo a favor: " . $saldo_a_favor;
+            echo "<br>Debe semanas: " . $debe_semanas;
+            echo "<br>Paga x semana:" . $x_semana;
+            $total = $x_semana;
+            $saldo_a_favor = $saldo_a_favor - $debe_semanas;
+            echo "<br>Saldo_a_favor: ", $saldo_a_favor;
+            actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
+            actualizaSemPagadas($con, $movil, $total);
+            guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $saldo_ft, $saldo_voucher, $dep_voucher, $usuario, $observaciones);
+        } elseif ($saldo_a_favor < $debe_semanas) {
+            echo "<br>No alcanza para pagar...";
         }
-        exit;
+
     ?>
         <script>
-            //window.location.href = "inicio_cobros.php";
+            window.location.href = "inicio_cobros.php";
         </script>
     <?php
+
     }
     //(cod 13)Semanas - saldo a favor - ventas
     if ($new_dep_ft == 0 && $debe_semanas > 0 && $saldo_a_favor > 0 && $deuda_anterior == 0 && $ventas > 0) {

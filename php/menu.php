@@ -152,13 +152,13 @@ if ($_SESSION['logueado']) {
                         <br>
                         <li><a href="admin/cobros/estado_de_caja.php" target="_blank" class=" btn btn-primary btn-block btn-sm">RESUMEN DE CAJA</a></li>
                         <br>
-                        <li><a href="admin/cobros/recibos" target="_blank" class=" btn btn-primary btn-block btn-sm">RECIBOS</a></li>
-                        <br>
-                        <li><a href="admin/moviminetos_de_caja/inicio_movimientos.php" target="_blank" class=" btn btn-danger btn-block btn-sm">EXTRACCIONES Y RESUMEN</a></li>
+                        <li><a href="admin/depositos_a_moviles/inicio_movimientos.php" target="_blank" class=" btn btn-primary btn-block btn-sm">DEPOSITOS A LOS MOVILES</a></li>
                         <br>
                         <h3>SIN TERMINAR</h3>
 
                         <h3>ESTADOS </h3>
+                        <li><a href="admin/cobros/recibos" target="_blank" class=" btn btn-primary btn-block btn-sm">RECIBOS</a></li>
+                        <br>
                         <li><a href="#" target="_blank" class=" btn btn-danger btn-block btn-sm">EDICION DE DEUDAS</a></li>
                         <br>
                         <li><a href="" target="_blank" class=" btn btn-danger btn-block btn-sm">ABOGADO</a></li>
@@ -180,8 +180,8 @@ if ($_SESSION['logueado']) {
                 </div>
                 <div class="col-md-3">
                     <ul class="list-group">
-                        <li><a href="admin/dep_a_moviles/inicio_dep_mov.php" target="_blank" class=" btn btn-info btn-block btn-sm">DEPOSITOS A REALIZAR PARA LOS CHOFERES</a></li>
-                        <br>
+
+
                         <h3>SIN TERMINAR</h3>
                         <li><a href="#" class=" btn btn-INFO btn-block btn-sm">INGRESOS</a></li>
                         <br>

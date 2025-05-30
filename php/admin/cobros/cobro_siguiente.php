@@ -187,38 +187,38 @@ $sql_voucher = $con->query($sql_voucher);
 
     <ul style="border: 2px solid black; padding: 10px; border-radius: 10px; list-style-type: none;">
         <div id="contaaaenedor">
-            <h6>Estado de cuenta del movil: <?php echo $movil . "." ?>&nbsp;
-                <?php
-                echo "Se le está cobrando la semana: " . $semana = date('W') - 1;
-                ?>
-                <div class="containeraa">
-                    <div class="column left-column">
-                        <?php
-                        if ($apellido_titu === $apellido_chof_1) {
-                            echo "<strong>TITULAR: </strong>" . $nombre_titu . " " . $apellido_titu;
-                        } else {
-                        ?>
-                            <h6> <?php echo "<strong>TITULAR: </strong>" . $nombre_titu . " " . $apellido_titu ?>&nbsp;<br>
-                            </h6>
-                            <h6><?php echo "<strong>CHOFER: </strong>" . $nombre_chof . " " . $apellido_chof_1 ?></h6>
-                        <?php
-                        }
-                        ?>
-                    </div>
-                    <div class="column left-column">
-                        <?php
+            <h3>Estado de cuenta del movil: <?php echo $movil . "." ?></h3>
+            <h4>Fecha: <?php echo date("d-m-Y"); ?> Se le esta cobrando la semana <?php echo $semana = date('W') - 1 ?></h4>
 
-                        $observ = $row_comp['obs'];
-                        if ($observ <= 0) {
-                            echo '';
-                            echo "<strong>COMENTARIOS: </strong>" . $observ;
-                        } else {
-                            echo "<br>";
-                        }
-                        ?>
-                    </div>
+
+            <div class="containeraa">
+                <div class="column left-column">
+                    <?php
+                    if ($apellido_titu === $apellido_chof_1) {
+                        echo "<strong>TITULAR: </strong>" . $nombre_titu . " " . $apellido_titu;
+                    } else {
+                    ?>
+                        <h6> <?php echo "<strong>TITULAR: </strong>" . $nombre_titu . " " . $apellido_titu ?>&nbsp;<br>
+                        </h6>
+                        <h6><?php echo "<strong>CHOFER: </strong>" . $nombre_chof . " " . $apellido_chof_1 ?></h6>
+                    <?php
+                    }
+                    ?>
                 </div>
-            </h6>
+                <div class="column left-column">
+                    <?php
+
+                    $observ = $row_comp['obs'];
+                    if ($observ <= 0) {
+                        echo '';
+                        echo "<strong>COMENTARIOS: </strong>" . $observ;
+                    } else {
+                        echo "<br>";
+                    }
+                    ?>
+                </div>
+            </div>
+            <!-- </h6>  -->
         </div>
     </ul>
     <?php
