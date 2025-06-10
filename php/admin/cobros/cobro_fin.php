@@ -343,7 +343,7 @@ if ($tot_voucher > 0) {
             <script>
                 alert("Los Voucher depositados no alcanzan para pagar la deuda... ");
             </script>
-    <?php
+        <?php
             echo $deuda_anterior = abs($resto_dep_mov);
             $venta_1 = 0;
             $venta_2 = 0;
@@ -368,8 +368,6 @@ if ($tot_voucher > 0) {
         header("Location: inicio_cobros.php");
     }
 
-
-
     //(cod 29) Voucher - saldo a favor
     if ($tot_voucher > 0 && $new_dep_ft == 0 && $debe_semanas == 0 && $deuda_anterior == 0 && $saldo_a_favor > 0  && $ventas == 0) {
         echo "(cod 29) Voucher - saldo a favor...";
@@ -388,23 +386,6 @@ if ($tot_voucher > 0) {
             echo "<br>Saldo leido: " . $saldo_leido;
             echo "xxxxx" . $xxxx = $saldo_leido - $para_movil;
             if ($saldo_leido < $para_movil) {
-                /*
-            ?>
-                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-                <script>
-                    Swal.fire({
-                        icon: "warning",
-                        title: "<span style='color: red;'>Saldo insuficiente</span>",
-                        html: "<span style='color: red;'>No hay saldo suficiente en caja para descontar el importe al móvil. Deposite mas efectivo...</span>",
-                        confirmButtonText: "Aceptar"
-                    }).then(() => {
-                        // Cerrar la pestaña
-                        window.close();
-                    });
-                </script>
-            <?php
-                header("Location: inicio_cobros.php");
-                */
             }
             $resto_dep_mov = $para_movil;
             $saldo_a_favor = 0;
@@ -430,23 +411,8 @@ if ($tot_voucher > 0) {
             echo "<br>Saldo leido: " . $saldo_leido;
             echo "<br>xxxxx" . $xxxx = $saldo_leido - $para_movil;
             if ($saldo_leido < $para_movil) {
-                /*
-            ?>
-                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-                <script>
-                    Swal.fire({
-                        icon: "warning",
-                        title: "<span style='color: red;'>Saldo insuficiente</span>",
-                        html: "<span style='color: red;'>No hay saldo suficiente en caja para descontar el importe al móvil. Deposite mas efectivo...</span>",
-                        confirmButtonText: "Aceptar"
-                    }).then(() => {
-                        // Cerrar la pestaña
-                        window.close();
-                    });
-                </script>
-    <?php
-    header("Location: inicio_cobros.php");
-    */
+
+                header("Location: inicio_cobros.php");
             }
             $saldo_a_favor = 0;
             DescuetaCaja($con, $movil, $para_movil, $usuario, $fecha);
@@ -455,17 +421,72 @@ if ($tot_voucher > 0) {
             viajesSemSig($con, $movil, $viajes_semana_que_viene);
             depositosAMoviles($con, $movil, $fecha, $resto_dep_mov, $estado);
         }
+        header("Location: inicio_cobros.php");
     }
-
-
-
     //(cod 30) Voucher - Saldo a favor - Ventas
     if ($tot_voucher == 0 && $new_dep_ft == 0 && $debe_semanas == 0 && $deuda_anterior == 0 && $saldo_a_favor == 0  && $ventas == 0) {
         echo "(cod 30) Voucher - Saldo a favor - Ventas...";
     }
     //(cod 31) voucher - Deuda anterior
-    if ($tot_voucher == 0 && $new_dep_ft == 0 && $debe_semanas == 0 && $deuda_anterior == 0 && $saldo_a_favor == 0  && $ventas == 0) {
+    if ($tot_voucher > 0 && $new_dep_ft == 0 && $debe_semanas == 0 && $deuda_anterior > 0 && $saldo_a_favor == 0  && $ventas == 0) {
         echo "(cod 31) voucher - Deuda anterior...";
+        echo "<br>Deuda anterior: " . $deuda_anterior = deudaAnterior($con, $movil);
+        echo "<br>Canridad de viajes que paga: " . $viajes_q_se_cobran;
+        echo "<br>Total de viajes: " . $tot_viajes;
+        echo "<br>Comision: " . $comision = $tot_voucher * .1;
+        echo "<br>Para base: " . $para_base = $comision + $total_de_viajes;
+        $resto_dep_mov = $tot_voucher - $para_base - $deuda_anterior;
+        $res_mov = number_format($resto_dep_mov, 2);
+        echo "<br>Total para el movillll: " . $res_mov;
+
+        if ($viajes_q_se_cobran == $tot_viajes) {
+            echo "<br>Paga todos los viajes";
+            $total_de_viajes = $tot_viajes * $paga_x_viaje;
+            echo "<br>Deposito en voucher: " . $tot_voucher;
+            echo "<br>Comision: " . $comision = $tot_voucher * .1;
+            echo "<br>Importe de viajes: " . $total_de_viajes;
+            echo "<br>Para base: " . $para_base = $comision + $total_de_viajes;
+            viajesSemSig($con, $movil, $viajes_semana_que_viene);
+        } elseif ($viajes_q_se_cobran < $tot_viajes) {
+            echo "<br>Paga menos viajes: ";
+            echo "<br>Canridad de viajes que paga: " . $viajes_q_se_cobran;
+            echo "<br>Total de viajes: " . $tot_viajes;
+            echo "<br>Guardar los viajes para la semana siguiente: " .  $viajes_semana_que_viene = $tot_viajes - $viajes_q_se_cobran;
+            viajesSemSig($con, $movil, $viajes_semana_que_viene);
+        }
+        if ($viajes_anteriores > 0) {
+            echo "<br>Paga todos los viajes...";
+            $viajes_semana_que_viene = 0;
+            viajesSemSig($con, $movil, $viajes_semana_que_viene);
+        }
+        $estado = 0;
+
+        if ($resto_dep_mov == 0) {
+            echo "<br>Le alcanza justo...";
+            echo "<br>Res_mov: " . $resto_dep_mov;
+            $deuda_anterior = 0;
+            actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
+            depositosAMoviles($con, $movil, $fecha, $resto_dep_mov, $estado);
+        } elseif ($resto_dep_mov > 0) {
+            echo "<br>Paga y sobra...";
+            echo "<br>Res_mov: " . $resto_dep_mov;
+            $saldo_a_favor = 0;
+            $deuda_anterior = 0;
+            depositosAMoviles($con, $movil, $fecha, $resto_dep_mov, $estado);
+            actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
+        } elseif ($resto_dep_mov < 0) {
+            echo "<br>No alcanza para pagar la deuda...";
+            echo "<br>Res_mov: " . $resto_dep_mov;
+            $deuda = $resto_dep_mov * 1;
+            echo "<br>Deuda..." . $deuda = abs($deuda);
+            echo "<br>Deuda: " . $deuda_anterior;
+            $deuda_total = $deuda + $deuda_anterior;
+            echo "<br>Deuda total: " . $deuda_anterior = $deuda_total;
+            actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
+        }
+        borraVoucher($con, $movil);
+
+        header("Location: inicio_cobros.php");
     }
     //(cod 32) voucher - Deuda anterior - ventas
     if ($tot_voucher == 0 && $new_dep_ft == 0 && $debe_semanas == 0 && $deuda_anterior == 0 && $saldo_a_favor == 0  && $ventas == 0) {
@@ -524,22 +545,136 @@ if ($tot_voucher > 0) {
         viajesSemSig($con, $movil, $viajes_semana_que_viene);
         depositosAMoviles($con, $movil, $fecha, $resto_dep_mov, $estado);
         actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
+        header("Location: inicio_cobros.php");
     }
     //(cod 36) voucher - semanas - ventas
     if ($tot_voucher == 0 && $new_dep_ft == 0 && $debe_semanas == 0 && $deuda_anterior == 0 && $saldo_a_favor == 0  && $ventas == 0) {
         echo "(cod 36) voucher - semanas - ventas...";
     }
     //(cod 37) voucher - semanas - saldo_a_favor
-    if ($tot_voucher == 0 && $new_dep_ft == 0 && $debe_semanas == 0 && $deuda_anterior == 0 && $saldo_a_favor == 0  && $ventas == 0) {
+    if ($tot_voucher > 0 && $new_dep_ft == 0 && $debe_semanas > 0 && $deuda_anterior == 0 && $saldo_a_favor > 0  && $ventas == 0) {
         echo "(cod 37) voucher - semanas - saldo_a_favor...";
+        echo "<br>Debe semanas: " . $debe_semanas;
+        echo "<br>Total de viajes: " . $total_de_viajes;
+        echo "<br>Viajes para la semana que viene: " . $viajes_q_se_cobran;
+        $saldo_leido = saldoAfavor($con, $movil);
+        echo "<br>Saldo a favor: " . $saldo_a_favor;
+
+
+        if ($total_de_viajes == $viajes_q_se_cobran) {
+            echo "<br>Paga todos los viajes";
+            echo "<br>Deposito en voucher: " . $tot_voucher;
+            $comision = $tot_voucher * .1;
+            $para_base = $tot_voucher - $comision;
+            echo "<br>Descuento de voucher: " . $para_movil = $tot_voucher - $comision;
+            echo "<br>Para base: " . $comision;
+            echo "<br>Saldo actualizado: " . $resto_dep_mov = $para_base + $saldo_a_favor - $debe_semanas;
+            $total = $x_semana;
+            $estado = 0;
+            $saldo_a_favor = 0;
+        } elseif ($total_de_viajes > $viajes_q_se_cobran) {
+            echo "<br>Paga menos viajes";
+            echo "<br>Viajes a guardar para la semana que viene: ";
+            echo "<br>Deposito en voucher: " . $tot_voucher;
+            echo "<br>Comision: " . $comision = $tot_voucher * .1;
+            $total_de_viajes = $viajes_q_se_cobran * $paga_x_viaje;
+            echo "<br>Importe de viajes: " . $total_de_viajes;
+            echo "<br>Descuento de voucher: " . $para_movil = $tot_voucher - $comision;
+            echo "<br>Para base: " . $comision;
+            echo "<br>Saldo actualizado: " . $resto_dep_mov = $para_base + $saldo_a_favor - $debe_semanas;
+
+
+            echo "<br>Viajes para la semana que viene: " . $viajes_semana_que_viene = $tot_viajes - $viajes_q_se_cobran;
+            $total = $x_semana;
+            $estado = 0;
+            $saldo_a_favor = 0;
+            viajesSemSig($con, $movil, $viajes_semana_que_viene);
+        }
+        actualizaSemPagadas($con, $movil, $total);
+        borraVoucher($con, $movil);
+        depositosAMoviles($con, $movil, $fecha, $resto_dep_mov, $estado);
+        actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
+
+        header("Location: inicio_cobros.php");
     }
     //(cod 38) voucher - semanas - saldo a favor - ventas
     if ($tot_voucher == 0 && $new_dep_ft == 0 && $debe_semanas == 0 && $deuda_anterior == 0 && $saldo_a_favor == 0  && $ventas > 0) {
         echo "(cod 38) voucher - semanas - saldo a favor - ventas...";
     }
     //(cod 39) voucher - semanas - Deuda anterior
-    if ($tot_voucher == 0 && $new_dep_ft == 0 && $debe_semanas == 0 && $deuda_anterior == 0 && $saldo_a_favor == 0  && $ventas == 0) {
-        echo "(cod 39) voucher - semanas - Deuda anterior...";
+    if ($tot_voucher > 0 && $new_dep_ft == 0 && $debe_semanas > 0 && $deuda_anterior > 0 && $saldo_a_favor == 0  && $ventas == 0) {
+        echo "<br>(cod 39) voucher - semanas - Deuda anterior...";
+        echo "<br>";
+        echo "<br>Voucher: " . $tot_voucher;
+        $para_base = $tot_voucher * .1;
+        $para_movil = $tot_voucher * .9;
+        echo "<br>Para base: " . $para_base;
+        echo "<br>Para movil: " . $para_movil;
+        echo "<br>Semanas: " . $debe_semanas;
+        echo "<br>Deuda anterior: " . $deuda_anterior;
+        echo "<br>Saldo: " . $saldo =  $para_movil - $deuda_anterior - $debe_semanas;
+        echo "<br>Viajes que paga: " . $viajes_q_se_cobran;
+        echo "<br>Viajes de la semana anterior: " . $viajes_anteriores;
+        echo "<br>Viajes que paga la semana que viene: " . $v_a_guardar;
+
+
+
+        if ($saldo == 0) {
+            echo "<br>Paga justo...";
+            $estado = 0;
+            $saldo_a_favor = 0;
+            $deuda_anterior = 0;
+            $resto_dep_mov = 0;
+            $viajes_semana_que_viene = $v_a_guardar;
+            $total = $x_semana;
+            //actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
+            //borraVoucher($con, $movil);
+            //depositosAMoviles($con, $movil, $fecha, $resto_dep_mov, $estado)
+            //viajesSemSig($con, $movil, $viajes_semana_que_viene);
+            //actualizaSemPagadas($con, $movil, $total);
+        } elseif ($saldo > 0) {
+            echo "<br>";
+            echo "<br>Paga de mas...";
+            echo "<br>Para base: " . $para_base;
+
+            echo "<br>Semanas: " . $debe_semanas;
+            echo "<br>Deuda anterior: " . $deuda_anterior;
+            echo "<br>Viajes que se cobran: " . $viajes_q_se_cobran;
+            echo "<br>Viajes para la semana qe viene: " . $v_a_guardar;
+            echo "<br>Importe de viajes que paga: " . $importe_viajes = $viajes_q_se_cobran * $paga_x_viaje;
+            $deuda_anterior = deudaAnterior($con, $movil);
+
+
+            echo "<br>Deuda total: " . $deuda_total = $deuda_anterior + $debe_semanas + $importe_viajes + $para_base;
+            echo "<br>Para movil: " . $Vuelto_del_movil = $tot_voucher - $para_base - $deuda_anterior - $debe_semanas - $importe_viajes;
+            $viajes_semana_que_viene = $v_a_guardar;
+            $resto_dep_mov = $saldo;
+            $estado = 0;
+            $deuda_anterior = 0;
+            $total = $x_semana;
+
+            //actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
+            //borraVoucher($con, $movil);
+            //depositosAMoviles($con, $movil, $fecha, $resto_dep_mov, $estado)
+            //viajesSemSig($con, $movil, $viajes_semana_que_viene);
+            //actualizaSemPagadas($con, $movil, $total);
+        } elseif ($saldo < 0) {
+            echo "<br>No alcanza para pagar...";
+            $deuda_anterior = deudaAnterior($con, $movil);
+            echo "<br>Deuda anterior: " . $deuda_anterior;
+            echo "<br>Viajes que paga: " . $importe_viajes = $viajes_q_se_cobran * $paga_x_viaje;
+            $saldo = $deuda_anterior - $para_movil + $debe_semanas + $importe_viajes;
+            echo "<br>Saldo: " . $saldo;
+            $estado = 0;
+            $deuda_anterior = $saldo;
+            $viajes_semana_que_viene = $v_a_guardar;
+            //actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
+            //borraVoucher($con, $movil);
+            //viajesSemSig($con, $movil, $viajes_semana_que_viene);
+            //actualizaSemPagadas($con, $movil, $total);
+        }
+
+        //exit;
     }
     //(cod 40) voucher - Semanas - deuda anterior - ventas
     if ($tot_voucher == 0 && $new_dep_ft == 0 && $debe_semanas == 0 && $deuda_anterior == 0 && $saldo_a_favor == 0  && $ventas == 0) {
@@ -654,25 +789,6 @@ if ($tot_voucher > 0) {
     echo "Debe semanas: " . $debe_semanas;
     echo "<br>";
     echo "Cantidad de semanas: " . $cant_semanas = $_POST['cant_sem'];
-    ?>
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        Swal.fire({
-            icon: "warning",
-            title: "<span style='color: red;'>Ningun dato cargado...</span>",
-            html: "<span style='color: red;'>   Vuelva a intentar....</span>",
-            confirmButtonText: "Aceptar"
-        }).then(() => {
-            // Cerrar la pestaña
-            window.close();
-
-            // Redireccionar a otra página
-            window.location.href = "inicio_cobros.php";
-        });
-    </script>
-
-    <?php
 
 
     // Llamada a la función debeSemanas
@@ -711,7 +827,7 @@ if ($tot_voucher > 0) {
     //(cod 5) Solo ventas...; 
     if ($new_dep_ft == 0 && $saldo_a_favor == 0 && $deuda_anterior == 0 && $debe_semanas == 0 && $ventas > 0) {
         echo "(cod 5) Solo ventas...";
-    ?>
+        ?>
         <script>
             window.location.href = "inicio_cobros.php";
         </script>

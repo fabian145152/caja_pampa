@@ -363,6 +363,19 @@ function deudaAnterior($con, $movil)
     $row = $result->fetch_assoc();
     $deuda_anterior = $row['deuda_anterior'];
     $saldo_a_favor = $row['saldo_a_favor_ft'];
+    return $deuda_anterior;
+}
+
+
+function saldoAfavor($con, $movil)
+{
+    $stmt = $con->prepare("SELECT * FROM completa WHERE movil = ?");
+    $stmt->bind_param("s", $movil); // "s" indica tipo string para $movil
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    //$deuda_anterior = $row['deuda_anterior'];
+    $saldo_a_favor = $row['saldo_a_favor_ft'];
 }
 
 // VOUCHER VOUCHER
@@ -466,7 +479,7 @@ function DescuetaCaja($con, $movil, $para_movil, $usuario, $fecha)
                 window.location.href = "inicio_cobros.php";
             });
         </script>
-    <?php
+<?php
         return; // Salir de la función si no hay saldo suficiente
     }
 
@@ -489,23 +502,19 @@ function saldoCaja($con, $para_movil)
 {
     $lee_ca = "SELECT * FROM caja_final ORDER BY id DESC LIMIT 1";
     $lee_caja = $con->query($lee_ca);
-
     // Verificamos si la consulta se ejecutó correctamente  
     if ($lee_caja && $row = $lee_caja->fetch_assoc()) {
         $saldo_leido = $row['saldo_ft']; // Guardamos el saldo
         $id = $row['id'];
-
         //return $saldo_leido; // Retornamos el saldo leído correctamente
-
     } else {
         echo "<br>Error al obtener el saldo de la caja.";
         return null; // Devolvemos null si hay un error en la consulta
     }
-
     if ($saldo_leido >= $para_movil) {
-
         return $saldo_leido; // Retornamos el saldo si es suficiente
     } else {
+        /*
     ?>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
@@ -522,8 +531,8 @@ function saldoCaja($con, $para_movil)
                 window.location.href = "inicio_cobros.php";
             });
         </script>
-
-<?php
+        <?php
+        */
         //echo "<strong style='color: red;'>No hay saldo suficiente en caja para descontar el importe del móvil.</strong>";
         return null; // Retornamos null si no hay saldo suficiente
     }
