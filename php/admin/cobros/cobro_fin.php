@@ -424,8 +424,35 @@ if ($tot_voucher > 0) {
         header("Location: inicio_cobros.php");
     }
     //(cod 30) Voucher - Saldo a favor - Ventas
-    if ($tot_voucher == 0 && $new_dep_ft == 0 && $debe_semanas == 0 && $deuda_anterior == 0 && $saldo_a_favor == 0  && $ventas == 0) {
+    if ($tot_voucher > 0 && $new_dep_ft == 0 && $debe_semanas == 0 && $deuda_anterior == 0 && $saldo_a_favor > 0  && $ventas > 0) {
         echo "(cod 30) Voucher - Saldo a favor - Ventas...";
+        echo "<br>Total de voucher: " . $tot_voucher;
+        echo "<br>Comision para base: " . $para_base = $tot_voucher * .1;
+        echo "<br>Para el movil: " . $para_movil = $tot_voucher * .9;
+        echo "<br>Saldo a favor: " . $saldo_a_favor;
+        echo "<br>Ventas: " . $ventas;
+        echo "<br>Viajes que paga: " . $viajes_q_se_cobran;
+        echo "<br>Paga x viaje: " . $paga_x_viaje;
+        echo "<br>paga total de viajes: " . $tot_via = $viajes_q_se_cobran * $paga_x_viaje;
+        echo "<br>Viajes de la semana anterior: " . $viajes_anteriores;
+        echo "<br>Viajes que paga la semana que viene: " . $v_a_guardar;
+        echo "<br>Total al favor del movil menos ventas menso viajes: " . $total_p_movil = $saldo_a_favor + $para_movil - $ventas - $tot_via;
+        if ($total_p_movil > 0) {
+            echo "<br>Sobra plata: ";
+            $venta_1 = 0;
+            $venta_2 = 0;
+            $venta_3 = 0;
+            $venta_4 = 0;
+            $venta_5 = 0;
+            $saldo_a_favor = $total_p_movil;
+            echo "<br>Saldo a favor: " . $saldo_a_favor;
+        } elseif ($total_p_movil < 0) {
+            echo "<br>No alcanza: ";
+        } elseif ($total_p_movil == 0) {
+            echo "<br>Alcanza justo";
+        }
+
+        //header("Location: inicio_cobros.php");
     }
     //(cod 31) voucher - Deuda anterior
     if ($tot_voucher > 0 && $new_dep_ft == 0 && $debe_semanas == 0 && $deuda_anterior > 0 && $saldo_a_favor == 0  && $ventas == 0) {
@@ -627,24 +654,21 @@ if ($tot_voucher > 0) {
             $resto_dep_mov = 0;
             $viajes_semana_que_viene = $v_a_guardar;
             $total = $x_semana;
-            //actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
-            //borraVoucher($con, $movil);
-            //depositosAMoviles($con, $movil, $fecha, $resto_dep_mov, $estado)
-            //viajesSemSig($con, $movil, $viajes_semana_que_viene);
-            //actualizaSemPagadas($con, $movil, $total);
+            actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
+            borraVoucher($con, $movil);
+            depositosAMoviles($con, $movil, $fecha, $resto_dep_mov, $estado);
+            viajesSemSig($con, $movil, $viajes_semana_que_viene);
+            actualizaSemPagadas($con, $movil, $total);
         } elseif ($saldo > 0) {
             echo "<br>";
             echo "<br>Paga de mas...";
             echo "<br>Para base: " . $para_base;
-
             echo "<br>Semanas: " . $debe_semanas;
             echo "<br>Deuda anterior: " . $deuda_anterior;
             echo "<br>Viajes que se cobran: " . $viajes_q_se_cobran;
             echo "<br>Viajes para la semana qe viene: " . $v_a_guardar;
             echo "<br>Importe de viajes que paga: " . $importe_viajes = $viajes_q_se_cobran * $paga_x_viaje;
             $deuda_anterior = deudaAnterior($con, $movil);
-
-
             echo "<br>Deuda total: " . $deuda_total = $deuda_anterior + $debe_semanas + $importe_viajes + $para_base;
             echo "<br>Para movil: " . $Vuelto_del_movil = $tot_voucher - $para_base - $deuda_anterior - $debe_semanas - $importe_viajes;
             $viajes_semana_que_viene = $v_a_guardar;
@@ -652,30 +676,32 @@ if ($tot_voucher > 0) {
             $estado = 0;
             $deuda_anterior = 0;
             $total = $x_semana;
-
-            //actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
-            //borraVoucher($con, $movil);
-            //depositosAMoviles($con, $movil, $fecha, $resto_dep_mov, $estado)
-            //viajesSemSig($con, $movil, $viajes_semana_que_viene);
-            //actualizaSemPagadas($con, $movil, $total);
+            viajesSemSig($con, $movil, $viajes_semana_que_viene);
+            depositosAMoviles($con, $movil, $fecha, $resto_dep_mov, $estado);
+            actualizaSemPagadas($con, $movil, $total);
+            borraVoucher($con, $movil);
+            actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
         } elseif ($saldo < 0) {
             echo "<br>No alcanza para pagar...";
             $deuda_anterior = deudaAnterior($con, $movil);
             echo "<br>Deuda anterior: " . $deuda_anterior;
             echo "<br>Viajes que paga: " . $importe_viajes = $viajes_q_se_cobran * $paga_x_viaje;
             $saldo = $deuda_anterior - $para_movil + $debe_semanas + $importe_viajes;
-            echo "<br>Saldo: " . $saldo;
+            $deuda_anterior = $saldo;
+            echo "<br>Deuda total: " . $deuda_anterior;
             $estado = 0;
             $deuda_anterior = $saldo;
             $viajes_semana_que_viene = $v_a_guardar;
-            //actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
-            //borraVoucher($con, $movil);
-            //viajesSemSig($con, $movil, $viajes_semana_que_viene);
-            //actualizaSemPagadas($con, $movil, $total);
+            $total = $x_semana;
+            viajesSemSig($con, $movil, $viajes_semana_que_viene);
+            actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
+            borraVoucher($con, $movil);
+            actualizaSemPagadas($con, $movil, $total);
+            viajesSemSig($con, $movil, $viajes_semana_que_viene);
         }
-
-        //exit;
+        header("Location: inicio_cobros.php");
     }
+
     //(cod 40) voucher - Semanas - deuda anterior - ventas
     if ($tot_voucher == 0 && $new_dep_ft == 0 && $debe_semanas == 0 && $deuda_anterior == 0 && $saldo_a_favor == 0  && $ventas == 0) {
         echo "(cod 40) voucher - Semanas - deuda anterior - ventas...";
