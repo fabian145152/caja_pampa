@@ -43,8 +43,13 @@ $con->set_charset("utf8mb4");
 
     $sql = "UPDATE completa SET deuda_anterior = $deuda_total WHERE movil = $movil";
     $result = $con->query($sql);
-    
-    header("Location: ../../menu_admin.php");
+
+    //header("Location: ../../menu_admin.php");
+    ?>
+    <script>
+        window.close(); // No hace nada en la mayoría de los navegadores si la pestaña fue abierta por el usuario
+    </script>
+    <?php
 
     ?>
 </body>
