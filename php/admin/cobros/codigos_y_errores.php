@@ -46,16 +46,16 @@
         <li><b>(cod 29) Voucher - saldo a favor</b></li>
         <li><b>(cod 30) Voucher - Saldo a favor - Ventas</b></li>
         <li><b>(cod 31) voucher - Deuda anterior</b></li>
-        <br>
-        <li>(cod 32) voucher - Deuda anterior - ventas</li>
-        <br>
+        <li><b>(cod 32) voucher - Deuda anterior - ventas</b></li>
         <li><b>(err cod 33) voucher - Deuda anterior - saldo a favor</b></li>
         <li><b>(err cod 34) voucher - Deuda anterior - saldo a favor - ventas</b></li>
         <li><b>(cod 35) voucher semanas</b></li>
-        <li>(cod 36) voucher - semanas - ventas</li>
+        <li><b>(cod 36) voucher - semanas - ventas</b></li>
         <li><b>(cod 37) voucher - semanas - saldo_a_favor</b></li>
+        <br><br>
         <li>(cod 38) voucher - semanas - saldo a favor - ventas</li>
-        <li><b>(cod 39) voucher - semanas - Deuda anterior</b></li>
+        <br><br>
+        <li>(cod 39) voucher - semanas - Deuda anterior</li>
         <li>(cod 40) voucher - Semanas - deuda anterior - ventas</li>
         <li><b>(err cod 41) voucher - Semanas - deuda anterior - Saldo a favor</b></li>
         <li><b>(err cod 42) voucher - semanas - deuda anterior - Saldo a favor - ventas</b></li>
