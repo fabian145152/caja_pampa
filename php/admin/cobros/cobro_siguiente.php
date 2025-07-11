@@ -336,7 +336,7 @@ $sql_voucher = $con->query($sql_voucher);
         }
         ?>
         </p>
-        <!-- EN ESTA LINEA VA EL target="_blank" PARA QUE ABRA EN OTRA SOLAPA-->
+
         <?php
         if ($venta_2 != 0) {
         ?>
@@ -369,14 +369,7 @@ $sql_voucher = $con->query($sql_voucher);
         <?php
         }
         ?>
-        <!--
-    <h6>La semana la cobra bien con FT y MP terminad</h6>
-    <h6>Varias semanas tambien con FT y MP terminado</h6>
-    <h6>Deuda anterior CON SEMANAS ADEUDADAS terminado</h6>
-    <h6>Ventas con deuda y semanas TERMINADO</h6>
-    <h6>Falta Terminar paga de mas hay un error</h6>
-    <h6>Falta terminar tambien voucher</h6>
--->
+
 
 
         <form action="cobro_fin.php" method="post" id="formulario" target="_blank">
@@ -403,7 +396,7 @@ $sql_voucher = $con->query($sql_voucher);
                         <li>
                             <label class="mi-label">Debe <?php echo $cant_sem - 1 ?> semanas.</label>
                             <input type="hidden" id="cant_sem" name="cant_sem" value="<?php echo $cant_sem - 1 ?>">
-                            <br>
+
                             <?php
                             if ($cobra_semana_anterior == $paga_x_semana) {
                                 echo "Esta al dia";
@@ -428,10 +421,6 @@ $sql_voucher = $con->query($sql_voucher);
                                 echo "<input type='text' id='total_ventas' name='total_ventas' value='$total_ventas' readonly>";
                             }
                             ?>
-                            <!--
-                        <label class="mi-label">Productos que compro</label>
-                        <input type="text" id="prod" name="prod" value="<?php echo $total_ventas ?>" readonly>
-                -->
                         </li>
 
                         <li>
@@ -591,25 +580,21 @@ $sql_voucher = $con->query($sql_voucher);
                                 $dep = $saldo_recuento + $saldo_a_favor;
                                 echo "<br>";
                             }
-                            //exit;
+
                             if ($para_movil < 0) {
                                 $dep_para_movil = $para_movil;
                             } else {
-
                             ?>
-                        <li>
-                            <?php
 
+                                <?php
                                 $debe_abonar = $para_movil + $deu_ant;
+                                ?>
+                                <input type="hidden" id="debe_abonar" name="debe_abonar" value="<?php echo $debe_abonar ?>">
+                                <label class="mi-label">Debe abonar: </label>
 
-                            ?>
-                            <input type="hidden" id="debe_abonar" name="debe_abonar" value="<?php echo $debe_abonar ?>">
-                            <label class="mi-label">Debe :</label>
 
-                            <?php
+                                <?php
                                 $total_para_base = $cobra_semana_anterior + $total_ventas + $deu_ant - $saldo_a_favor;
-
-
                                 if ($viajes_que_no_se_cobraron >= 1) {
                                     echo "<br>";
                                     echo "Se le suman " . $viajes_que_no_se_cobraron . " De la semana anterior. ";
@@ -617,27 +602,27 @@ $sql_voucher = $con->query($sql_voucher);
                                     $cobra = $viajes_que_no_se_cobraron * $paga_x_viaje + $cobra;
                                 }
 
-                                echo $a_cobrar = $deuda_semanas_anteriores - $paga_x_semana + $deuda_anterior;
-                            ?>
-                            <input type="hidden" id="paga_mov" name="paga_mov" value="<?php echo $saldo_recuento ?>"
-                                readonly>
-                            <input type="text" id="deuda_semanas_anteriores" name="deuda_semanas_anteriores"
-                                value="<?php echo $cobra_2 ?>" style="background-color: yellow;" readonly>
-                            <input type="hidden" id="pesos" name="pesos" value="<?php ?>">
-                            >
+                                $a_cobrar = $deuda_semanas_anteriores - $paga_x_semana + $deuda_anterior;
+
+                                ?>
+                                <br>
+                                <input type="hidden" id="paga_mov" name="paga_mov" value="<?php echo $saldo_recuento ?>"
+                                    readonly>
+                                <input type="text" id="deuda_semanas_anteriores" name="deuda_semanas_anteriores"
+                                    value="<?php echo $cobra_2 ?>" style="background-color: yellow;" readonly>
+                                <input type="hidden" id="pesos" name="pesos" value="<?php ?>">
+
                         </li>
+                        <br>
                     <?php
                             }
-
                             if ($can_viajes > 0) {
                                 $voucher = 1;
                     ?>
                         <div class="recuadro" id="ing_via">
                             <?php
-
                                 include "calcula_viajes.php";
                             ?>
-
                         </div>
                     <?php
                             }

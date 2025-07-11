@@ -53,11 +53,11 @@ Es la calculadora de cantidad de viajes a cobrar y monto a depositar
     // Variables definidas en PHP
     $multiplicador = $paga_x_viaje; // Valor usado para la multiplicación
     $otraVariable =  $dato_a_env; // Valor inicial para la resta
-
+    /*
     echo "<br>multiplicador: " . $multiplicador;
     echo "<br>Otra variable: " . $otraVariable;
     echo "<br>Saldo a favor: " . $saldo_a_favor;
-
+*/
     //$otraVariable = $dep_para_movil; // Valor inicial para la resta
     echo "<script>
             multiplicador = $multiplicador;
