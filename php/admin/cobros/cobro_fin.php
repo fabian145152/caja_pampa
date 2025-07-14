@@ -231,21 +231,33 @@ if ($tot_voucher == 0 && $new_dep_ft == 0 && $debe_semanas == 0 && $deuda_anteri
 //(cod 2) Error saldo a favor menor que cero
 if ($tot_voucher == 0 && $new_dep_ft == 0 && $debe_semanas == 0 && $deuda_anterior == 0 && $saldo_a_favor < 0  && $ventas == 0) {
     echo "<b>(cod 2) Error saldo a favor menor que cero</b>";
+    echo "<br><a href='inicio_cobros.php'>Volver</a>";
     exit;
 }
 //(cod 3) Error efectivo menor que cero
 if ($tot_voucher == 0 && $new_dep_ft < 0 && $debe_semanas == 0 && $deuda_anterior == 0 && $saldo_a_favor == 0 && $ventas == 0) {
     echo "<b>(cod 3) Error efectivo menor que cero</b>";
+    echo "<br><a href='inicio_cobros.php'>Volver</a>";
     exit;
 }
 //(cod 4) Error Saldo a favor - deuda anterior mayores a 0
 if ($tot_voucher == 0 && $new_dep_ft == 0 && $debe_semanas == 0 && $deuda_anterior > 0 && $saldo_a_favor > 0 && $ventas == 0) {
     echo "<b>(cod 4) Error Saldo a favor - deuda anterior mayores a 0</b>";
+    echo "<br><a href='inicio_cobros.php'>Volver</a>";
     exit;
 }
 //(cod 5) Solo ventas
 if ($tot_voucher == 0 && $new_dep_ft == 0 && $debe_semanas == 0 && $deuda_anterior == 0 && $saldo_a_favor == 0 && $ventas > 0) {
     echo "<b>(cod 5) Solo ventas</b>";
+    echo "<br>Total Ventas: " . $ventas;
+    $venta_1 = 0;
+    $venta_2 = 0;
+    $venta_3 = 0;
+    $venta_4 = 0;
+    $venta_5 = 0;
+    $deuda_anterior = $ventas;
+    actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
+    header("Location: inicio_cobros.php");
     exit;
 }
 //(cod 6) Solo saldo a favor

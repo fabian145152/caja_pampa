@@ -392,6 +392,9 @@ $sql_voucher = $con->query($sql_voucher);
                         $deudas_sumadas = $deuda_ant + $cobra_semana_anterior;
                         $debe_deuda = $total_ventas + $cobra_semana_anterior + $deuda_anterior - $saldo_a_favor;
 
+
+
+
                         ?>
                         <li>
                             <label class="mi-label">Debe <?php echo $cant_sem - 1 ?> semanas.</label>
@@ -431,7 +434,7 @@ $sql_voucher = $con->query($sql_voucher);
                         <?php
                         if ($saldo_a_favor > 0) {
                         ?>
-                            <label class="mi-label">Tenía saldo a favor:</label>
+                            <label class="mi-label">TENIA SALDO A FAVOR:</label>
                             <input type="text" id="saldo_a_favor" name="saldo_a_favor" value="<?php echo $saldo_a_favor ?>"
                                 style="background-color: yellow;" readonly>
                         <?php
@@ -441,7 +444,7 @@ $sql_voucher = $con->query($sql_voucher);
                             <label class="mi-label">Al dia...:</label>
                             <input type="text" id="depo_mov" name="depo_mov" value="Al dia..." style="background-color:  aqua;"
                                 readonly>
-                        <?php
+                            <?php
                         }
                         if ($deu_ant > 0 || $cant_sem > 1 || $total_ventas > 1) {
 
@@ -455,14 +458,24 @@ $sql_voucher = $con->query($sql_voucher);
                             //Cobra 1 es la que se cobra
                             //$cobra_1 = $saldo_a_favor - $cobra_semana_anterior - $deu_ant - $total_ventas;
                             //exit;
-                        ?>
 
-                            <label class="mi-label">Deuda anterior:</label>
-                            <input type="text" id="deuda_ant" name="deuda_ant" value="<?php echo $deu_ant ?>"
-                                style="background-color: red; color: yellow;" readonly>
-                            <label class="mi-label">Deuda total:</label>
-                            <input type="hidden" id="depo_mov" name="depo_mov" value="<?php echo $cobra_1 ?>"
-                                style="background-color: blue; color: yellow;" readonly>
+
+                            if ($deuda_anterior > 0) {
+                            ?>
+                                <label class="mi-label">Deuda anterior:</label>
+                                <input type="text" id="deuda_ant" name="deuda_ant" value="<?php echo $deu_ant ?>" style="background-color: red; color: yellow;" readonly>
+                            <?php
+                            }
+                            ?>
+                            <br>
+                            <label class="mi-label">DEUDA TOTAL:</label>
+                            <input type="hidden" id="depo_mov" name="depo_mov" value="<?php echo $cobra_1 ?>" readonly>
+
+
+
+
+
+
 
                             <input type="text" id="" name="" value="<?php echo $cobra_2 ?>"
                                 style="background-color: red; color: yellow;" readonly>
