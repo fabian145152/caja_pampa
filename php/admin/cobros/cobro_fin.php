@@ -222,31 +222,31 @@ $para_depositar = $sub_saldo - $suma_gastos_semanales;
 
 
 
-//(cod 1) Error deuda anterior menor a cero
+//OK --------- (cod 1) Error deuda anterior menor a cero
 if ($tot_voucher == 0 && $new_dep_ft == 0 && $debe_semanas == 0 && $deuda_anterior < 0 && $saldo_a_favor == 0  && $ventas == 0) {
     echo "<b>(cod 1) Error deuda anterior menor a cero</b>";
     echo "<br><a href='inicio_cobros.php'>Volver</a>";
     exit;
 }
-//(cod 2) Error saldo a favor menor que cero
+//OK --------- (cod 2) Error saldo a favor menor que cero
 if ($tot_voucher == 0 && $new_dep_ft == 0 && $debe_semanas == 0 && $deuda_anterior == 0 && $saldo_a_favor < 0  && $ventas == 0) {
     echo "<b>(cod 2) Error saldo a favor menor que cero</b>";
     echo "<br><a href='inicio_cobros.php'>Volver</a>";
     exit;
 }
-//(cod 3) Error efectivo menor que cero
+//OK --------- (cod 3) Error efectivo menor que cero
 if ($tot_voucher == 0 && $new_dep_ft < 0 && $debe_semanas == 0 && $deuda_anterior == 0 && $saldo_a_favor == 0 && $ventas == 0) {
     echo "<b>(cod 3) Error efectivo menor que cero</b>";
     echo "<br><a href='inicio_cobros.php'>Volver</a>";
     exit;
 }
-//(cod 4) Error Saldo a favor - deuda anterior mayores a 0
+//OK --------- (cod 4) Error Saldo a favor - deuda anterior mayores a 0
 if ($tot_voucher == 0 && $new_dep_ft == 0 && $debe_semanas == 0 && $deuda_anterior > 0 && $saldo_a_favor > 0 && $ventas == 0) {
     echo "<b>(cod 4) Error Saldo a favor - deuda anterior mayores a 0</b>";
     echo "<br><a href='inicio_cobros.php'>Volver</a>";
     exit;
 }
-//(cod 5) Solo ventas
+//OK --------- (cod 5) Solo ventas
 if ($tot_voucher == 0 && $new_dep_ft == 0 && $debe_semanas == 0 && $deuda_anterior == 0 && $saldo_a_favor == 0 && $ventas > 0) {
     echo "<b>(cod 5) Solo ventas</b>";
     echo "<br>Total Ventas: " . $ventas;
@@ -258,46 +258,178 @@ if ($tot_voucher == 0 && $new_dep_ft == 0 && $debe_semanas == 0 && $deuda_anteri
     $deuda_anterior = $ventas;
     actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
     header("Location: inicio_cobros.php");
-    exit;
 }
-//(cod 6) Solo saldo a favor
+//OK --------- (cod 6) Solo saldo a favor
 if ($tot_voucher == 0 && $new_dep_ft == 0 && $debe_semanas == 0 && $deuda_anterior == 0 && $saldo_a_favor > 0 && $ventas == 0) {
     echo "<b>(cod 6) Solo saldo a favor</b>";
-    exit;
+    header("Location: inicio_cobros.php");
 }
-//(cod 7) Saldo a favor - Ventas
+//OK --------- (cod 7) Saldo a favor - Ventas
 if ($tot_voucher == 0 && $new_dep_ft == 0 && $debe_semanas == 0 && $deuda_anterior == 0 && $saldo_a_favor > 0 && $ventas > 0) {
     echo "<b>(cod 7) Saldo a favor - Ventas</b>";
-    exit;
+    if ($saldo_a_favor > $ventas) {
+        $saldo = $saldo_a_favor - $ventas;
+        echo "<br>Paga y sobra..." . $saldo;
+        $saldo_a_favor = $saldo;
+        $venta_1 = 0;
+        $venta_2 = 0;
+        $venta_3 = 0;
+        $venta_4 = 0;
+        $venta_5 = 0;
+        $deuda_anterior = 0;
+        echo "<br>Le queda a favor descontando la venta: " . $saldo_a_favor = $saldo;
+        actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
+        header("Location: inicio_cobros.php");
+    } elseif ($saldo_a_favor == $ventas) {
+        echo "Paga justo...";
+        $venta_1 = 0;
+        $venta_2 = 0;
+        $venta_3 = 0;
+        $venta_4 = 0;
+        $venta_5 = 0;
+        $saldo_a_favor = 0;
+        $deuda_anterior = 0;
+        actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
+        header("Location: inicio_cobros.php");
+    }
 }
-//(cod 8) Solo deuda anterior
+//OK --------- (cod 8) Solo deuda anterior
 if ($tot_voucher == 0 && $new_dep_ft == 0 && $debe_semanas == 0 && $deuda_anterior > 0 && $saldo_a_favor == 0 && $ventas == 0) {
     echo "<b>(cod 8) Solo deuda anterior</b>";
-    exit;
+    header("Location: inicio_cobros.php");
 }
-//(cod 9) Deuda anterior - ventas
+//OK --------- (cod 9) Deuda anterior - ventas
 if ($tot_voucher == 0 && $new_dep_ft == 0 && $debe_semanas == 0 && $deuda_anterior > 0 && $saldo_a_favor == 0 && $ventas > 0) {
     echo "<b>(cod 9) Deuda anterior - ventas</b>";
-    exit;
+    echo "<br>Ventas: " . $ventas;
+    echo "<br>Deuda Anterior: " . $deuda_anterior;
+    $venta_1 = 0;
+    $venta_2 = 0;
+    $venta_3 = 0;
+    $venta_4 = 0;
+    $venta_5 = 0;
+    $deuda_anterior = $deuda_anterior + $ventas;
+    actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
+    header("Location: inicio_cobros.php");
 }
-//(cod 10) Solo semanas
+//OK --------- (cod 10) Solo semanas
 if ($tot_voucher == 0 && $new_dep_ft == 0 && $debe_semanas > 0 && $deuda_anterior == 0 && $saldo_a_favor == 0 && $ventas == 0) {
     echo "<b>(cod 10) Solo semanas</b>";
-    exit;
+    header("Location: inicio_cobros.php");
 }
-//(cod 11) Ventas - Semanas
+//OK --------- (cod 11) Ventas - Semanas
 if ($tot_voucher == 0 && $new_dep_ft == 0 && $debe_semanas > 0 && $deuda_anterior == 0 && $saldo_a_favor == 0 && $ventas > 0) {
     echo "<b>(cod 11) Ventas - Semanas</b>";
-    exit;
+    echo "<br>Ventas: " . $ventas;
+    $venta_1 = 0;
+    $venta_2 = 0;
+    $venta_3 = 0;
+    $venta_4 = 0;
+    $venta_5 = 0;
+    echo "<br>Debe semanas: " . $debe_semanas;
+    echo "<br>Ventas: " . $ventas;
+    $debe = $debe_semanas + $ventas;
+    echo "<br>Debe semanas + Ventas: " . $debe;
+    $deuda_anterior = $debe;
+    echo "<br>" . $total = $x_semana;
+    actualizaSemPagadas($con, $movil, $total);
+    actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
+    header("Location: inicio_cobros.php");
 }
-//(cod 12) Semanas - Saldo a favor
+//OK --------- (cod 12) Semanas - Saldo a favor
 if ($tot_voucher == 0 && $new_dep_ft == 0 && $debe_semanas > 0 && $deuda_anterior == 0 && $saldo_a_favor > 0 && $ventas == 0) {
     echo "<b>(cod 12) Semanas - Saldo a favor</b>";
-    exit;
+    echo "<br>Debe semanas: " . $debe_semanas;
+    echo "<br>Saldo a favor: " . $saldo_a_favor;
+    $deuda = $saldo_a_favor - $debe_semanas + $ventas;
+
+    if ($deuda < 0) {
+        echo "<br>Saldo negativo, no se puede pagar";
+?>
+        <script>
+            if (confirm('¿El minimo que debes depositar es <?php echo $x_semana ?> ')) {
+                window.location.href = 'inicio_cobros.php';
+            } else {
+                alert('Operación cancelada.');
+            }
+        </script>
+    <?php
+        exit;
+    } elseif ($deuda == 0) {
+        echo "<br>Saldo cero, se puede pagar";
+        $saldo_a_favor = 0;
+        $total = $x_semana;
+        $venta_1 = 0;
+        $venta_2 = 0;
+        $venta_3 = 0;
+        $venta_4 = 0;
+        $venta_5 = 0;
+        actualizaSemPagadas($con, $movil, $total);
+        actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
+    } elseif ($deuda > 0) {
+        echo "<br>Saldo positivo, se puede pagar";
+        echo "<br>" . $total = $x_semana;
+        echo "<br>Saldo a favor: " . $saldo_a_favor;
+        echo "<br>" . $saldo_a_favor = $deuda;
+        $venta_1 = 0;
+        $venta_2 = 0;
+        $venta_3 = 0;
+        $venta_4 = 0;
+        $venta_5 = 0;
+        actualizaSemPagadas($con, $movil, $total);
+        actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
+    }
+    header("Location: inicio_cobros.php");
 }
 //(cod 13) Semanas - Saldo a favor - Ventas
 if ($tot_voucher == 0 && $new_dep_ft == 0 && $debe_semanas > 0 && $deuda_anterior == 0 && $saldo_a_favor > 0 && $ventas > 0) {
     echo "<b>(cod 13) Semanas - Saldo a favor - Ventas</b>";
+    echo "<b>(cod 12) Semanas - Saldo a favor</b>";
+    echo "<br>Debe semanas: " . $debe_semanas;
+    echo "<br>Saldo a favor: " . $saldo_a_favor;
+    $deuda = $saldo_a_favor - $debe_semanas;
+    echo "<br>Saldo: " . $deuda;
+    echo "<br>Ventas: " . $ventas;
+    $deuda = $deuda - $ventas;
+    echo "<br>Deuda: " . $deuda;
+
+    if ($deuda < 0) {
+        echo "<br>Saldo negativo, no se puede pagar";
+    ?>
+        <script>
+            if (confirm('¿El minimo que debes depositar es <?php echo  $x_semana ?>')) {
+                window.location.href = 'inicio_cobros.php';
+            } else {
+                alert('Operación cancelada.');
+            }
+        </script>
+<?php
+        exit;
+    } elseif ($deuda == 0) {
+        echo "<br>Saldo cero, se puede pagar";
+        echo "<br>Saldo a favor: " . $saldo_a_favor = 0;
+        echo "<br>Total: " . $total = $x_semana;
+        $venta_1 = 0;
+        $venta_2 = 0;
+        $venta_3 = 0;
+        $venta_4 = 0;
+        $venta_5 = 0;
+        actualizaSemPagadas($con, $movil, $total);
+        actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
+    } elseif ($deuda > 0) {
+        echo "<br>Saldo positivo, se puede pagar";
+        echo "<br>" . $total = $x_semana;
+        echo "<br>Saldo a favor: " . $saldo_a_favor;
+        echo "<br>" . $saldo_a_favor = $deuda;
+        $venta_1 = 0;
+        $venta_2 = 0;
+        $venta_3 = 0;
+        $venta_4 = 0;
+        $venta_5 = 0;
+        //actualizaSemPagadas($con, $movil, $total);
+        //actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
+    }
+    header("Location: inicio_cobros.php");
     exit;
 }
 //(cod 14) Semanas - Deuda anterior

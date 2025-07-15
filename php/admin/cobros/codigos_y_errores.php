@@ -32,12 +32,12 @@
                 <li><b>OK OK (err 4) Error Saldo a favor - deuda anterior mayores a 0</b></li>
                 <li><b>OK OK (cod 5) Solo ventas</b></li>
                 <li><b>OK OK (cod 6) Solo saldo a favor</b></li>
-                <li><b>(cod 7) Saldo a favor - Ventas</b></li>
-                <li><b>(cod 8) Solo deuda anterior</b></li>
-                <li><b>(cod 9) Deuda anterior - ventas</b></li>
-                <li><b>(cod 10) Solo semanas</b></li>
-                <li><b>(cod 11) Ventas - Semanas</b></li>
-                <li><b>(cod 12) Semanas - Saldo a favor</b></li>
+                <li><b>OK OK (cod 7) Saldo a favor - Ventas</b></li>
+                <li><b>OK OK (cod 8) Solo deuda anterior</b></li>
+                <li><b>OK OK (cod 9) Deuda anterior - ventas</b></li>
+                <li><b>OK OK (cod 10) Solo semanas</b></li>
+                <li><b>OK OK (cod 11) Ventas - Semanas</b></li>
+                <li><b>OK OK (cod 12) Semanas - Saldo a favor</b></li>
                 <li><b>(cod 13) Semanas - Saldo a favor - Ventas</b></li>
                 <li><b>(cod 14) Semanas - Deuda anterior</b></li>
                 <li><b>(cod 15) Semanas - deuda anterior - ventas</b></li>
