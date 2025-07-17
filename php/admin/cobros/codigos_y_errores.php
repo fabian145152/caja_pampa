@@ -48,8 +48,8 @@
                 <li><b>OK OK (cod 20) Deposito - Deuda anterior</b></li>
                 <li><b>OK OK (cod 21) Deposito - Deuda anterior - Ventas</b></li>
                 <li><b>OK OK (cod 22) Deposito - semanas</b></li>
-                <li><b>(cod 23) Deposito - Semanas - Ventas</b></li>
-                <li><b>(cod 24) Deposito - Semanas - Saldo a favor</b></li>
+                <li><b>OK OK (cod 23) Deposito - Semanas - Ventas</b></li>
+                <li><b>OK OK (cod 24) Deposito - Semanas - Saldo a favor</b></li>
                 <li><b>(cod 25) Deposito - semanas - saldo a favor - ventas</b></li>
                 <li><b>(cod 26) Deposito - Semanas - Deuda anterior</b></li>
                 <li><b>(cod 27) eposito - Semanas - Deuda anterior - Ventas</b></li>
