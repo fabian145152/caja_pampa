@@ -744,6 +744,7 @@ if ($tot_voucher == 0 && $new_dep_ft > 0 && $debe_semanas > 0 && $deuda_anterior
 //(cod 25) Deposito - semanas - saldo a favor - ventas
 if ($tot_voucher == 0 && $new_dep_ft > 0 && $debe_semanas > 0 && $deuda_anterior == 0 && $saldo_a_favor > 0 && $ventas > 0) {
     echo "<b>(cod 25) Deposito - semanas - saldo a favor - ventas</b>";
+    echo "<br>Hola";
     exit;
 }
 //(cod 26) Deposito - Semanas - Deuda anterior
