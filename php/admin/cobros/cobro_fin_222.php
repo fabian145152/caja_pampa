@@ -762,7 +762,6 @@ if ($tot_voucher > 0) {
             viajesSemSig($con, $movil, $viajes_a_guardar);
         }
     }
-
     //(cod 39) voucher - semanas - Deuda anterior
     if ($tot_voucher > 0 && $new_dep_ft == 0 && $debe_semanas > 0 && $deuda_anterior > 0 && $saldo_a_favor == 0  && $ventas == 0) {
         echo "<br>(cod 39) voucher - semanas - Deuda anterior...";
