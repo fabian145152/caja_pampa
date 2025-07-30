@@ -17,7 +17,7 @@ if ($_SESSION['logueado']) {
             echo "Los tabla completa se actualizo correctamente.";
             echo "<br>";
         } else {
-            echo "Error al actualizar la tabla completa: " . $con->error;
+            echo "Error al actualizar la tabla completa... " . $con->error;
             exit;
         }
 
