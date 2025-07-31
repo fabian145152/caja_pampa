@@ -88,7 +88,6 @@ function deleteAllFilesInDirectory($dir)
     return true;
 }
 
-
 function procesarCobroSemanas($con, $movil)
 {
     if ($con->connect_error) {
@@ -195,7 +194,6 @@ function actualizaSemPagadas($con, $movil, $total)
     }
 }
 
-
 //Consulta para actualizar ventas de la tabla completa
 function actualizaVenta1($con, $movil, $venta_1)
 {
@@ -277,7 +275,7 @@ function ultimosDep($con)
 }
 
 /*
-    Guarda los depositos de caja y sumaelvalordelregistroanterior
+    Guarda los depositos de caja y suma el valor del registro anterior
     para resumen de caja
 */
 function guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $saldo_ft, $saldo_voucher, $dep_voucher, $usuario, $observaciones)
@@ -368,7 +366,6 @@ function deudaAnterior($con, $movil)
     return $deuda_anterior;
 
 }
-
 
 
 function saldoAfavor($con, $movil)

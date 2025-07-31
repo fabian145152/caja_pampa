@@ -465,7 +465,7 @@ $sql_voucher = $con->query($sql_voucher);
                             ?>
                                 <label class="mi-label">Deuda anterior:</label>
                                 <input type="text" id="deuda_ant" name="deuda_ant" value="<?php echo $deu_ant ?>"
-                                    style="background-color: red; color: yellow;" readonly>
+                                    style="background-color: orange; color: yellow;" readonly>
                             <?php
                             }
 
@@ -475,11 +475,11 @@ $sql_voucher = $con->query($sql_voucher);
 
                             <?php
                             if ($cobra_2 < 0) {
-                            ?>
 
+                            ?>
                                 <label class="mi-label">QUEDA A FAVOR</label>
                                 <input type="hidden" id="depo_mov" name="depo_mov" value="<?php echo $cobra_1 ?>" readonly>
-                                <input type="text" id="" name="" value="<?php echo $cobra_2 ?>"
+                                <input type="text" id="" name="" value="<?php echo abs($cobra_2) ?>"
                                     style="background-color: green; color: yellow;" readonly>
                                 <ul style="border: 2px solid black; padding: 5px; border-radius: 10px; list-style-type: none;">
                                 <?php
