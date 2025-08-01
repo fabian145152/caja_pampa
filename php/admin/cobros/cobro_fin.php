@@ -1646,7 +1646,7 @@ if ($tot_voucher > 0 && $new_dep_ft == 0 && $debe_semanas > 0 && $deuda_anterior
         $venta_3 = 0;
         $venta_4 = 0;
         $venta_5 = 0;
-        exit;
+        //exit;
         borraVoucher($con, $movil);
         actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5);
         viajesSemSig($con, $movil, $viajes_semana_que_viene);
@@ -1669,7 +1669,7 @@ if ($tot_voucher > 0 && $new_dep_ft == 0 && $debe_semanas > 0 && $deuda_anterior
         viajesSemSig($con, $movil, $viajes_semana_que_viene);
         actualizaSemPagadas($con, $movil, $total);
     }
-    //header("Location: inicio_cobros.php");
+    header("Location: inicio_cobros.php");
     exit;
 }
 //OK --------- (cod 42) voucher - semanas - Deuda anterior
