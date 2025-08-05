@@ -108,23 +108,28 @@ if ($_SESSION['logueado']) {
                         <!--
                         <li><a href="ayuda/help.php" target="_blank" class="btn btn-info btn-block btn-sm">AYUDA DE COBROS</a></li>
                         <br>-->
+                        <li><a href="admin/cobros/inicio_cobros.php" target="_blank" class=" btn btn-primary btn-block btn-sm">COBRAR A MOVIL</a></li>
+                        <br>
                         <li> <a href="admin/genera_deuda/genera_deuda.php" class="btn btn-primary btn-block btn-sm" target="__blank">GENERAR DEUDA ANTERIOR</a></li>
                         <br>
                         <li> <a href="admin/deposito_a_cuenta/genera_dep.php" class="btn btn-primary btn-block btn-sm" target="__blank">DEPOSITO A CUENTA DE LOS MOVILES</a></li>
                         <br>
-                        <li><a href="admin/cobros/inicio_cobros.php" target="_blank" class=" btn btn-primary btn-block btn-sm">COBRAR A MOVIL</a></li>
+                        <li><a href="admin/depositos_a_moviles/inicio_movimientos.php" target="_blank" class=" btn btn-primary btn-block btn-sm">DEPOSITOS A LOS MOVILES</a></li>
                         <br>
+                        <li><a href="admin/cobros/estado_de_caja.php" target="_blank" class=" btn btn-primary btn-block btn-sm">RESUMEN DE CAJA</a></li>
+                        <br>
+
                         <!--
                         <li><a href="admin/dep_a_moviles/inicio_dep_mov.php" target="_blank" class=" btn btn-info btn-block btn-sm">DEPOSITOS A REALIZAR PARA LOS CHOFERES</a></li>
                         <br>
                          <li><a href="admin/historial/inicio_resumen.php" target="_blank" class=" btn btn-primary btn-block btn-sm">HISTORIAL DE PAGOS DEL MOVIL</a></li>
                         <br> 
                         <li><a href="admin/cobros/recibos" target="_blank" class=" btn btn-primary btn-block btn-sm">RECIBOS</a></li>
-                        <br> -->
-                        <li><a href="admin/depositos_a_moviles/inicio_movimientos.php" target="_blank" class=" btn btn-primary btn-block btn-sm">DEPOSITOS A LOS MOVILES</a></li>
-                        <br>
+                        <br> 
                         <li><a href="admin/moviminetos_de_caja/inicio_movimientos.php" target="_blank" class=" btn btn-primary btn-block btn-sm">EXTRACCIONES</a></li>
                         <br>
+                        -->
+
 
                     </ul>
                 </div>

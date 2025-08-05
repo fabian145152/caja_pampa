@@ -85,7 +85,6 @@ if ($_SESSION['logueado']) {
 
                     <ul class="list-group">
                         <h3>UNIDADES</h3>
-
                         <li><a href="ayuda/crear_para_cobrar.php" target="_blank" class="btn btn-info btn-block btn-sm">COMO ARMAR UNA UNIDAD</a></li>
                         <br>
                         <li><a href="admin/crear_no_de_movil/list_no_movil.php" target="_blank" class="btn btn-primary btn-block btn-sm">CREAR NUMERO DE MOVIL</a></li>
@@ -97,14 +96,12 @@ if ($_SESSION['logueado']) {
                         <li><a href="admin/uni_comp/list_uni_comp.php" class="btn btn-primary btn-block btn-sm" target="_blank">EDICION DE UNIDAD COMPLETA</a></li>
                         <br>
                         <li><a href="admin/observaciones/inicio_obs.php" target="_blank" class="btn btn-primary btn-block btn-sm">OBSERVACIONES X MOVIL.</a></li>
-
                     </ul>
                 </div>
 
 
                 <div class="col-md-3">
                     <ul class="list-group">
-
                         <h3>SEMANAS</h3>
                         <li><a href="#" class=" btn btn-primary btn-block btn-sm">SEMANA los lunes solamente...
                                 <!-- <li><a href="actualiza_semana/semana.php" class=" btn btn-primary btn-block btn-sm">SEMANA los lunes solamente... -->
@@ -112,15 +109,10 @@ if ($_SESSION['logueado']) {
                                     este boton no hace nada, verificar el lunes si cobra 1 semana a todos los moviles</p>
                             </a></li>
                         <br>
-
-
-
+                        
                         <h3>VOUCHER</h3>
-
                         <li><a href="ayuda/ayuda_voucher.php" target="_blank" class="btn btn-info btn-block btn-sm">AYUDA DE CARGA DE VOUCHER</a></li>
                         <br>
-
-
                         <li> <a href="admin/voucher/inicio_voucher.php" target="_blank" class="btn btn-primary btn-block btn-sm">VOUCHER DE CAJA</a></li>
                         <h3>VENTAS</h3>
                         <li><a href="admin/venta/venta_prod.php" class=" btn btn-primary btn-block btn-sm" target="__blank">STOCK DE PRODUCTOS</a></li>
