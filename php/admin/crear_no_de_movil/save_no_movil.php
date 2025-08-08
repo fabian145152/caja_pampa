@@ -33,7 +33,7 @@ $stmt_semana->execute();
 if ($stmt_movil->execute() === TRUE) {
 ?>
     <script>
-        alert("MOVIL DUPLICADO")
+        alert("NUEVO MOVIL CREADO CON EXITO")
         window.location = "list_no_movil.php";
     </script>
 <?php
@@ -41,7 +41,7 @@ if ($stmt_movil->execute() === TRUE) {
 } else {
 ?>
     <script>
-        alert("NUEVO MOVIL CREADO CON EXITO")
+        alert("MOVIL DUPLICADO")
         window.location = "list_no_movil.php";
     </script>
 <?php

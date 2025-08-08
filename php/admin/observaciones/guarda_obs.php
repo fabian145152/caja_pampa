@@ -19,4 +19,15 @@ if ($con->query($sql_obs) === TRUE) {
     exit();
 }
 
-header('Location:../../menu.php');
+// ...existing code...
+if ($con->query($sql_obs) === TRUE) {
+    echo "Datos editados correctamente";
+    // Cierra la ventana con JavaScript
+    echo "<script>window.close();</script>";
+} else {
+    echo "Error de escritura";
+    echo "Error al vaciar la tabla: " . $con->error;
+    exit();
+}
+// ...existing code...
+//header('Location:../../menu.php');

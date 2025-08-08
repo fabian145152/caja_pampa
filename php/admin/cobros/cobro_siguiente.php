@@ -217,6 +217,7 @@ $sql_voucher = $con->query($sql_voucher);
                         echo "<br>";
                     }
                     ?>
+                    <a href="../observaciones/ver_obs.php?movil=<?php echo $movil ?>" class="btn btn-danger" target="_blank">EDITAR</a>
                 </div>
             </div>
             <!-- </h6>  -->
@@ -376,10 +377,12 @@ $sql_voucher = $con->query($sql_voucher);
         <!-- <form action="cobro_fin.php" method="post" id="formulario" target="_blank"> -->
         <form action="cobro_fin.php" method="post" id="formulario">
 
-
-
             <input type="hidden" id="movil" name="movil" value="<?php echo $movil ?>">
             <div class="container">
+                <div>
+
+
+                </div>
                 <div class="form-group">
                     <ul style="border: 2px solid black; padding: 56px; border-radius: 10px; list-style-type: none;">
                         <!--   <h5>-------------------------------------------------------------------------</h5>  -->
@@ -400,24 +403,58 @@ $sql_voucher = $con->query($sql_voucher);
                         <li>
                             <label class="mi-label">Debe <?php echo $cant_sem - 1 ?> semanas.</label>
                             <input type="hidden" id="cant_sem" name="cant_sem" value="<?php echo $cant_sem - 1 ?>">
+                        </li>
+                        <?php
+                        $sql_p =  "SELECT * FROM semanas WHERE movil = $movil";
+                        $res_p = $con->query($sql_p);
+                        $row_p = $res_p->fetch_assoc();
+                        $paga_semanas = $row_p['activo'];
 
-                            <?php
-                            if ($cobra_semana_anterior == $paga_x_semana) {
-                                echo "Esta al dia";
-                            } else {
-                                $adu = $cobra_semana_anterior - $paga_x_semana;
-                            ?>
-                                <input type="text" id="debe_sem_ant" name="debe_sem_ant" value="<?php echo $adu ?>" readonly>
-                            <?php
-                            }
-                            ?>
+                        if ($paga_semanas == "NO") {
+                        ?>
+                            <label class="mi-label">NO abona semanas... </label>
+                        <?php
+                        } else {
+                        ?>
+                            <li>
+                                <label class="mi-label">
+                                    <h5>Paga por semana</h5>
+                                </label>
+                                <input type="text" id="paga_x_semana" name="paga_x_semana"
+                                    value="<?php echo $paga_x_semana ?>" readonly>
+                            </li>
+                        <?php
+                        }
+
+                        if ($paga_x_viaje == 0) {
+                            echo "<h5>No paga viajes</h5>";
+                        } else {
+                        ?>
+                            <li>
+                                <label class="mi-label">
+                                    <h5>Paga por viaje</h5>
+                                </label>
+                                <input type="text" id="paga_x_semana" name="paga_x_viaje"
+                                    value="<?php echo $paga_x_viaje ?>" readonly>
+                            </li>
+
+                        <?php
+
+                        }
+                        echo "<br>";
+                        if ($cobra_semana_anterior == $paga_x_semana) {
+                            echo "Esta al dia";
+                        } else {
+                            $adu = $cobra_semana_anterior - $paga_x_semana;
+                        ?>
+                            <input type="text" id="debe_sem_ant" name="debe_sem_ant" value="<?php echo $adu ?>" readonly>
+                        <?php
+                        }
+                        ?>
 
                         </li>
 
-                        <li>
-                            <input type="hidden" id="paga_x_semana" name="paga_x_semana"
-                                value="<?php echo $paga_x_semana ?>">
-                        </li>
+
                         <li>
                             <?php
                             if ($total_ventas > 0) {
@@ -687,7 +724,6 @@ $sql_voucher = $con->query($sql_voucher);
                 </div>
 
                 <div>
-
                     <button type="submit" class="btn btn-danger">GUARDAR</button>
                 </div>
 

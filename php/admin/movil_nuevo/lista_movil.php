@@ -65,7 +65,7 @@ if ($_SESSION['logueado']) {
 
                 <thead class="thead-dark">
                     <tr>
-                        <th>ID</th>
+                        <!-- <th>ID</th>  -->
                         <th>Movil</th>
                         <th>Nombre</th>
                         <th>Apellido</th>
@@ -96,7 +96,7 @@ if ($_SESSION['logueado']) {
                         <form action="borrar_movil.php" method="get">
 
                             <tr>
-                                <td><?php echo $row['id'] ?></td>
+                                <!-- <td><?php echo $row['id'] ?></td>  -->
                                 <?php
                                 $id = $row['id'];
                                 $row['id'] ?>

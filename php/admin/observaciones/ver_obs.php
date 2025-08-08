@@ -4,7 +4,13 @@ include_once "../../../funciones/funciones.php";
 $con = conexion();
 $con->set_charset("utf8mb4");
 
-$movil = $_POST['movil'];
+if (isset($_POST['movil'])) {
+    $movil = $_POST['movil'];
+} elseif (isset($_GET['movil'])) {
+    $movil = $_GET['movil'];
+} else {
+    $movil = null;
+}
 
 ?>
 <!DOCTYPE html>
@@ -13,7 +19,7 @@ $movil = $_POST['movil'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EDITAR OBSERV</title>
+    <title>EDITAR OBSERVACIONES</title>
     <?php head() ?>
 </head>
 
@@ -25,28 +31,34 @@ $movil = $_POST['movil'];
     $result_obs = $con->query($sql_obs);
     $row_obs = $result_obs->fetch_assoc();
     $observaciones = $row_obs['obs'];
-
+    $nombre_titu = $row_obs['nombre_titu'];
+    $apellido_titu = $row_obs['apellido_titu'];
+    $movil = $row_obs['movil'];
     ?>
 
 
     <head>
 
-        <h1>Editor de observaciones del movil o del titular</h1>
 
+        <h2>EDITOR DE OBSERVACIONES DE LA UNIDAD, SE VE EN LA PAGINA COBRAR A MOVILES</h2>
         <br>
         <button onclick="cerrarPagina()">CERRAR PAGINA</button>
-        <br><br><br><br>
+        <br><br>
 
         <form action="guarda_obs.php" method="POST">
             <!-- Campo de texto -->
-            <label for="nombre">Unidad: </label>
-            <input type="text" id="nombre" name="nombre" value="<?php echo $movil ?>"><br><br>
+            <div style="text-align: center;">
+                <label for="nombre">Unidad: </label>
+                <input type="text" id="nombre" name="nombre" value="<?php echo $movil ?>" readonly><br><br>
+                <label for="nombre">Titular: </label>
 
-            <!-- Área de texto -->
-            <label for="comentarios">Observaciones</label>
-            <textarea id="comentarios" name="comentarios" rows="15" cols="70"><?php echo $observaciones ?></textarea><br><br>
+                <input type="text" id="" name="" value="<?php echo $nombre_titu . " " . $apellido_titu ?>" readonly style="width:300px;"><br><br>
+                <label for="comentarios">Observaciones</label>
+                <br>
 
-            <input type="submit" value="Enviar">
+                <textarea id="comentarios" name="comentarios" rows="10" cols="70"><?php echo $observaciones ?></textarea><br><br>
+                <input type="submit" value="Enviar">
+            </div>
 
         </form>
 

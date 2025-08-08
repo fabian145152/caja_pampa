@@ -26,11 +26,11 @@ include_once "../../../funciones/funciones.php";
             <br><br>
             <input type="text" name="movil" class="gui-input" autofocus>
             <br><br>
-            <input type="submit" value="BUSCAR" class=" btn btn-primary">
+            <input type="submit" value="BUSCAR" class=" btn btn-danger">
         </form>
     </div>
     <br><br><br>
-    <button onclick="cerrarPagina()" class="btn btn-primary btn-sm">CERRAR PAGINA</button>
+    <button onclick="cerrarPagina()" class="btn btn-danger btn-sm">CERRAR PAGINA</button>
 
     <?php foot() ?>
 </body>
