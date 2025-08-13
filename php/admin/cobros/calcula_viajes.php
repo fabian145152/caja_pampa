@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
-<!-- Este archivo viene de cobro_con_voucher.php -
-Es la calculadora de cantidad de viajes a cobrar y monto a depositar 
--->
+
 
 <head>
     <meta charset="UTF-8">
@@ -12,25 +10,10 @@ Es la calculadora de cantidad de viajes a cobrar y monto a depositar
         let multiplicador; // Variable de PHP para multiplicar
         let otraVariable; // Variable de PHP para realizar la resta
 
-        /*
-        function calcularYRestar() {
-            const numero = document.getElementById('numero').value; // Capturamos el número ingresado
-            if (!isNaN(numero) && numero !== "") { // Verificamos que sea un número válido
-                const resultadoMultiplicacion = numero * multiplicador; // Multiplicamos
-                const resultadoResta = otraVariable - resultadoMultiplicacion; // Realizamos la resta
-                document.getElementById('resultadoMultiplicacion').value = resultadoMultiplicacion; // Mostramos la multiplicación
-                document.getElementById('resultadoResta').value = resultadoResta.toFixed(2); // Actualizamos la segunda variable
-
-            } else {
-                document.getElementById('resultadoMultiplicacion').value = ""; // Limpiamos los resultados
-                document.getElementById('resultadoResta').value = "";
-            }
-        }
-*/
 
         function calcularYRestar() {
             const numero = document.getElementById('numero').value; // Capturamos el número ingresado
-            //const saldoAfavor = 1000; // Definimos el saldo a favor
+
 
             if (!isNaN(numero) && numero !== "") { // Verificamos que sea un número válido
                 const resultadoMultiplicacion = numero * multiplicador; // Multiplicamos
@@ -50,21 +33,17 @@ Es la calculadora de cantidad de viajes a cobrar y monto a depositar
 
 <body>
     <?php
-    // Variables definidas en PHP
-    $multiplicador = round($paga_x_viaje); // Valor usado para la multiplicación
-    $otraVariable = round($dato_a_env); // Valor inicial para la resta
-    /*
-    echo "<br>multiplicador: " . $multiplicador;
-    echo "<br>Otra variable: " . $otraVariable;
-    echo "<br>Saldo a favor: " . $saldo_a_favor;
-*/
-    //$otraVariable = $dep_para_movil; // Valor inicial para la resta
+
+    $multiplicador = round($paga_x_viaje);
+    $otraVariable = round($dato_a_env);
+
+
     echo "<script>
             multiplicador = $multiplicador;
             otraVariable = $otraVariable;
             saldoAfavor = $saldo_a_favor;
-          </script>"; // Pasamos ambas variables a JavaScript
-    
+          </script>";
+
     ?>
 
     <form>
@@ -72,10 +51,8 @@ Es la calculadora de cantidad de viajes a cobrar y monto a depositar
         <input type="text" id="numero" name="numero" onblur="calcularYRestar()" required autofocus>
         <h6><strong>Ingrese cantidad y presione la tecla TAB</strong></h6>
         <input type="hidden" id="resultadoMultiplicacion" readonly>
-
         <label for="resultadoResta">Total a depositarle:</label>
-        <input type="text" id="resultadoResta" name="resultadoResta" readonly style="background-color: yellow;">
-
+        <input type="text" id="resultadoResta" name="resultadoResta" style="background-color: yellow;">
     </form>
 </body>
 

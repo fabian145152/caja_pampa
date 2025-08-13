@@ -22,7 +22,8 @@ include_once "../../../funciones/funciones.php";
 
     <div>
         <form class="form" action="genera.php" method="POST" name="movil">
-            <h1>Ingrese Movil</h1>
+        <h1>Genera deuda anterior</h1>    
+        <h2>Ingrese Movil</h2>
             <br><br>
             <input type="text" name="movil" class="gui-input" autofocus>
             <br><br>

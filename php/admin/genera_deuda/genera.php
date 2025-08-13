@@ -29,8 +29,23 @@ $con->set_charset("utf8mb4");
         die("Error de conexión a la primera base de datos: " . $con->connect_error);
     }
 
+    $lee_deuda = "SELECT * FROM completa WHERE movil = '$movil'";
+    $lee_deuda_res = $con->query($lee_deuda);
+    $row = $lee_deuda_res->fetch_assoc();
+    $saldo_a_favor = $row['saldo_a_favor_ft'];
+
+    if ($saldo_a_favor > 0) {
+        echo "<h1>El movil tiene un saldo a favor de $saldo_a_favor</h1>";
+        echo "<br>No se puede guardar...";
+        echo "<a href='genera_deuda.php'>Volver</a>";
+    }
+
+
+
+
     $sql = "SELECT * FROM completa WHERE movil = '$movil'";
     $result = $con->query($sql);
+
     ?>
 
     <br>
@@ -42,7 +57,7 @@ $con->set_charset("utf8mb4");
         $ant = $row['deuda_anterior'];
 
         if ($ant > 0) {
-            echo "<h1>Ojo tiene una deuda anterior de $$ant-";
+            echo "<h1>Ojo tiene una deuda anterior de $ant-";
         }
 
     ?>
@@ -64,7 +79,7 @@ $con->set_charset("utf8mb4");
         echo "No se encontraron registros.";
     }
 
-    
+
 
     ?>
 
@@ -72,9 +87,9 @@ $con->set_charset("utf8mb4");
         <h1>Ingrese nuevo Monto</h1>
         <br><br>
         <input type="hidden" name="movil" class="gui-input" value="<?php echo $movil ?>">
-        
+
         <input type="text" name="deuda_anterior" class="gui-input" autofocus>
-        
+
         <input type="hidden" name="actualiza_deuda" class="gui-input" value="<?php echo $deu_ant ?>">
         <input type="submit" value="GUARDAR" class=" btn btn-primary">
     </form>

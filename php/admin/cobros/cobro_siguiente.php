@@ -1,5 +1,5 @@
 <?php
-
+//session_start();
 include_once "../../../funciones/funciones.php";
 $con = conexion();
 $con->set_charset("utf8mb4");
@@ -27,6 +27,8 @@ $adu = 0;
 if (isset($_GET['movil'])) {
     $movil = $_GET['movil'];
     htmlspecialchars($movil, ENT_QUOTES, 'UTF-8');
+} else {
+    $movil = $_POST['movil'];
 }
 
 
@@ -38,6 +40,7 @@ $row_comp['movil'];
 $saldo_a_favor = $row_comp['saldo_a_favor_ft'];
 $viajes_que_no_se_cobraron = $row_comp['v_sem_siguiente'];
 $deu_ant = $row_comp['deuda_anterior'];
+$bonif = $row_comp['observaciones_deuda'];
 
 
 
@@ -178,6 +181,28 @@ $sql_voucher = $con->query($sql_voucher);
     <link rel="stylesheet" href="../../../css/vista_con_voucher.css">
     <link rel="stylesheet" href="esta_pagina.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        function deleteProduct(cod_voucher) {
+            //window.location = "borra_voucher.php?q=" + cod_voucher;
+            const nuevaVentana = window.open("borra_voucher.php?q=" + cod_voucher, "_blank");
+        }
+
+        // Selecciona el enlace por su ID
+        var enlace = document.getElementById('miEnlace');
+
+        // Añade un evento de clic al enlace
+        enlace.addEventListener('click', function(event) {
+            // Evita el comportamiento predeterminado del enlace (navegación)
+            event.preventDefault();
+
+            // Muestra un mensaje de alerta
+            alert('¡Va a borrar todos los vouher!.....');
+        });
+
+        function cerrarPagina() {
+            window.close();
+        }
+    </script>
 </head>
 
 <body>
@@ -217,7 +242,7 @@ $sql_voucher = $con->query($sql_voucher);
                         echo "<br>";
                     }
                     ?>
-                    <a href="../observaciones/ver_obs.php?movil=<?php echo $movil ?>" class="btn btn-danger" target="_blank">EDITAR</a>
+                    <a href="../observaciones/ver_obs.php?movil=<?php echo $movil ?>" class="btn btn-success" target="_blank">EDITAR</a>
                 </div>
             </div>
             <!-- </h6>  -->
@@ -226,15 +251,17 @@ $sql_voucher = $con->query($sql_voucher);
     <?php
     if ($can_viajes > 0) {
     ?>
-        <table class="table table-bordered table-sm table-hover flex" style="zoom:80%">
+        <!-- <table class="table table-bordered table-sm table-hover flex" style="zoom:80%"> -->
+        <table class="table table-bordered table-sm table-hover" style="width:50%; margin: 0 auto; zoom:60%; ">
+
             <thead>
                 <tr>
                     <!--<th class="col-sm-2">ID</th>-->
                     <th class="col-sm-2">CC</th>
                     <th class="col-sm-2">Fecha</th>
-                    <!--<th class="col-sm-2">Semana</th> -->
                     <th class="col-sm-2">Numero</th>
                     <th class="col-sm-2">Importe</th>
+
                 </tr>
             </thead>
             <?php
@@ -286,6 +313,8 @@ $sql_voucher = $con->query($sql_voucher);
 
                         ?>
                         <th class="col-sm-12"><?php echo $tot_voucher ?></th>
+                        <th><a class="btn btn-danger btn-sm" style="width: 150px;" href="#" onclick="deleteProduct(<?php echo $row_voucher['id'] ?>)">BORRAR</a></th>
+
                     </tr>
             <?php
             }
@@ -317,13 +346,13 @@ $sql_voucher = $con->query($sql_voucher);
             <div class="contenedor">
 
                 <div class="recuadro">
-                    Viajes de la semana anterior: <?php echo "<strong>" . $viajes_de_la_semana_anterior . "</strong>" ?>
+                    Voucher depositados: <?php echo "<strong>" . $viajes_de_la_semana_anterior . "</strong>" ?>
                 </div>
+                <!--
                 <div class="recuadro">
-
                     Viajes que se cobran la semana que viene: <?php echo "<strong>" . $viajes_de_esta_semana . "</strong>" ?>
                 </div>
-
+        -->
                 <div class="recuadro">
                     Total de voucher: <?php echo "<strong>" . "$" . $total . "-" . "</strong>" ?>
                 </div>
@@ -502,7 +531,7 @@ $sql_voucher = $con->query($sql_voucher);
                             ?>
                                 <label class="mi-label">Deuda anterior:</label>
                                 <input type="text" id="deuda_ant" name="deuda_ant" value="<?php echo $deu_ant ?>"
-                                    style="background-color: orange; color: yellow;" readonly>
+                                    style="background-color: orange; color: black;" readonly>
                             <?php
                             }
 
@@ -544,12 +573,13 @@ $sql_voucher = $con->query($sql_voucher);
                                     <?php
                                     if ($viajes_de_la_semana_anterior > 0) {
                                     ?>
-
+                                        <!--
                                         <li>
                                             <label for="viajes_nuevos">Depositó: </label>
                                             <input class="put" type="text" id="viajes_nuevos" name="viajes_nuevos"
                                                 value="<?php echo $total_de_viajes_que_se_cobran ?>" readonly> Voucher.
                                         </li>
+
                                         <li>
                                             <input type="hidden" id="viajes_de_esta_semana" name="viajes_de_esta_semana"
                                                 value="<?php echo
@@ -560,6 +590,7 @@ $sql_voucher = $con->query($sql_voucher);
                                             <input type="text" id="paga_x_viaje" name="paga_x_viaje"
                                                 value="<?php echo $paga_x_viaje ?>">
                                         </li>
+                                    -->
                                         <li>
                                             <input type="hidden" id="tot_via" name="tot_via"
                                                 value="<?php echo $total_de_viajes_que_se_cobran ?>">
@@ -618,6 +649,8 @@ $sql_voucher = $con->query($sql_voucher);
 
                             <input type="hidden" id="saldo_a_favor" name="saldo_a_favor"
                                 value="<?php echo $saldo_a_favor ?>">
+
+                            <input type="text" id="imp_modif" name="imp_modif" value="<?php echo $noventa ?>">
                             <input type="hidden" id="deuda_ant" name="deuda_ant" value="<?php echo $deu_ant ?>">
                             <input type="hidden" id="venta_1" name="venta_1" value="<?php echo $ven_1 ?>">
                             <input type="hidden" id="venta_2" name="venta_2" value="<?php echo $ven_2 ?>">
@@ -628,15 +661,9 @@ $sql_voucher = $con->query($sql_voucher);
                             <?php
 
                             $dato_a_env = $noventa - $adu - $total_ventas - $deu_ant;
-
                             $depot = $adu + $total_ventas + $deu_ant + $pesos_viajes;
-
                             $saldo_recuento = $depot - $saldo_a_favor; // - $noventa;
-
                             $cuenta = $noventa - $depot;
-
-
-
 
                             if ($saldo_recuento < 0) {
 
@@ -723,18 +750,27 @@ $sql_voucher = $con->query($sql_voucher);
                     </ul>
                 </div>
 
-                <div>
+
+                <div class="d-flex flex-column gap-2">
+                    <a href="inicio_cobros.php" class="btn btn-info">VOLVER</a>
+                    <br>
+                    <a href="../editar_deudas/inicio_edit_deuda.php?movil= <?php echo $movil ?>" class="btn btn-warning" target="_blank"><?php
+                                                                                                                                            if ($bonif !== "") {
+                                                                                                                                                echo "YA SE LE BONIFICO";
+                                                                                                                                            } else {
+                                                                                                                                                echo "BONIFICACION";
+                                                                                                                                            }
+                                                                                                                                            ?></a>
+
+                    <br>
+                    <a href="../vauchin/exportar_tabla.php?q=<?php echo $movil ?>" class="btn btn-primary" target="_blank">VAUCHIN</a>
+                    <br>
                     <button type="submit" class="btn btn-danger">GUARDAR</button>
                 </div>
 
+
             </div>
-            <div>
-                <a href="inicio_cobros.php" class="btn btn-info">VOLVER</a></li>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="../vauchin/exportar_tabla.php?q=<?php echo $movil ?> " class="btn btn-primary"
-                    target="_blank">VAUCHIN</a>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            </div>
+
         </form>
 
         <br><br><br>
