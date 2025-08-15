@@ -27,7 +27,7 @@ function leerArchivoTXT($rutaArchivo)
 ##Pie depagina
 function foot()
 {
-    ?>
+?>
     <style>
         .footer {
             width: 100%;
@@ -45,21 +45,23 @@ function foot()
     </style>
 
     <div class="footer">Ver 1.2</div>
-    <?php
+<?php
 }
 
 ##Encabezado de la pagina
 function head()
 {
-    ?>
+?>
     <link rel="icon" href="imagenes/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/ultima.css">
     <script src="../js/jquery-3.4.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/bootbox.min.js"></script>
-    <?php
+<?php
 }
 
 ## Esta funcion se utiliza para borrar todos los archivos de una carpeta
@@ -282,8 +284,7 @@ function guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $saldo_ft, $saldo_vo
 {
 
     //Lee el anteultiomo registro
-    $lee_anteultimo_registro = "SELECT saldo_ft, dep_ft, dep_voucher, saldo_voucher FROM caja_final ORDER BY id DESC LIMIT 1";
-    ;
+    $lee_anteultimo_registro = "SELECT saldo_ft, dep_ft, dep_voucher, saldo_voucher FROM caja_final ORDER BY id DESC LIMIT 1";;
     $res_le = $con->query($lee_anteultimo_registro);
     $row_reg = $res_le->fetch_assoc();
     $total_caja = $row_reg['saldo_ft'];
@@ -364,7 +365,6 @@ function deudaAnterior($con, $movil)
     $deuda_anterior = $row['deuda_anterior'];
     $saldo_a_favor = $row['saldo_a_favor_ft'];
     return $deuda_anterior;
-
 }
 
 
@@ -384,6 +384,8 @@ function saldoAfavor($con, $movil)
 //GUARDA CANTIDAD DE VIAJES QUE SE COBRARAN LA SEMANA SIGUIENTE
 function viajesSemSig($con, $movil, $viajes_semana_que_viene)
 {
+
+
     $sql = "UPDATE completa SET v_sem_siguiente = '$viajes_semana_que_viene' WHERE movil = '$movil'";
     if ($con->query($sql) === TRUE) {
         echo "<br>cantidad de viajes guardados para la semana que viene correctamente";
@@ -393,20 +395,18 @@ function viajesSemSig($con, $movil, $viajes_semana_que_viene)
 }
 
 // GUARDA DEPOSITOS A LOS MOVILES
-function depositosAMoviles($con, $movil, $fecha, $resto_dep_mov, $estado)
+function depositosAMoviles($con, $movil, $fecha, $resto_dep_mov, $dep_vou, $estado)
 {
 
-    echo "<br<Resto dep movil dentro de la funcion..." . $resto_dep_mov;
-    if ($resto_dep_mov == 0) {
-        echo "<br>No se realizó depósito porque el importe es cero.";
-        return;
-    }
 
-    $stmt = $con->prepare("INSERT INTO depositos_a_moviles (movil, fecha, importe, est) VALUES (?, ?, ?, ?)");
-    if (!$stmt) {
-        die("<br>Error en la preparación de la consulta: " . $con->error);
-    }
-    $stmt->bind_param("isdi", $movil, $fecha, $resto_dep_mov, $estado);
+
+
+    echo "<br>Resto dep movil dentro de la funcion..." . $resto_dep_mov;
+
+    $stmt = $con->prepare("INSERT INTO depositos_a_moviles (movil, fecha, efectivo, voucher, est) VALUES (?, ?, ?, ?, ?)");
+
+
+    $stmt->bind_param("isddi", $movil, $fecha, $resto_dep_mov, $dep_vou, $estado);
     if ($stmt->execute()) {
         echo "<br>Depósito a móvil guardado correctamente.";
     } else {
@@ -444,9 +444,9 @@ function borraVoucher($con, $movil)
     $stmt->bind_param("i", $movil);
     // Ejecutar la consulta
     if ($stmt->execute()) {
-        echo "Registro eliminado correctamente";
+        echo "<br>Registro eliminado correctamente";
     } else {
-        echo "Error al eliminar el registro: " . $stmt->error;
+        echo "<br>Error al eliminar el registro: " . $stmt->error;
     }
     // Cerrar la consulta y la conexión
 

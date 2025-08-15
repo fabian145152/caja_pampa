@@ -12,15 +12,15 @@ echo $id = $_GET['q'];
 $sql_l = "SELECT * FROM depositos_a_moviles WHERE id = " . $id;
 $sql_le = $con->query($sql_l);
 $sql_lee = $sql_le->fetch_assoc();
-$saldo = $sql_lee['importe'];
 $movil = $sql_lee['movil'];
 $fecha = $sql_lee['fecha'];
+$voucher = $sql_lee['voucher'];
 
-echo "<br>Saldo: " . $saldo;
 echo "<br>Movil: " . $movil;
 echo "<br>Fecha: " . $fecha;
+echo "<br>Voucher: " . $voucher;
 
-
+//exit;
 
 // Consulta corregida
 $lee_sal = "SELECT * FROM completa WHERE movil = '$movil'"; // Si movil es un string, usa comillas
@@ -35,7 +35,7 @@ if ($lee_sald) {
     echo "Error en la consulta: " . $con->error;
 }
 
-echo "<br>Saldo sumado: " . $saldo_sumado = $saldo_a_favor + $saldo;
+echo "<br>Saldo sumado: " . $saldo_sumado = $saldo_a_favor + $voucher;
 
 
 $sql = "UPDATE completa SET saldo_a_favor_ft = ? WHERE movil = ?";

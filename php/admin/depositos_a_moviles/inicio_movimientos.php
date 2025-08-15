@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
 
-    <h1 class="text-center" style="margin: 5px ; ">DEOSITOS A MOVILES</h1>
+    <h1 class="text-center" style="margin: 5px ; ">DEPOSITOS A MOVILES</h1>
     <div class="row">
         <style>
             a {
@@ -117,7 +117,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <th></th>
                     <th>Movil</th>
                     <th>Fecha</th>
-                    <th>Depsoito</th>
+                    <th>Deposito</th>
+                    <th>voucher</th>
                     <th>Estados</th>
                     <th></th>
                     <th></th>
@@ -136,7 +137,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <th><?php echo $sql_lista['id'] ?></th>
                         <th><?php echo $sql_lista['movil'] ?></th>
                         <th><?php echo $sql_lista['fecha'] ?></th>
-                        <th><?php echo $sql_lista['importe'] ?></th>
+                        <th><?php echo $sql_lista['efectivo'] ?></th>
+                        <th><?php echo $sql_lista['voucher'] ?></th>
 
 
                         <td><input type="checkbox" name="opciones[]" value="<?php echo $sql_lista['id']; ?>" <?php echo ($sql_lista['est'] == 1) ? 'checked' : ''; ?> disabled></td>

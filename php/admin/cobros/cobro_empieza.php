@@ -5,16 +5,9 @@ $_SESSION['time'];
 
 include_once "../../../funciones/funciones.php";
 
-
-
-
 $con = conexion();
 $con->set_charset("utf8mb4");
 $mov = $_POST['movil'];
-
-
-
-
 
 $movil = "A" . $mov;
 
@@ -46,7 +39,6 @@ if ($result->num_rows > 0) {
 
 //exit;
 
-
 $sql_tiene_ventas = "SELECT * FROM completa WHERE movil = " . $mov;
 $resu = $con->query($sql_tiene_ventas);
 $linea = $resu->fetch_assoc();
@@ -58,10 +50,6 @@ $sql_sem = "SELECT * FROM semanas WHERE movil = " . $mov;
 $sql_res = $con->query($sql_sem);
 $tiene_semanas = $sql_res->fetch_assoc();
 $debe_semanas = $tiene_semanas['total'];
-
-
-
-
 
 
 $_SESSION['variable'] = $movil;

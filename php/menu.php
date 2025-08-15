@@ -109,7 +109,7 @@ if ($_SESSION['logueado']) {
                                     este boton no hace nada, verificar el lunes si cobra 1 semana a todos los moviles</p>
                             </a></li>
                         <br>
-                        
+
                         <h3>VOUCHER</h3>
                         <li><a href="ayuda/ayuda_voucher.php" target="_blank" class="btn btn-info btn-block btn-sm">AYUDA DE CARGA DE VOUCHER</a></li>
                         <br>
@@ -133,7 +133,9 @@ if ($_SESSION['logueado']) {
                         <h3>MENU CAJA </h3>
                         <li><a href="ayuda/help.php" target="_blank" class="btn btn-info btn-block btn-sm">AYUDA DE COBROS</a></li>
                         <br>
-                        <li> <a href="admin/genera_deuda/genera_deuda.php" class="btn btn-danger btn-block btn-sm" target="__blank">GENERAR DEUDA ANTERIOR</a></li>
+                        <li> <a href="admin/bonifica_deuda/inicio_deuda.php" class="btn btn-danger btn-block btn-sm" target="__blank">BONIFICA DEUDA</a></li>
+                        <br>
+                        <li> <a href="admin/genera_deuda/genera_deuda.php" class="btn btn-success btn-block btn-sm" target="__blank">GENERA DEUDA</a></li>
                         <br>
                         <li> <a href="admin/deposito_a_cuenta/genera_dep.php" class="btn btn-secondary btn-block btn-sm" target="__blank">DEPOSITO A CUENTA DE LOS MOVILES</a></li>
                         <br>

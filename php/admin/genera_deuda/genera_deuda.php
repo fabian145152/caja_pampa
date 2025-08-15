@@ -22,16 +22,16 @@ include_once "../../../funciones/funciones.php";
 
     <div>
         <form class="form" action="genera.php" method="POST" name="movil">
-        <h1>Genera deuda anterior</h1>    
-        <h2>Ingrese Movil</h2>
+            <h1>Genera deuda anterior</h1>
+            <h2>Ingrese Movil</h2>
             <br><br>
             <input type="text" name="movil" class="gui-input" autofocus>
             <br><br>
-            <input type="submit" value="BUSCAR" class=" btn btn-danger">
+            <input type="submit" value="BUSCAR" class=" btn btn-success">
         </form>
     </div>
     <br><br><br>
-    <button onclick="cerrarPagina()" class="btn btn-danger btn-sm">CERRAR PAGINA</button>
+    <button onclick="cerrarPagina()" class="btn btn-success btn-sm">CERRAR PAGINA</button>
 
     <?php foot() ?>
 </body>
