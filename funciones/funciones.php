@@ -308,8 +308,6 @@ function guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $saldo_ft, $saldo_vo
 
     //exit;
 
-
-
     $sql_gua_ca_ft = "INSERT INTO caja_final (movil, fecha, dep_ft, saldo_ft, dep_voucher, saldo_voucher, usuario, observaciones) ";
     $sql_gua_ca_ft .= "VALUES (?,?,?,?,?,?,?,?)";
     $guarda_caja = $con->prepare($sql_gua_ca_ft);

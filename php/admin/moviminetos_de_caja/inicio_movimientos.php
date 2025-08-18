@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
 
-    <h1 class="text-center" style="margin: 5px ; ">DEOSITOS A MOVILES</h1>
+    <h1 class="text-center" style="margin: 5px ; ">DEPOSITOS A MOVILES</h1>
     <div class="row">
         <style>
             a {
@@ -51,12 +51,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         </style>
         <form method="post" action="">
-        &nbsp; &nbsp;
+            &nbsp; &nbsp;
             <label for="cantidad">Cantidad de registros a mostrar:</label>
-            <input type="number"  id="cantidad" name="cantidad" value="10" min="1" required>
+            <input type="number" id="cantidad" name="cantidad" value="10" min="1" required>
             <input type="submit" class="btn btn-secondary btn-sm" value="Ver registros">
         </form>
-     
+
 
 
 
@@ -102,7 +102,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $sql_listado = "SELECT * FROM caja_final ORDER BY id DESC LIMIT $cantidad";
             $sql_lis = $con->query($sql_listado);
             while ($sql_lista = $sql_lis->fetch_assoc()) {
+
+
+
+
             ?>
+
+
+
+
+
                 <form action="">
                     <tr>
                         <th><?php $sql_lista['id'] ?></th>
