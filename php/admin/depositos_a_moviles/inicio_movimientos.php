@@ -110,11 +110,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 
-    <table class="table table-bordered table-sm table-hover" style="width: 50%; margin: 0 auto;">
+    <table class="table table-bordered table-sm table-hover" style="width: 70%; margin: 0 auto;">
         <div>
             <thead class="thead-dark">
                 <tr>
-                    <th></th>
+                    <th>ID</th>
+
                     <th>Movil</th>
                     <th>Fecha</th>
                     <th>Deposito</th>
@@ -132,31 +133,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $sql_lis = $con->query($sql_listado);
             while ($sql_lista = $sql_lis->fetch_assoc()) {
 
+
             ?>
                 <form action="">
                     <tr>
-                        <?php
-                        if ($sql_lista['efectivo'] == 0) {
-                        } elseif ($sql_lista['efectivo'] > 0) {
+
+                        <th><?php echo $sql_lista['id'] ?></th>
 
 
-                        ?>
-                            <th><?php echo $sql_lista['id'] ?></th>
-                            <th><?php echo $sql_lista['movil'] ?></th>
-                            <th><?php echo $sql_lista['fecha'] ?></th>
-                            <th><?php echo $sql_lista['efectivo'] ?></th>
-                            <th><?php echo $sql_lista['voucher'] ?></th>
+                        <th><?php echo $sql_lista['movil'] ?></th>
+                        <th><?php echo $sql_lista['fecha'] ?></th>
+                        <th><?php echo $sql_lista['efectivo'] ?></th>
+                        <th><?php echo $sql_lista['voucher'] ?></th>
 
 
-                            <td><input type="checkbox" name="opciones[]" value="<?php echo $sql_lista['id']; ?>" <?php echo ($sql_lista['est'] == 1) ? 'checked' : ''; ?> disabled></td>
-                            <td> <a class="btn btn-primary btn-sm" href="#" onclick="extraeProd(<?php echo $sql_lista['id']; ?>)">Depositar</td>
-                            <td> <a class="btn btn-secondary btn-sm" href="#" onclick="guardaProd(<?php echo $sql_lista['id']; ?>)">Guarda a cuenta</td>
 
-                            <td> <a class="btn btn-danger btn-sm" href="#" onclick="deleteProd(<?php echo $sql_lista['id']; ?>)">Eliminar</td>
+                        <td><input type="checkbox" name="opciones[]" value="<?php echo $sql_lista['id']; ?>" <?php echo ($sql_lista['est'] == 1) ? 'checked' : ''; ?> disabled></td>
+                        <td> <a class="btn btn-primary btn-sm" href="#" onclick="extraeProd(<?php echo $sql_lista['id']; ?>)">Depositar</td>
+                        <td> <a class="btn btn-secondary btn-sm" href="#" onclick="guardaProd(<?php echo $sql_lista['id']; ?>)">Guarda a cuenta</td>
 
-                        <?php
-                        }
-                        ?>
+
+
+                        <td> <a class="btn btn-danger btn-sm" href="#" onclick="deleteProd(<?php echo $sql_lista['id']; ?>)">Eliminar</td>
+
 
 
                     </tr>

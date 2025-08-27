@@ -224,7 +224,6 @@ function actualizaVenta1($con, $movil, $venta_1)
 function actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5)
 {
 
-    //exit;
     // Definimos la consulta preparada
 
     $sql_deuda = "UPDATE completa SET deuda_anterior = ?, 
@@ -233,7 +232,8 @@ function actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $vent
                                         venta_2 = ?, 
                                         venta_3 = ?, 
                                         venta_4 = ?, 
-                                        venta_5 = ?  WHERE movil = ?";
+                                        venta_5 = ?
+                                          WHERE movil = ?";
     $stmt = $con->prepare($sql_deuda);
 
     if (!$stmt) {
@@ -245,9 +245,9 @@ function actDeuAntSalaFavor($con, $movil, $deuda_anterior, $saldo_a_favor, $vent
     $stmt->bind_param("iiiiiiii", $deuda_anterior, $saldo_a_favor, $venta_1, $venta_2, $venta_3, $venta_4, $venta_5, $movil);
 
     if ($stmt->execute()) {
-        echo "<br>";
-        echo "Deuda anterior y saldo a favor actualizada correctamente.";
-        echo "<br>";
+        
+        echo "<br>Deuda anterior y saldo a favor actualizada correctamente.";
+        
         return true;
     } else {
         echo "<strong>Error al actualizar deuda anterior: </strong>" . $stmt->error;
@@ -320,9 +320,9 @@ function guardaCajaFinal($con, $movil, $fecha, $new_dep_ft, $saldo_ft, $saldo_vo
     $guarda_caja->bind_param("isiiiiss", $movil, $fecha, $new_dep_ft, $saldo_ft, $dep_voucher, $saldo_voucher, $usuario, $observaciones);
 
     if ($guarda_caja->execute()) {
-        echo "<br>";
+
         echo "Datos guardados en caja_final correctamente.";
-        echo "<br>";
+
         return true;
     } else {
         echo "<strong>Error al insertar datos en caja_final: </strong>" . $guarda_caja->error;
@@ -427,7 +427,6 @@ function efectivoEnCaja($con, $movil, $fecha, $new_dep_ft, $usuario)
     }
     $sql_a->close();
 }
-
 
 //Borra los voucher validados
 function borraVoucher($con, $movil)
@@ -556,5 +555,38 @@ function saldoCaja($con, $para_movil)
         */
         //echo "<strong style='color: red;'>No hay saldo suficiente en caja para descontar el importe del móvil.</strong>";
         return null; // Retornamos null si no hay saldo suficiente
+    }
+}
+
+##Edita solo el campo observaciones de deuda y deuda anteriors
+function obsDeuda($con, $movil, $postergar_pago, $mensaje)
+{
+
+    if ($postergar_pago > 0) {
+
+        $mensaje;
+
+        $sql_lee = "SELECT * FROM completa WHERE movil = '$movil'";
+        $res_lee = mysqli_query($con, $sql_lee);
+        if (!$res_lee) {
+            echo "<br>Error al leer completa: " . mysqli_error($con);
+        }
+        $row_comp = mysqli_fetch_assoc($res_lee);
+        $observaciones = $row_comp['observaciones_deuda'];
+
+        echo "<br>Observaciones: " . $observaciones;
+
+
+        $seg = $observaciones . " " . $mensaje;
+        echo "<br>Nuevo obs: " . $seg;
+
+        //exit;
+        $sql_edi = "UPDATE completa SET observaciones_deuda = '$seg' WHERE movil = '$movil'";
+        $res_edi = mysqli_query($con, $sql_edi);
+        if (!$res_edi) {
+            echo "<br>Error al actualizar postergar pago: " . mysqli_error($con);
+        } else {
+            echo "<br>Postergar pago actualizado correctamente.";
+        }
     }
 }

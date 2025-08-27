@@ -394,7 +394,7 @@ $sql_voucher = $con->query($sql_voucher);
 
 
             <!-- <form action="cobro_fin.php" method="post" id="formulario" target="_blank"> -->
-            <form action="cobro_fin.php" method="post" id="formulario" target="_blank">
+            <form action="cobro_fin.php" method="post" id="formulario">
 
                 <input type="hidden" id="movil" name="movil" value="<?php echo $movil ?>">
 
@@ -709,30 +709,33 @@ $sql_voucher = $con->query($sql_voucher);
                             <div class="recuadro" id="ing_via">
                                 <?php
                                     include "calcula_viajes.php";
-                                    //echo "<br>Saldo a favorrrrrrr: " . $saldo_a_favor;
+
                                 ?>
                             </div>
                         <?php
                                 }
-
-                                //                        if ($para_movil > 0) {
                         ?>
 
                         <li>
                             <br>
                             <label class="mi-label">Deposito FT:</label>
                             <input type="text" id="dep_ft" name="dep_ft" placeholder="Ingrese dinero" autofocus required>
-                            <label class="mi-label">Postergar pago:</label>
-                            <input type="text" id="postergar_pago" name="postergar_pago" placeholder="0">
+                            <?php
+                            $sem = $cant_sem - 1;
+                            if ($sem > 0 && $noventa > 0) {
+                            ?>
+                                <label class="mi-label"></label>
+                                <input type="text" id="postergar_semana" name="postergar_semana" placeholder="N° de semanas..." value="0">
+                                <h4>Semanas que paga</h4>
+                            <?php
+                            }
+                            ?>
                         </li>
-                        <h4>Ingrese Efectivo o 0</h4>
+
                         <?php
-                        //                      }
                         if ($viajes_de_la_semana_anterior > 0) {
                         }
-
                         ?>
-
                         <li>
                         </li>
                         </ul>
@@ -753,7 +756,7 @@ $sql_voucher = $con->query($sql_voucher);
                         <br>
                         <a href="../vauchin/exportar_tabla.php?q=<?php echo $movil ?>" class="btn btn-success" target="_blank">VAUCHIN</a>
                         <br>
-                        <a href="" class="btn btn-primary">BONIFICAR DEUDA</a>
+                        <a href="../bonifica_deuda/ver_deuda.php?movil= <?php echo $movil ?>" class="btn btn-primary" target="_blank">BONIFICAR DEUDA</a>
                         <br>
                         <button type="submit" class="btn btn-danger">COBRAR</button>
                     </div>
