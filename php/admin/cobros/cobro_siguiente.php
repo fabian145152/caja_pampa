@@ -398,8 +398,6 @@ $sql_voucher = $con->query($sql_voucher);
 
                 <input type="hidden" id="movil" name="movil" value="<?php echo $movil ?>">
 
-
-
                 <div class="container">
 
                     <div class="form-group">
@@ -745,7 +743,7 @@ $sql_voucher = $con->query($sql_voucher);
                     <div class="d-flex flex-column gap-2">
                         <a href="inicio_cobros.php" class="btn btn-info">VOLVER</a>
                         <br>
-                        <a href="../editar_deudas/inicio_edit_deuda.php?movil= <?php echo $movil ?>" class="btn btn-warning" target="_blank">
+                        <a href="../editar_deudas/inicio_edit_deuda.php?movil= <?php echo $movil ?>" class="btn btn-secondary" target="_blank">
                             <?php if ($bonif !== "") {
                                 echo "YA SE LE BONIFICO";
                             } else {
@@ -754,11 +752,16 @@ $sql_voucher = $con->query($sql_voucher);
                             ?></a>
 
                         <br>
-                        <a href="../vauchin/exportar_tabla.php?q=<?php echo $movil ?>" class="btn btn-success" target="_blank">VAUCHIN</a>
+                        <a href="../vauchin/exportar_tabla.php?q=<?php echo $movil ?>" class="btn btn-light" target="_blank">VAUCHIN</a>
                         <br>
                         <a href="../bonifica_deuda/ver_deuda.php?movil= <?php echo $movil ?>" class="btn btn-primary" target="_blank">BONIFICAR DEUDA</a>
                         <br>
                         <button type="submit" class="btn btn-danger">COBRAR</button>
+                        <!--
+                        <br>
+                        <button type="submit" name="accion" value="depositar.php" class="btn btn-dark">DEPOSITAR</button>
+                        -->
+
                     </div>
 
 

@@ -275,7 +275,6 @@ function ultimosDep($con)
         return null;
     }
 }
-
 /*
     Guarda los depositos de caja y suma el valor del registro anterior
     para resumen de caja
